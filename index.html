@@ -6,107 +6,159 @@
   <title>Эмоциональный компас</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body, html {
+    body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0c0e2b;
-      color: #e0f7fa;
+      background: linear-gradient(135deg, #1a2a6c, #3a5fcd);
+      color: white;
       min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .stars {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 1;
-    }
-    .star {
-      position: absolute; background: white; border-radius: 50%;
-      animation: twinkle var(--duration, 3s) infinite ease-in-out;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.2; } 50% { opacity: 1; }
+      padding: 20px;
+      display: flex;
+      justify-content: center;
     }
 
     .container {
-      position: relative; z-index: 10;
-      background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px; padding: 24px; margin: 20px auto;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center;
-      width: 92%; max-width: 600px;
+      background: rgba(10, 15, 40, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
     }
 
     h1 {
-      font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0 0 12px; color: #88d1ff;
+      text-align: center;
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      color: #64b5f6;
     }
+
     .subtitle {
-      font-size: clamp(0.9rem, 2.8vw, 1.1rem); color: #a0aec0; margin-bottom: 20px;
+      text-align: center;
+      color: #bbdefb;
+      margin-bottom: 20px;
+      font-size: 1rem;
     }
+
     .progress-bar {
-      height: 8px; background: #2d3748; border-radius: 4px; margin: 18px 0; overflow: hidden;
+      height: 8px;
+      background: #37474f;
+      border-radius: 4px;
+      margin: 16px 0;
+      overflow: hidden;
     }
     .progress-fill {
-      height: 100%; background: linear-gradient(to right, #4fd1c5, #63b3ed);
-      width: 10%; transition: width 0.4s ease;
+      height: 100%;
+      background: #4fc3f7;
+      width: 0%;
+      transition: width 0.4s;
     }
+
     .question {
-      font-size: clamp(1.2rem, 3.8vw, 1.5rem); margin: 22px 0; font-weight: 500;
+      font-size: 1.3rem;
+      margin: 20px 0;
+      line-height: 1.4;
     }
+
     .options {
-      display: flex; flex-direction: column; gap: 12px; margin: 22px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
     }
+
     .option {
-      padding: 16px 20px; background: rgba(50, 60, 90, 0.65);
-      border: 2px solid transparent; border-radius: 16px; cursor: pointer;
-      transition: all 0.2s; text-align: left; font-size: clamp(1rem, 3.2vw, 1.1rem);
-      min-height: 60px; display: flex; align-items: center;
+      padding: 16px;
+      background: rgba(40, 50, 90, 0.6);
+      border: 2px solid transparent;
+      border-radius: 14px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 1.05rem;
+      transition: all 0.2s;
     }
-    .option:hover { background: rgba(70, 90, 130, 0.8); }
+
+    .option:hover {
+      background: rgba(60, 80, 130, 0.7);
+    }
+
     .option.selected {
-      border-color: #63b3ed; background: rgba(49, 108, 192, 0.35);
+      border-color: #4fc3f7;
+      background: rgba(30, 60, 120, 0.5);
     }
+
     button {
-      padding: 16px 28px; font-size: clamp(1.1rem, 3.5vw, 1.2rem);
-      background: linear-gradient(to right, #4fd1c5, #63b3ed); color: white;
-      border: none; border-radius: 50px; cursor: pointer; font-weight: 600;
-      margin-top: 18px; transition: transform 0.15s, opacity 0.2s;
-      width: 100%; max-width: 320px; box-shadow: 0 4px 12px rgba(79,209,197,0.3);
+      padding: 14px;
+      font-size: 1.15rem;
+      background: #4fc3f7;
+      color: #0d1b3d;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 16px;
+      width: 100%;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+      transition: opacity 0.2s;
     }
-    button:hover:not(:disabled), button:active:not(:disabled) {
-      transform: scale(1.02); opacity: 0.95;
+
+    button:hover:not(:disabled) {
+      opacity: 0.9;
     }
-    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .result { display: none; animation: fadeIn 0.8s; }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result {
+      display: none;
+      animation: fadeIn 0.6s;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     .score-card {
-      background: rgba(30, 40, 70, 0.75); padding: 18px; border-radius: 16px;
-      margin: 16px 0; font-size: clamp(1rem, 3.2vw, 1.05rem);
+      background: rgba(0, 0, 0, 0.25);
+      padding: 18px;
+      border-radius: 14px;
+      margin: 16px 0;
+      font-size: 1.1rem;
     }
+
     .total-score {
-      font-size: clamp(1.8rem, 5vw, 2.2rem); color: #ffd700; margin: 20px 0; font-weight: bold;
+      font-size: 2rem;
+      color: #ffd54f;
+      margin: 20px 0;
+      font-weight: bold;
+      text-align: center;
     }
+
     .recommendation {
-      margin-top: 22px; padding: 18px; background: rgba(0,0,0,0.3);
-      border-radius: 14px; font-style: italic; color: #c6e7ff;
-      font-size: clamp(1rem, 3.2vw, 1.05rem);
+      background: rgba(0, 0, 0, 0.2);
+      padding: 16px;
+      border-radius: 12px;
+      font-style: italic;
+      margin-top: 20px;
+      line-height: 1.5;
     }
-    @media (max-width: 360px) {
-      .container { padding: 20px 16px; }
-      .option { padding: 14px 16px; font-size: 0.95rem; min-height: 55px; }
-    }
-    @media (min-width: 768px) {
-      .container { padding: 32px; margin: 40px auto; }
-      button { padding: 18px 36px; font-size: 1.25rem; }
+
+    @media (max-width: 480px) {
+      .container { padding: 18px; }
+      h1 { font-size: 1.6rem; }
+      .question { font-size: 1.2rem; }
+      .option { padding: 14px; font-size: 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="stars" id="stars"></div>
-
-  <div class="container" id="gameContainer">
+  <div class="container">
     <h1>🧭 Эмоциональный компас</h1>
     <div class="subtitle">Ответьте честно — и узнайте свой внутренний баланс</div>
 
@@ -122,21 +174,6 @@
   </div>
 
   <script>
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const starCount = isMobile ? 70 : 120;
-
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < starCount; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.width = `${Math.random() * (isMobile ? 2 : 3)}px`;
-      star.style.height = star.style.width;
-      star.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
-      starsContainer.appendChild(star);
-    }
-
     const levels = [
       { q: "Когда вы сталкиваетесь с трудной ситуацией, вы чаще:", opts: [ { text: "Анализирую, что пошло не так, и ищу решение", calm: 2, aware: 3, energy: 1 }, { text: "Обращаюсь за поддержкой к близким", calm: 1, empathy: 3, aware: 1 }, { text: "Пытаюсь отвлечься или избежать проблемы", calm: 0, energy: 0, aware: -1 }, { text: "Реагирую эмоционально, потом успокаиваюсь", calm: -1, aware: 1, empathy: 1 } ] },
       { q: "Как вы реагируете на чужую боль?", opts: [ { text: "Глубоко сопереживаю и хочу помочь", empathy: 3, calm: 1 }, { text: "Сочувствую, но держу дистанцию", empathy: 2, calm: 2 }, { text: "Не знаю, что сказать — чувствую неловкость", empathy: 0, aware: 1 }, { text: "Стараюсь быстро «починить» ситуацию", empathy: 1, energy: 2 } ] },
@@ -200,34 +237,29 @@
       }
     }
 
-    // ✅ ЛОГИЧНЫЙ РАСЧЁТ
-    function calculateLogicalScore() {
-      const { calm, aware, empathy, energy } = scores;
-      const values = [calm, aware, empathy, energy];
-      const avg = values.reduce((a,b) => a + b, 0) / 4;
-      const maxVal = Math.max(...values);
-      const minVal = Math.min(...values);
-      const spread = maxVal - minVal;
-      const balanceFactor = 1 - (spread / 30); // чем больше разброс — тем ниже баланс
-
-      let totalScore = Math.round(avg * balanceFactor);
-      return Math.max(0, Math.min(100, totalScore)); // от 0 до 100
+    // ✅ ПРОСТОЙ И ЛОГИЧНЫЙ РАСЧЁТ
+    function calculateScore() {
+      const total = scores.calm + scores.aware + scores.empathy + scores.energy;
+      const average = total / 4; // максимум 30
+      const percentage = Math.round((average / 30) * 100);
+      return Math.max(0, Math.min(100, percentage));
     }
 
     function getRecommendation(score) {
-      if (score >= 85) return "Вы в гармонии с собой. Продолжайте заботиться о внутреннем балансе — вы вдохновляете других!";
-      if (score >= 65) return "У вас хороший эмоциональный фундамент. Уделяйте внимание зонам роста — и вы расцветёте ещё больше.";
-      if (score >= 45) return "Вы в процессе поиска равновесия. Это нормально. Попробуйте практики осознанности и дыхания.";
-      return "Ваша психоэмоциональная энергия истощена. Пожалуйста, найдите время для себя — даже 10 минут в день.";
+      if (score >= 80) return "Вы в отличной эмоциональной форме! У вас высокий уровень самосознания, спокойствия и связи с собой.";
+      if (score >= 60) return "Ваш эмоциональный фон стабилен. Есть ресурсы, но можно уделить внимание зонам роста.";
+      if (score >= 40) return "Вы в состоянии умеренного напряжения. Возможно, вы устали или чувствуете нехватку поддержки.";
+      if (score >= 20) return "Ваша психоэмоциональная энергия на низком уровне. Пожалуйста, найдите время для отдыха и заботы о себе.";
+      return "Вы в состоянии сильного истощения. Это не ваша вина. Обратитесь за поддержкой — к близким или специалисту.";
     }
 
     function showResult() {
-      const totalScore = calculateLogicalScore(); // ✅ Теперь логично!
+      const totalScore = calculateScore();
       const rec = getRecommendation(totalScore);
 
       resultEl.innerHTML = `
-        <h2 style="color:#ffd700; font-size: clamp(1.5rem, 4.5vw, 1.8rem);">✨ Ваш результат</h2>
-        <div class="total-score">${totalScore} / 100</div>
+        <h2 style="text-align:center; color:#4fc3f7; margin-bottom:16px;">✨ Ваш результат</h2>
+        <div class="total-score">${totalScore} из 100</div>
 
         <div class="score-card">
           <div>🌿 Спокойствие: ${scores.calm} / 30</div>
@@ -238,8 +270,8 @@
 
         <div class="recommendation">«${rec}»</div>
 
-        <p style="margin-top:20px; font-size: clamp(0.85rem, 2.7vw, 0.95rem); color:#a0aec0;">
-          💬 Эта игра — не диагноз, а отражение. Если вам тяжело — поговорите с психологом. Вы имеете право на поддержку.
+        <p style="margin-top:20px; font-size:0.9rem; color:#bbdefb; text-align:center;">
+          💬 Эта игра — не диагноз, а зеркало. Если вам тяжело — вы имеете право на помощь.
         </p>
       `;
       resultEl.style.display = 'block';
