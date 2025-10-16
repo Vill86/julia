@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Найди лишнее — Развивающая игра</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      color: #2c3e50;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 500px;
+      width: 95%;
+    }
+
+    h1 {
+      color: #e74c3c;
+      margin-top: 0;
+    }
+
+    .score {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #27ae60;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 25px 0;
+    }
+
+    .card {
+      background: #f9f9f9;
+      border: 3px solid #3498db;
+      border-radius: 15px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .card:hover {
+      background: #e3f2fd;
+      transform: scale(1.05);
+      border-color: #2980b9;
+    }
+
+    .card.selected {
+      border-color: #e74c3c;
+      background: #ffebee;
+      transform: scale(1.1);
+    }
+
+    .feedback {
+      min-height: 30px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin: 15px 0;
+      padding: 8px;
+      border-radius: 10px;
+    }
+
+    .correct { color: #27ae60; background: #ebf7ef; }
+    .wrong { color: #e74c3c; background: #fdf2f2; }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🔍 Найди лишнее!</h1>
+    <div class="score">Очки: <span id="score">0</span></div>
+
+    <div class="cards" id="cards"></div>
+
+    <div class="feedback" id="feedback">Выбери тот, который не подходит!</div>
+
+    <button onclick="nextQuestion()">Следующий вопрос</button>
+  </div>
+
+  <script>
+    // База заданий: [три подходящих, одно лишнее]
+    const questions = [
+      { items: ['🍎', '🍌', '🍇', '🚗'], correct: 3 },
+      { items: ['🐶', '🐱', '🐭', '🌳'], correct: 3 },
+      { items: ['⚽', '🏀', '🏈', '🍕'], correct: 3 },
+      { items: ['1️⃣', '2️⃣', '3️⃣', '🐱'], correct: 3 },
+      { items: ['🔴', '🔵', '🟢', '🚲'], correct: 3 },
+      { items: ['📚', '✏️', '📘', '🐟'], correct: 3 },
+      { items: ['☀️', '🌙', '⭐', '🍎'], correct: 3 },
+      { items: ['👕', '👖', '👗', '🍦'], correct: 3 },
+      { items: ['🦁', '🐯', '🐻', '✈️'], correct: 3 },
+      { items: ['💧', '🌊', '💦', '🔥'], correct: 3 }
+    ];
+
+    let score = 0;
+    let currentQuestion = null;
+    let selectedCardIndex = null;
+
+    const cardsContainer = document.getElementById('cards');
+    const feedbackEl = document.getElementById('feedback');
+    const scoreEl = document.getElementById('score');
+
+    function shuffle(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    function loadQuestion() {
+      const q = questions[Math.floor(Math.random() * questions.length)];
+      const shuffledItems = shuffle([...q.items]);
+      const correctOriginalIndex = q.correct;
+      const correctShuffledIndex = shuffledItems.indexOf(q.items[correctOriginalIndex]);
+
+      currentQuestion = {
+        items: shuffledItems,
+        correctIndex: correctShuffledIndex
+      };
+
+      renderCards();
+      feedbackEl.textContent = 'Выбери тот, который не подходит!';
+      feedbackEl.className = 'feedback';
+      selectedCardIndex = null;
+    }
+
+    function renderCards() {
+      cardsContainer.innerHTML = '';
+      currentQuestion.items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.textContent = item;
+        card.onclick = () => selectCard(index, card);
+        cardsContainer.appendChild(card);
+      });
+    }
+
+    function selectCard(index, element) {
+      if (selectedCardIndex !== null) return; // уже выбрано
+
+      selectedCardIndex = index;
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+      element.classList.add('selected');
+
+      if (index === currentQuestion.correctIndex) {
+        score++;
+        scoreEl.textContent = score;
+        feedbackEl.textContent = '✅ Правильно! Молодец!';
+        feedbackEl.className = 'feedback correct';
+      } else {
+        feedbackEl.textContent = '❌ Нет, это не то. Попробуй ещё!';
+        feedbackEl.className = 'feedback wrong';
+      }
+    }
+
+    function nextQuestion() {
+      loadQuestion();
+    }
+
+    // Старт игры
+    loadQuestion();
+  </script>
+
+</body>
+</html>
