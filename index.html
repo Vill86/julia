@@ -22,7 +22,7 @@
       border-radius: 20px;
       padding: 24px;
       width: 100%;
-      max-width: 600px;
+      max-width: 620px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.4);
     }
 
@@ -148,11 +148,36 @@
       line-height: 1.5;
     }
 
+    .explanation {
+      margin-top: 25px;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #e3f2fd;
+    }
+
+    .explanation h3 {
+      margin-bottom: 10px;
+      color: #81d4fa;
+    }
+
+    .explanation ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .explanation li {
+      margin-bottom: 8px;
+    }
+
     @media (max-width: 480px) {
       .container { padding: 18px; }
       h1 { font-size: 1.6rem; }
       .question { font-size: 1.2rem; }
       .option { padding: 14px; font-size: 1rem; }
+      .explanation { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -237,10 +262,9 @@
       }
     }
 
-    // ✅ ПРОСТОЙ И ЛОГИЧНЫЙ РАСЧЁТ
     function calculateScore() {
       const total = scores.calm + scores.aware + scores.empathy + scores.energy;
-      const average = total / 4; // максимум 30
+      const average = total / 4;
       const percentage = Math.round((average / 30) * 100);
       return Math.max(0, Math.min(100, percentage));
     }
@@ -270,9 +294,18 @@
 
         <div class="recommendation">«${rec}»</div>
 
-        <p style="margin-top:20px; font-size:0.9rem; color:#bbdefb; text-align:center;">
-          💬 Эта игра — не диагноз, а зеркало. Если вам тяжело — вы имеете право на помощь.
-        </p>
+        <div class="explanation">
+          <h3>ℹ️ Как это работает?</h3>
+          <p>Эта игра помогает увидеть, как вы чувствуете себя <strong>здесь и сейчас</strong>. Вот что означают показатели:</p>
+          <ul>
+            <li><strong>🌿 Спокойствие</strong> — насколько вы уравновешены, умеете ли справляться с тревогой.</li>
+            <li><strong>💡 Осознанность</strong> — замечаете ли вы свои мысли и чувства, или живёте «на автопилоте».</li>
+            <li><strong>❤️ Эмпатия</strong> — как вы связаны с другими людьми и с самим собой.</li>
+            <li><strong>🔋 Энергия</strong> — есть ли у вас внутренние ресурсы для жизни и действий.</li>
+          </ul>
+          <p><strong>Итоговый балл</strong> — это среднее по всем шкалам, переведённое в проценты. Чем выше — тем более сбалансировано ваше состояние.</p>
+          <p>❗ <em>Это не тест и не диагноз. Это зеркало. Если результат вызвал тревогу — поговорите с психологом. Вы имеете право на поддержку.</em></p>
+        </div>
       `;
       resultEl.style.display = 'block';
       optionsEl.style.display = 'none';
