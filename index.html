@@ -3,214 +3,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0c0e2b">
   <title>Эмоциональный компас</title>
   <style>
-    /* Сброс и базовые настройки */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body, html {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0c0e2b;
       color: #e0f7fa;
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.5;
     }
 
-    /* Запрет выделения только на интерактивных элементах */
-    .option, button {
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    /* Звёзды */
     .stars {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
     }
     .star {
-      position: absolute;
-      background: white;
-      border-radius: 50%;
+      position: absolute; background: white; border-radius: 50%;
       animation: twinkle var(--duration, 3s) infinite ease-in-out;
     }
-
     @keyframes twinkle {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
+      0%, 100% { opacity: 0.2; } 50% { opacity: 1; }
     }
 
     .container {
-      position: relative;
-      z-index: 10;
+      position: relative; z-index: 10;
       background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 24px;
-      padding: 24px;
-      margin: 20px auto;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      text-align: center;
-      width: 92%;
-      max-width: 600px;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px; padding: 24px; margin: 20px auto;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5); text-align: center;
+      width: 92%; max-width: 600px;
     }
 
     h1 {
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      margin: 0 0 12px;
-      color: #88d1ff;
+      font-size: clamp(1.6rem, 4vw, 2.2rem); margin: 0 0 12px; color: #88d1ff;
     }
-
     .subtitle {
-      font-size: clamp(0.9rem, 2.8vw, 1.1rem);
-      color: #a0aec0;
-      margin-bottom: 20px;
+      font-size: clamp(0.9rem, 2.8vw, 1.1rem); color: #a0aec0; margin-bottom: 20px;
     }
-
     .progress-bar {
-      height: 8px;
-      background: #2d3748;
-      border-radius: 4px;
-      margin: 18px 0;
-      overflow: hidden;
+      height: 8px; background: #2d3748; border-radius: 4px; margin: 18px 0; overflow: hidden;
     }
     .progress-fill {
-      height: 100%;
-      background: linear-gradient(to right, #4fd1c5, #63b3ed);
-      width: 10%;
-      transition: width 0.4s ease;
+      height: 100%; background: linear-gradient(to right, #4fd1c5, #63b3ed);
+      width: 10%; transition: width 0.4s ease;
     }
-
     .question {
-      font-size: clamp(1.2rem, 3.8vw, 1.5rem);
-      margin: 22px 0;
-      font-weight: 500;
+      font-size: clamp(1.2rem, 3.8vw, 1.5rem); margin: 22px 0; font-weight: 500;
     }
-
     .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin: 22px 0;
+      display: flex; flex-direction: column; gap: 12px; margin: 22px 0;
     }
-
     .option {
-      padding: 16px 20px;
-      background: rgba(50, 60, 90, 0.65);
-      border: 2px solid transparent;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: left;
-      font-size: clamp(1rem, 3.2vw, 1.1rem);
-      min-height: 60px;
-      display: flex;
-      align-items: center;
+      padding: 16px 20px; background: rgba(50, 60, 90, 0.65);
+      border: 2px solid transparent; border-radius: 16px; cursor: pointer;
+      transition: all 0.2s; text-align: left; font-size: clamp(1rem, 3.2vw, 1.1rem);
+      min-height: 60px; display: flex; align-items: center;
     }
-
-    .option:hover {
-      background: rgba(70, 90, 130, 0.8);
-    }
-
+    .option:hover { background: rgba(70, 90, 130, 0.8); }
     .option.selected {
-      border-color: #63b3ed;
-      background: rgba(49, 108, 192, 0.35);
+      border-color: #63b3ed; background: rgba(49, 108, 192, 0.35);
     }
-
     button {
-      padding: 16px 28px;
-      font-size: clamp(1.1rem, 3.5vw, 1.2rem);
-      background: linear-gradient(to right, #4fd1c5, #63b3ed);
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: 600;
-      margin-top: 18px;
-      transition: transform 0.15s, opacity 0.2s;
-      width: 100%;
-      max-width: 320px;
-      box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
+      padding: 16px 28px; font-size: clamp(1.1rem, 3.5vw, 1.2rem);
+      background: linear-gradient(to right, #4fd1c5, #63b3ed); color: white;
+      border: none; border-radius: 50px; cursor: pointer; font-weight: 600;
+      margin-top: 18px; transition: transform 0.15s, opacity 0.2s;
+      width: 100%; max-width: 320px; box-shadow: 0 4px 12px rgba(79,209,197,0.3);
     }
-
-    button:hover:not(:disabled),
-    button:active:not(:disabled) {
-      transform: scale(1.02);
-      opacity: 0.95;
+    button:hover:not(:disabled), button:active:not(:disabled) {
+      transform: scale(1.02); opacity: 0.95;
     }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .result {
-      display: none;
-      animation: fadeIn 0.8s;
-    }
-
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .result { display: none; animation: fadeIn 0.8s; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     .score-card {
-      background: rgba(30, 40, 70, 0.75);
-      padding: 18px;
-      border-radius: 16px;
-      margin: 16px 0;
-      font-size: clamp(1rem, 3.2vw, 1.05rem);
+      background: rgba(30, 40, 70, 0.75); padding: 18px; border-radius: 16px;
+      margin: 16px 0; font-size: clamp(1rem, 3.2vw, 1.05rem);
     }
-
     .total-score {
-      font-size: clamp(1.8rem, 5vw, 2.2rem);
-      color: #ffd700;
-      margin: 20px 0;
-      font-weight: bold;
+      font-size: clamp(1.8rem, 5vw, 2.2rem); color: #ffd700; margin: 20px 0; font-weight: bold;
     }
-
     .recommendation {
-      margin-top: 22px;
-      padding: 18px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 14px;
-      font-style: italic;
-      color: #c6e7ff;
+      margin-top: 22px; padding: 18px; background: rgba(0,0,0,0.3);
+      border-radius: 14px; font-style: italic; color: #c6e7ff;
       font-size: clamp(1rem, 3.2vw, 1.05rem);
     }
-
-    /* Для очень маленьких экранов (старые телефоны) */
     @media (max-width: 360px) {
-      .container {
-        padding: 20px 16px;
-      }
-      .option {
-        padding: 14px 16px;
-        font-size: 0.95rem;
-        min-height: 55px;
-      }
+      .container { padding: 20px 16px; }
+      .option { padding: 14px 16px; font-size: 0.95rem; min-height: 55px; }
     }
-
-    /* Для планшетов и десктопов — чуть больше отступов */
     @media (min-width: 768px) {
-      .container {
-        padding: 32px;
-        margin: 40px auto;
-      }
-      button {
-        padding: 18px 36px;
-        font-size: 1.25rem;
-      }
+      .container { padding: 32px; margin: 40px auto; }
+      button { padding: 18px 36px; font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -234,7 +122,6 @@
   </div>
 
   <script>
-    // Определяем количество звёзд в зависимости от устройства
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const starCount = isMobile ? 70 : 120;
 
@@ -250,98 +137,17 @@
       starsContainer.appendChild(star);
     }
 
-    // Вопросы и баллы
     const levels = [
-      {
-        q: "Когда вы сталкиваетесь с трудной ситуацией, вы чаще:",
-        opts: [
-          { text: "Анализирую, что пошло не так, и ищу решение", calm: 2, aware: 3, energy: 1 },
-          { text: "Обращаюсь за поддержкой к близким", calm: 1, empathy: 3, aware: 1 },
-          { text: "Пытаюсь отвлечься или избежать проблемы", calm: 0, energy: 0, aware: -1 },
-          { text: "Реагирую эмоционально, потом успокаиваюсь", calm: -1, aware: 1, empathy: 1 }
-        ]
-      },
-      {
-        q: "Как вы реагируете на чужую боль?",
-        opts: [
-          { text: "Глубоко сопереживаю и хочу помочь", empathy: 3, calm: 1 },
-          { text: "Сочувствую, но держу дистанцию", empathy: 2, calm: 2 },
-          { text: "Не знаю, что сказать — чувствую неловкость", empathy: 0, aware: 1 },
-          { text: "Стараюсь быстро «починить» ситуацию", empathy: 1, energy: 2 }
-        ]
-      },
-      {
-        q: "Как часто вы замечаете свои эмоции в моменте?",
-        opts: [
-          { text: "Почти всегда — я в потоке осознанности", aware: 3, calm: 2 },
-          { text: "Иногда, особенно если сильно переживаю", aware: 2, calm: 1 },
-          { text: "Редко — замечаю только потом", aware: 0, calm: 0 },
-          { text: "Почти никогда — живу на автопилоте", aware: -1, energy: -1 }
-        ]
-      },
-      {
-        q: "Что даёт вам энергию?",
-        opts: [
-          { text: "Общение с близкими", empathy: 2, energy: 2 },
-          { text: "Тишина и одиночество", calm: 3, aware: 2 },
-          { text: "Новые задачи и вызовы", energy: 3, aware: 1 },
-          { text: "Отдых без планов", calm: 2, energy: 2 }
-        ]
-      },
-      {
-        q: "Как вы относитесь к своим ошибкам?",
-        opts: [
-          { text: "Воспринимаю как урок", aware: 3, calm: 2 },
-          { text: "Переживаю, но отпускаю", calm: 1, empathy: 1 },
-          { text: "Долго корю себя", calm: -2, aware: -1 },
-          { text: "Стараюсь забыть как можно скорее", aware: 0, energy: -1 }
-        ]
-      },
-      {
-        q: "Можете ли вы сказать «нет», не чувствуя вины?",
-        opts: [
-          { text: "Да, спокойно и уважительно", calm: 3, aware: 2 },
-          { text: "Иногда получается", calm: 1, aware: 1 },
-          { text: "Очень трудно — боюсь обидеть", empathy: 2, calm: -1 },
-          { text: "Почти никогда", calm: -2, energy: -2 }
-        ]
-      },
-      {
-        q: "Как вы восстанавливаетесь после стресса?",
-        opts: [
-          { text: "Медитация, прогулка, тишина", calm: 3, aware: 2 },
-          { text: "Общение с друзьями", empathy: 2, energy: 1 },
-          { text: "Сон или сериалы", energy: 2, calm: 1 },
-          { text: "Еда или покупки", energy: -1, aware: -1 }
-        ]
-      },
-      {
-        q: "Что важнее для вас в отношениях?",
-        opts: [
-          { text: "Глубина и искренность", aware: 3, empathy: 2 },
-          { text: "Поддержка и забота", empathy: 3, calm: 1 },
-          { text: "Свобода и личное пространство", calm: 3, aware: 2 },
-          { text: "Веселье и совместные приключения", energy: 3, empathy: 1 }
-        ]
-      },
-      {
-        q: "Как вы принимаете важные решения?",
-        opts: [
-          { text: "Слушаю интуицию и чувства", aware: 3, calm: 2 },
-          { text: "Взвешиваю все «за» и «против»", aware: 2, calm: 2 },
-          { text: "Советуюсь с другими", empathy: 2, aware: 1 },
-          { text: "Действую импульсивно", energy: 2, calm: -1 }
-        ]
-      },
-      {
-        q: "Что вы чувствуете, оставаясь наедине с собой?",
-        opts: [
-          { text: "Спокойствие и умиротворение", calm: 3, aware: 3 },
-          { text: "Лёгкое одиночество, но комфортно", calm: 2, empathy: 1 },
-          { text: "Тревогу или скуку", calm: -1, energy: -1 },
-          { text: "Облегчение — наконец-то тишина!", calm: 2, energy: 2 }
-        ]
-      }
+      { q: "Когда вы сталкиваетесь с трудной ситуацией, вы чаще:", opts: [ { text: "Анализирую, что пошло не так, и ищу решение", calm: 2, aware: 3, energy: 1 }, { text: "Обращаюсь за поддержкой к близким", calm: 1, empathy: 3, aware: 1 }, { text: "Пытаюсь отвлечься или избежать проблемы", calm: 0, energy: 0, aware: -1 }, { text: "Реагирую эмоционально, потом успокаиваюсь", calm: -1, aware: 1, empathy: 1 } ] },
+      { q: "Как вы реагируете на чужую боль?", opts: [ { text: "Глубоко сопереживаю и хочу помочь", empathy: 3, calm: 1 }, { text: "Сочувствую, но держу дистанцию", empathy: 2, calm: 2 }, { text: "Не знаю, что сказать — чувствую неловкость", empathy: 0, aware: 1 }, { text: "Стараюсь быстро «починить» ситуацию", empathy: 1, energy: 2 } ] },
+      { q: "Как часто вы замечаете свои эмоции в моменте?", opts: [ { text: "Почти всегда — я в потоке осознанности", aware: 3, calm: 2 }, { text: "Иногда, особенно если сильно переживаю", aware: 2, calm: 1 }, { text: "Редко — замечаю только потом", aware: 0, calm: 0 }, { text: "Почти никогда — живу на автопилоте", aware: -1, energy: -1 } ] },
+      { q: "Что даёт вам энергию?", opts: [ { text: "Общение с близкими", empathy: 2, energy: 2 }, { text: "Тишина и одиночество", calm: 3, aware: 2 }, { text: "Новые задачи и вызовы", energy: 3, aware: 1 }, { text: "Отдых без планов", calm: 2, energy: 2 } ] },
+      { q: "Как вы относитесь к своим ошибкам?", opts: [ { text: "Воспринимаю как урок", aware: 3, calm: 2 }, { text: "Переживаю, но отпускаю", calm: 1, empathy: 1 }, { text: "Долго корю себя", calm: -2, aware: -1 }, { text: "Стараюсь забыть как можно скорее", aware: 0, energy: -1 } ] },
+      { q: "Можете ли вы сказать «нет», не чувствуя вины?", opts: [ { text: "Да, спокойно и уважительно", calm: 3, aware: 2 }, { text: "Иногда получается", calm: 1, aware: 1 }, { text: "Очень трудно — боюсь обидеть", empathy: 2, calm: -1 }, { text: "Почти никогда", calm: -2, energy: -2 } ] },
+      { q: "Как вы восстанавливаетесь после стресса?", opts: [ { text: "Медитация, прогулка, тишина", calm: 3, aware: 2 }, { text: "Общение с друзьями", empathy: 2, energy: 1 }, { text: "Сон или сериалы", energy: 2, calm: 1 }, { text: "Еда или покупки", energy: -1, aware: -1 } ] },
+      { q: "Что важнее для вас в отношениях?", opts: [ { text: "Глубина и искренность", aware: 3, empathy: 2 }, { text: "Поддержка и забота", empathy: 3, calm: 1 }, { text: "Свобода и личное пространство", calm: 3, aware: 2 }, { text: "Веселье и совместные приключения", energy: 3, empathy: 1 } ] },
+      { q: "Как вы принимаете важные решения?", opts: [ { text: "Слушаю интуицию и чувства", aware: 3, calm: 2 }, { text: "Взвешиваю все «за» и «против»", aware: 2, calm: 2 }, { text: "Советуюсь с другими", empathy: 2, aware: 1 }, { text: "Действую импульсивно", energy: 2, calm: -1 } ] },
+      { q: "Что вы чувствуете, оставаясь наедине с собой?", opts: [ { text: "Спокойствие и умиротворение", calm: 3, aware: 3 }, { text: "Лёгкое одиночество, но комфортно", calm: 2, empathy: 1 }, { text: "Тревогу или скуку", calm: -1, energy: -1 }, { text: "Облегчение — наконец-то тишина!", calm: 2, energy: 2 } ] }
     ];
 
     let currentLevel = 0;
@@ -394,10 +200,18 @@
       }
     }
 
-    function calculateTotalScore() {
-      const max = levels.length * 3;
-      const total = scores.calm + scores.aware + scores.empathy + scores.energy;
-      return Math.min(100, Math.round((total / max) * 100));
+    // ✅ ЛОГИЧНЫЙ РАСЧЁТ
+    function calculateLogicalScore() {
+      const { calm, aware, empathy, energy } = scores;
+      const values = [calm, aware, empathy, energy];
+      const avg = values.reduce((a,b) => a + b, 0) / 4;
+      const maxVal = Math.max(...values);
+      const minVal = Math.min(...values);
+      const spread = maxVal - minVal;
+      const balanceFactor = 1 - (spread / 30); // чем больше разброс — тем ниже баланс
+
+      let totalScore = Math.round(avg * balanceFactor);
+      return Math.max(0, Math.min(100, totalScore)); // от 0 до 100
     }
 
     function getRecommendation(score) {
@@ -408,7 +222,7 @@
     }
 
     function showResult() {
-      const totalScore = calculateTotalScore();
+      const totalScore = calculateLogicalScore(); // ✅ Теперь логично!
       const rec = getRecommendation(totalScore);
 
       resultEl.innerHTML = `
