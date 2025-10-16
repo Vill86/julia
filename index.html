@@ -3,196 +3,322 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Найди лишнее — Развивающая игра</title>
+  <title>Глубина чувств — Психологическая игра</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to bottom, #a1c4fd, #c2e9fb);
       margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: white;
       min-height: 100vh;
-      color: #2c3e50;
-    }
-
-    .container {
-      background: white;
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      text-align: center;
-      max-width: 500px;
-      width: 95%;
-    }
-
-    h1 {
-      color: #e74c3c;
-      margin-top: 0;
-    }
-
-    .score {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #27ae60;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin: 25px 0;
-    }
-
-    .card {
-      background: #f9f9f9;
-      border: 3px solid #3498db;
-      border-radius: 15px;
-      height: 100px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 3rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      user-select: none;
+      text-align: center;
     }
 
-    .card:hover {
-      background: #e3f2fd;
-      transform: scale(1.05);
-      border-color: #2980b9;
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .card.selected {
-      border-color: #e74c3c;
-      background: #ffebee;
-      transform: scale(1.1);
+    .container {
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 40px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      transition: all 0.4s ease;
     }
 
-    .feedback {
-      min-height: 30px;
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      color: #ffd700;
+    }
+
+    .level-title {
+      font-size: 1.4rem;
+      margin: 20px 0;
+      color: #87ceeb;
+    }
+
+    .question {
       font-size: 1.3rem;
-      font-weight: bold;
-      margin: 15px 0;
-      padding: 8px;
-      border-radius: 10px;
+      margin: 25px 0;
+      line-height: 1.5;
     }
 
-    .correct { color: #27ae60; background: #ebf7ef; }
-    .wrong { color: #e74c3c; background: #fdf2f2; }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .option {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    .option:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .option.selected {
+      border-color: #ffd700;
+      background: rgba(255, 215, 0, 0.15);
+    }
 
     button {
-      padding: 12px 25px;
+      padding: 14px 30px;
       font-size: 1.1rem;
-      background: #3498db;
-      color: white;
+      background: #ffd700;
+      color: #000;
       border: none;
-      border-radius: 12px;
+      border-radius: 50px;
       cursor: pointer;
       font-weight: bold;
-      transition: background 0.3s;
+      margin-top: 20px;
+      transition: transform 0.2s, background 0.3s;
     }
 
     button:hover {
-      background: #2980b9;
+      background: #ffeb3b;
+      transform: scale(1.03);
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 15px;
+      display: none;
+    }
+
+    .insight {
+      margin-top: 15px;
+      font-style: italic;
+      color: #a9dfbf;
+    }
+
+    .progress {
+      font-size: 0.95rem;
+      color: #ddd;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>🔍 Найди лишнее!</h1>
-    <div class="score">Очки: <span id="score">0</span></div>
+  <div class="container" id="gameContainer">
+    <h1>🌊 Глубина чувств</h1>
+    <div class="progress">Уровень <span id="levelNum">1</span> из 10</div>
 
-    <div class="cards" id="cards"></div>
+    <div class="level-title" id="levelTitle">Текущее настроение</div>
+    <div class="question" id="question">Как вы себя чувствуете прямо сейчас?</div>
 
-    <div class="feedback" id="feedback">Выбери тот, который не подходит!</div>
+    <div class="options" id="options"></div>
 
-    <button onclick="nextQuestion()">Следующий вопрос</button>
+    <button id="nextBtn" disabled>Далее</button>
+
+    <div class="result" id="result"></div>
   </div>
 
   <script>
-    // База заданий: [три подходящих, одно лишнее]
-    const questions = [
-      { items: ['🍎', '🍌', '🍇', '🚗'], correct: 3 },
-      { items: ['🐶', '🐱', '🐭', '🌳'], correct: 3 },
-      { items: ['⚽', '🏀', '🏈', '🍕'], correct: 3 },
-      { items: ['1️⃣', '2️⃣', '3️⃣', '🐱'], correct: 3 },
-      { items: ['🔴', '🔵', '🟢', '🚲'], correct: 3 },
-      { items: ['📚', '✏️', '📘', '🐟'], correct: 3 },
-      { items: ['☀️', '🌙', '⭐', '🍎'], correct: 3 },
-      { items: ['👕', '👖', '👗', '🍦'], correct: 3 },
-      { items: ['🦁', '🐯', '🐻', '✈️'], correct: 3 },
-      { items: ['💧', '🌊', '💦', '🔥'], correct: 3 }
+    // База уровней: каждый — вопрос + варианты + веса эмоций
+    const levels = [
+      {
+        title: "Текущее настроение",
+        question: "Как вы себя чувствуете прямо сейчас?",
+        options: ["Спокойно и уравновешенно", "Тревожно или напряжённо", "Радостно и вдохновлённо", "Устало или опустошённо"]
+      },
+      {
+        title: "Энергия",
+        question: "Сколько у вас внутренней энергии сегодня?",
+        options: ["Много — готов(а) к действиям", "Достаточно для повседневных дел", "Мало — хочется отдохнуть", "Почти нет — выгорание"]
+      },
+      {
+        title: "Связь с собой",
+        question: "Насколько вы «на связи» со своими истинными желаниями?",
+        options: ["Чётко понимаю, чего хочу", "Есть общее направление", "Путаюсь в желаниях", "Не думаю об этом"]
+      },
+      {
+        title: "Поддержка",
+        question: "Насколько вы чувствуете поддержку от близких?",
+        options: ["Очень сильно", "Достаточно", "Иногда чувствую одиночество", "Почти никогда"]
+      },
+      {
+        title: "Стресс",
+        question: "Как вы справляетесь со стрессом?",
+        options: ["Легко — у меня есть ресурсы", "Справляюсь, но с усилием", "Трудно — часто теряю контроль", "Избегаю, не справляюсь"]
+      },
+      {
+        title: "Самооценка",
+        question: "Как вы относитесь к себе в последнее время?",
+        options: ["С уважением и принятием", "В целом положительно", "Критично, но терпимо", "Жёстко и недовольно"]
+      },
+      {
+        title: "Будущее",
+        question: "Что вы чувствуете, думая о будущем?",
+        options: ["Надежду и интерес", "Нейтральность", "Тревогу", "Безысходность"]
+      },
+      {
+        title: "Смысл",
+        question: "Чувствуете ли вы смысл в том, что делаете?",
+        options: ["Да, глубоко и ясно", "В чём-то — да", "Иногда теряю ощущение смысла", "Не чувствую совсем"]
+      },
+      {
+        title: "Границы",
+        question: "Умеете ли вы говорить «нет» и защищать свои границы?",
+        options: ["Да, уверенно", "Иногда получается", "Редко — боюсь конфликта", "Почти никогда"]
+      },
+      {
+        title: "Внутренний диалог",
+        question: "Какой у вас внутренний голос?",
+        options: ["Поддерживающий и мягкий", "Нейтральный", "Критичный, но конструктивный", "Жёсткий и обесценивающий"]
+      }
     ];
 
-    let score = 0;
-    let currentQuestion = null;
-    let selectedCardIndex = null;
+    let currentLevel = 0;
+    let answers = [];
+    const emotions = { спокойствие: 0, тревога: 0, радость: 0, усталость: 0, надежда: 0, выгорание: 0 };
 
-    const cardsContainer = document.getElementById('cards');
-    const feedbackEl = document.getElementById('feedback');
-    const scoreEl = document.getElementById('score');
+    const container = document.getElementById('gameContainer');
+    const levelNumEl = document.getElementById('levelNum');
+    const levelTitleEl = document.getElementById('levelTitle');
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const nextBtn = document.getElementById('nextBtn');
+    const resultEl = document.getElementById('result');
 
-    function shuffle(array) {
-      return [...array].sort(() => Math.random() - 0.5);
-    }
+    function renderLevel() {
+      const level = levels[currentLevel];
+      levelNumEl.textContent = currentLevel + 1;
+      levelTitleEl.textContent = level.title;
+      questionEl.textContent = level.question;
+      optionsEl.innerHTML = '';
 
-    function loadQuestion() {
-      const q = questions[Math.floor(Math.random() * questions.length)];
-      const shuffledItems = shuffle([...q.items]);
-      const correctOriginalIndex = q.correct;
-      const correctShuffledIndex = shuffledItems.indexOf(q.items[correctOriginalIndex]);
-
-      currentQuestion = {
-        items: shuffledItems,
-        correctIndex: correctShuffledIndex
-      };
-
-      renderCards();
-      feedbackEl.textContent = 'Выбери тот, который не подходит!';
-      feedbackEl.className = 'feedback';
-      selectedCardIndex = null;
-    }
-
-    function renderCards() {
-      cardsContainer.innerHTML = '';
-      currentQuestion.items.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.textContent = item;
-        card.onclick = () => selectCard(index, card);
-        cardsContainer.appendChild(card);
+      level.options.forEach((opt, i) => {
+        const div = document.createElement('div');
+        div.className = 'option';
+        div.textContent = opt;
+        div.onclick = () => selectOption(div, i);
+        optionsEl.appendChild(div);
       });
+
+      nextBtn.disabled = true;
+      resultEl.style.display = 'none';
     }
 
-    function selectCard(index, element) {
-      if (selectedCardIndex !== null) return; // уже выбрано
+    function selectOption(el, index) {
+      document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      answers[currentLevel] = index;
+      nextBtn.disabled = false;
+    }
 
-      selectedCardIndex = index;
-      document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
-      element.classList.add('selected');
-
-      if (index === currentQuestion.correctIndex) {
-        score++;
-        scoreEl.textContent = score;
-        feedbackEl.textContent = '✅ Правильно! Молодец!';
-        feedbackEl.className = 'feedback correct';
+    function nextLevel() {
+      if (currentLevel < levels.length - 1) {
+        currentLevel++;
+        renderLevel();
       } else {
-        feedbackEl.textContent = '❌ Нет, это не то. Попробуй ещё!';
-        feedbackEl.className = 'feedback wrong';
+        showResult();
       }
     }
 
-    function nextQuestion() {
-      loadQuestion();
+    function analyzeEmotions() {
+      // Простая эвристика для анализа
+      const a = answers;
+
+      // Уровень 0: настроение
+      if (a[0] === 0) emotions.спокойствие += 2;
+      if (a[0] === 1) emotions.тревога += 2;
+      if (a[0] === 2) emotions.радость += 2;
+      if (a[0] === 3) emotions.усталость += 2;
+
+      // Уровень 1: энергия
+      if (a[1] <= 1) emotions.спокойствие += 1;
+      if (a[1] >= 2) emotions.усталость += 1;
+      if (a[1] === 3) emotions.выгорание += 2;
+
+      // Уровень 4: стресс
+      if (a[4] <= 1) emotions.спокойствие += 1;
+      if (a[4] >= 2) emotions.тревога += 1;
+
+      // Уровень 6: будущее
+      if (a[6] === 0) emotions.надежда += 2;
+      if (a[6] === 2) emotions.тревога += 1;
+      if (a[6] === 3) emotions.усталость += 1;
+
+      // Уровень 7: смысл
+      if (a[7] <= 1) emotions.надежда += 1;
+      if (a[7] >= 2) emotions.усталость += 1;
+
+      // Уровень 9: внутренний голос
+      if (a[9] === 0) emotions.спокойствие += 1;
+      if (a[9] === 3) emotions.тревога += 1;
     }
 
-    // Старт игры
-    loadQuestion();
+    function getInsight() {
+      const maxEmotion = Object.keys(emotions).reduce((a, b) => emotions[a] > emotions[b] ? a : b);
+
+      const insights = {
+        спокойствие: "Вы в гармонии с собой. Продолжайте заботиться о себе и поддерживать этот баланс.",
+        радость: "Ваша душа цветёт! Вы открыты миру и чувствуете вдохновение.",
+        тревога: "Вы находитесь в состоянии напряжения. Возможно, стоит выделить время на отдых и осознанность.",
+        усталость: "Ваша энергия на исходе. Дайте себе разрешение отдохнуть — это не слабость, а мудрость.",
+        выгорание: "Вы в зоне эмоционального истощения. Обратитесь за поддержкой — вы не обязаны справляться в одиночку.",
+        надежда: "Вы смотрите в будущее с верой. Это мощный ресурс — берегите его."
+      };
+
+      return insights[maxEmotion] || "Вы в процессе поиска равновесия. Это нормально — быть в движении.";
+    }
+
+    function showResult() {
+      analyzeEmotions();
+      const insight = getInsight();
+
+      resultEl.innerHTML = `
+        <h2 style="color:#ffd700">✨ Ваш психологический портрет</h2>
+        <p>Вы прошли путь внутрь себя. Спасибо за честность.</p>
+        <div class="insight">«${insight}»</div>
+        <p style="margin-top:20px; font-size:0.95rem; color:#bbb;">
+          💡 Эта игра — не диагноз, а зеркало. Если вам тяжело — поговорите с психологом.
+        </p>
+      `;
+      resultEl.style.display = 'block';
+      optionsEl.style.display = 'none';
+      nextBtn.style.display = 'none';
+      questionEl.style.display = 'none';
+      levelTitleEl.style.display = 'none';
+      document.querySelector('.progress').style.display = 'none';
+    }
+
+    nextBtn.onclick = nextLevel;
+
+    // Старт
+    renderLevel();
   </script>
 
 </body>
