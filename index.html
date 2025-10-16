@@ -2,13 +2,23 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Эмоциональный компас — Психологическая игра</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Эмоциональный компас</title>
   <style>
+    /* Запрет масштабирования и выделения */
+    body, html {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      overscroll-behavior: none;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #0c0e2b;
       color: #e0f7fa;
       min-height: 100vh;
@@ -16,11 +26,12 @@
       position: relative;
     }
 
-    /* Звёздное небо */
+    /* Звёзды — оптимизировано для мобильных */
     .stars {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
+      will-change: transform;
     }
     .star {
       position: absolute;
@@ -37,138 +48,164 @@
     .container {
       position: relative;
       z-index: 10;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(10px);
-      border-radius: 25px;
-      padding: 40px;
-      max-width: 650px;
-      width: 90%;
-      margin: 40px auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 24px;
+      padding: 24px 20px;
+      margin: 20px 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       text-align: center;
+      max-width: 560px;
+      width: calc(100% - 32px);
     }
 
     h1 {
-      font-size: 2.3rem;
-      margin-bottom: 10px;
+      font-size: 1.8rem;
+      margin: 0 0 8px;
       color: #88d1ff;
-      text-shadow: 0 0 10px rgba(136, 209, 255, 0.4);
+      line-height: 1.2;
     }
 
     .subtitle {
+      font-size: 1rem;
       color: #a0aec0;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
+      line-height: 1.4;
     }
 
     .progress-bar {
-      height: 10px;
+      height: 8px;
       background: #2d3748;
-      border-radius: 5px;
-      margin: 20px 0;
+      border-radius: 4px;
+      margin: 16px 0;
       overflow: hidden;
     }
     .progress-fill {
       height: 100%;
       background: linear-gradient(to right, #4fd1c5, #63b3ed);
       width: 10%;
-      transition: width 0.5s ease;
+      transition: width 0.4s ease;
     }
 
     .question {
-      font-size: 1.4rem;
-      margin: 25px 0;
+      font-size: 1.35rem;
+      margin: 20px 0;
       line-height: 1.5;
+      font-weight: 500;
     }
 
     .options {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin: 25px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
     }
 
     .option {
-      padding: 16px;
-      background: rgba(50, 60, 90, 0.6);
+      padding: 16px 18px;
+      background: rgba(50, 60, 90, 0.65);
       border: 2px solid transparent;
       border-radius: 16px;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.2s;
       text-align: left;
-      padding-left: 20px;
       font-size: 1.05rem;
+      line-height: 1.4;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
     }
 
-    .option:hover {
-      background: rgba(70, 90, 130, 0.7);
+    .option:hover,
+    .option:active {
+      background: rgba(70, 90, 130, 0.8);
     }
 
     .option.selected {
       border-color: #63b3ed;
-      background: rgba(49, 108, 192, 0.3);
+      background: rgba(49, 108, 192, 0.35);
     }
 
     button {
-      padding: 14px 35px;
+      padding: 16px 28px;
       font-size: 1.15rem;
       background: linear-gradient(to right, #4fd1c5, #63b3ed);
       color: white;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      font-weight: bold;
-      margin-top: 20px;
-      transition: transform 0.2s, opacity 0.3s;
+      font-weight: 600;
+      margin-top: 16px;
+      transition: transform 0.15s, opacity 0.2s;
+      width: 100%;
+      max-width: 300px;
+      box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
     }
 
-    button:hover:not(:disabled) {
-      transform: scale(1.04);
+    button:hover,
+    button:active {
+      transform: scale(1.02);
       opacity: 0.95;
     }
 
     button:disabled {
       opacity: 0.5;
-      cursor: not-allowed;
       transform: none;
+      cursor: not-allowed;
     }
 
     .result {
       display: none;
-      animation: fadeIn 1s;
+      animation: fadeIn 0.8s;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .score-card {
-      background: rgba(30, 40, 70, 0.7);
-      padding: 20px;
+      background: rgba(30, 40, 70, 0.75);
+      padding: 18px;
       border-radius: 16px;
-      margin: 15px 0;
+      margin: 14px 0;
+      font-size: 1.05rem;
+      line-height: 1.5;
     }
 
     .total-score {
-      font-size: 2.2rem;
+      font-size: 2rem;
       color: #ffd700;
-      margin: 20px 0;
+      margin: 18px 0;
       font-weight: bold;
     }
 
     .recommendation {
-      margin-top: 25px;
-      padding: 18px;
+      margin-top: 20px;
+      padding: 16px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 14px;
       font-style: italic;
       color: #c6e7ff;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    /* Адаптация для очень маленьких экранов */
+    @media (max-height: 600px) {
+      .container {
+        margin: 10px 12px;
+        padding: 18px 16px;
+      }
+      h1 { font-size: 1.6rem; }
+      .question { font-size: 1.25rem; }
+      .option { padding: 14px 16px; min-height: 55px; font-size: 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Звёздное небо -->
   <div class="stars" id="stars"></div>
 
   <div class="container" id="gameContainer">
@@ -187,20 +224,20 @@
   </div>
 
   <script>
-    // Генерация звёзд
+    // Генерация звёзд (меньше на мобильных для производительности)
     const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 150; i++) {
+    const starCount = window.innerWidth < 500 ? 80 : 120;
+    for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       star.style.left = `${Math.random() * 100}%`;
       star.style.top = `${Math.random() * 100}%`;
-      star.style.width = `${Math.random() * 3}px`;
+      star.style.width = `${Math.random() * 2.5}px`;
       star.style.height = star.style.width;
-      star.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
+      star.style.setProperty('--duration', `${2 + Math.random() * 3}s`);
       starsContainer.appendChild(star);
     }
 
-    // Вопросы и баллы
     const levels = [
       {
         q: "Когда вы сталкиваетесь с трудной ситуацией, вы чаще:",
@@ -303,14 +340,13 @@
     const nextBtn = document.getElementById('nextBtn');
     const progressFill = document.getElementById('progressFill');
     const resultEl = document.getElementById('result');
-    const container = document.getElementById('gameContainer');
 
     function renderLevel() {
       const level = levels[currentLevel];
       questionEl.textContent = level.q;
       optionsEl.innerHTML = '';
 
-      level.opts.forEach((opt, i) => {
+      level.opts.forEach((opt) => {
         const div = document.createElement('div');
         div.className = 'option';
         div.textContent = opt.text;
@@ -319,7 +355,7 @@
       });
 
       nextBtn.disabled = true;
-      progressFill.style.width = `${((currentLevel) / levels.length) * 100}%`;
+      progressFill.style.width = `${(currentLevel / levels.length) * 100}%`;
     }
 
     function selectOption(el, opt) {
@@ -330,7 +366,6 @@
     }
 
     function nextLevel() {
-      // Начисление баллов
       if (selectedOption) {
         scores.calm += Math.max(0, selectedOption.calm || 0);
         scores.aware += Math.max(0, selectedOption.aware || 0);
@@ -347,9 +382,9 @@
     }
 
     function calculateTotalScore() {
-      const maxPossible = levels.length * 3; // 10 уровней × 3 макс
+      const max = levels.length * 3;
       const total = scores.calm + scores.aware + scores.empathy + scores.energy;
-      return Math.min(100, Math.round((total / maxPossible) * 100));
+      return Math.min(100, Math.round((total / max) * 100));
     }
 
     function getRecommendation(score) {
@@ -364,7 +399,7 @@
       const rec = getRecommendation(totalScore);
 
       resultEl.innerHTML = `
-        <h2 style="color:#ffd700">✨ Ваш результат</h2>
+        <h2 style="color:#ffd700; font-size:1.6rem;">✨ Ваш результат</h2>
         <div class="total-score">${totalScore} / 100</div>
 
         <div class="score-card">
@@ -376,7 +411,7 @@
 
         <div class="recommendation">«${rec}»</div>
 
-        <p style="margin-top:25px; font-size:0.9rem; color:#a0aec0;">
+        <p style="margin-top:20px; font-size:0.85rem; color:#a0aec0; line-height:1.5;">
           💬 Эта игра — не диагноз, а отражение. Если вам тяжело — поговорите с психологом. Вы имеете право на поддержку.
         </p>
       `;
