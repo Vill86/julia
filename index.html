@@ -2,36 +2,40 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c0e2b">
   <title>Эмоциональный компас</title>
   <style>
-    /* Запрет масштабирования и выделения */
+    /* Сброс и базовые настройки */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body, html {
-      -webkit-touch-callout: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: #0c0e2b;
+      color: #e0f7fa;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Запрет выделения только на интерактивных элементах */
+    .option, button {
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      overscroll-behavior: none;
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0c0e2b;
-      color: #e0f7fa;
-      min-height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Звёзды — оптимизировано для мобильных */
+    /* Звёзды */
     .stars {
-      position: absolute;
+      position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
-      will-change: transform;
+      z-index: 1;
     }
     .star {
       position: absolute;
@@ -52,33 +56,31 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-radius: 24px;
-      padding: 24px 20px;
-      margin: 20px 16px;
+      padding: 24px;
+      margin: 20px auto;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       text-align: center;
-      max-width: 560px;
-      width: calc(100% - 32px);
+      width: 92%;
+      max-width: 600px;
     }
 
     h1 {
-      font-size: 1.8rem;
-      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      margin: 0 0 12px;
       color: #88d1ff;
-      line-height: 1.2;
     }
 
     .subtitle {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 2.8vw, 1.1rem);
       color: #a0aec0;
       margin-bottom: 20px;
-      line-height: 1.4;
     }
 
     .progress-bar {
       height: 8px;
       background: #2d3748;
       border-radius: 4px;
-      margin: 16px 0;
+      margin: 18px 0;
       overflow: hidden;
     }
     .progress-fill {
@@ -89,9 +91,8 @@
     }
 
     .question {
-      font-size: 1.35rem;
-      margin: 20px 0;
-      line-height: 1.5;
+      font-size: clamp(1.2rem, 3.8vw, 1.5rem);
+      margin: 22px 0;
       font-weight: 500;
     }
 
@@ -99,26 +100,24 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      margin: 20px 0;
+      margin: 22px 0;
     }
 
     .option {
-      padding: 16px 18px;
+      padding: 16px 20px;
       background: rgba(50, 60, 90, 0.65);
       border: 2px solid transparent;
       border-radius: 16px;
       cursor: pointer;
       transition: all 0.2s;
       text-align: left;
-      font-size: 1.05rem;
-      line-height: 1.4;
+      font-size: clamp(1rem, 3.2vw, 1.1rem);
       min-height: 60px;
       display: flex;
       align-items: center;
     }
 
-    .option:hover,
-    .option:active {
+    .option:hover {
       background: rgba(70, 90, 130, 0.8);
     }
 
@@ -129,30 +128,30 @@
 
     button {
       padding: 16px 28px;
-      font-size: 1.15rem;
+      font-size: clamp(1.1rem, 3.5vw, 1.2rem);
       background: linear-gradient(to right, #4fd1c5, #63b3ed);
       color: white;
       border: none;
       border-radius: 50px;
       cursor: pointer;
       font-weight: 600;
-      margin-top: 16px;
+      margin-top: 18px;
       transition: transform 0.15s, opacity 0.2s;
       width: 100%;
-      max-width: 300px;
+      max-width: 320px;
       box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
     }
 
-    button:hover,
-    button:active {
+    button:hover:not(:disabled),
+    button:active:not(:disabled) {
       transform: scale(1.02);
       opacity: 0.95;
     }
 
     button:disabled {
       opacity: 0.5;
-      transform: none;
       cursor: not-allowed;
+      transform: none;
     }
 
     .result {
@@ -169,38 +168,49 @@
       background: rgba(30, 40, 70, 0.75);
       padding: 18px;
       border-radius: 16px;
-      margin: 14px 0;
-      font-size: 1.05rem;
-      line-height: 1.5;
+      margin: 16px 0;
+      font-size: clamp(1rem, 3.2vw, 1.05rem);
     }
 
     .total-score {
-      font-size: 2rem;
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
       color: #ffd700;
-      margin: 18px 0;
+      margin: 20px 0;
       font-weight: bold;
     }
 
     .recommendation {
-      margin-top: 20px;
-      padding: 16px;
+      margin-top: 22px;
+      padding: 18px;
       background: rgba(0, 0, 0, 0.3);
       border-radius: 14px;
       font-style: italic;
       color: #c6e7ff;
-      font-size: 1.05rem;
-      line-height: 1.5;
+      font-size: clamp(1rem, 3.2vw, 1.05rem);
     }
 
-    /* Адаптация для очень маленьких экранов */
-    @media (max-height: 600px) {
+    /* Для очень маленьких экранов (старые телефоны) */
+    @media (max-width: 360px) {
       .container {
-        margin: 10px 12px;
-        padding: 18px 16px;
+        padding: 20px 16px;
       }
-      h1 { font-size: 1.6rem; }
-      .question { font-size: 1.25rem; }
-      .option { padding: 14px 16px; min-height: 55px; font-size: 1rem; }
+      .option {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        min-height: 55px;
+      }
+    }
+
+    /* Для планшетов и десктопов — чуть больше отступов */
+    @media (min-width: 768px) {
+      .container {
+        padding: 32px;
+        margin: 40px auto;
+      }
+      button {
+        padding: 18px 36px;
+        font-size: 1.25rem;
+      }
     }
   </style>
 </head>
@@ -224,20 +234,23 @@
   </div>
 
   <script>
-    // Генерация звёзд (меньше на мобильных для производительности)
+    // Определяем количество звёзд в зависимости от устройства
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const starCount = isMobile ? 70 : 120;
+
     const starsContainer = document.getElementById('stars');
-    const starCount = window.innerWidth < 500 ? 80 : 120;
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       star.style.left = `${Math.random() * 100}%`;
       star.style.top = `${Math.random() * 100}%`;
-      star.style.width = `${Math.random() * 2.5}px`;
+      star.style.width = `${Math.random() * (isMobile ? 2 : 3)}px`;
       star.style.height = star.style.width;
-      star.style.setProperty('--duration', `${2 + Math.random() * 3}s`);
+      star.style.setProperty('--duration', `${2 + Math.random() * 4}s`);
       starsContainer.appendChild(star);
     }
 
+    // Вопросы и баллы
     const levels = [
       {
         q: "Когда вы сталкиваетесь с трудной ситуацией, вы чаще:",
@@ -350,7 +363,7 @@
         const div = document.createElement('div');
         div.className = 'option';
         div.textContent = opt.text;
-        div.onclick = () => selectOption(div, opt);
+        div.addEventListener('click', () => selectOption(div, opt));
         optionsEl.appendChild(div);
       });
 
@@ -399,7 +412,7 @@
       const rec = getRecommendation(totalScore);
 
       resultEl.innerHTML = `
-        <h2 style="color:#ffd700; font-size:1.6rem;">✨ Ваш результат</h2>
+        <h2 style="color:#ffd700; font-size: clamp(1.5rem, 4.5vw, 1.8rem);">✨ Ваш результат</h2>
         <div class="total-score">${totalScore} / 100</div>
 
         <div class="score-card">
@@ -411,7 +424,7 @@
 
         <div class="recommendation">«${rec}»</div>
 
-        <p style="margin-top:20px; font-size:0.85rem; color:#a0aec0; line-height:1.5;">
+        <p style="margin-top:20px; font-size: clamp(0.85rem, 2.7vw, 0.95rem); color:#a0aec0;">
           💬 Эта игра — не диагноз, а отражение. Если вам тяжело — поговорите с психологом. Вы имеете право на поддержку.
         </p>
       `;
@@ -422,7 +435,7 @@
       document.querySelector('.progress-bar').style.display = 'none';
     }
 
-    nextBtn.onclick = nextLevel;
+    nextBtn.addEventListener('click', nextLevel);
     renderLevel();
   </script>
 
