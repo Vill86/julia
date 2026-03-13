@@ -1,322 +1,201 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Эмоциональный компас</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1a2a6c, #3a5fcd);
-      color: white;
-      min-height: 100vh;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Юлия | Психолог</title>
+    <style>
+        /* Сброс стилей и базовые настройки */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    .container {
-      background: rgba(10, 15, 40, 0.92);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 24px;
-      width: 100%;
-      max-width: 620px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            /* Используем цвета Telegram для автоматической адаптации темы */
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            line-height: 1.5;
+            padding: 20px;
+            padding-bottom: 100px; /* Место под кнопку */
+        }
 
-    h1 {
-      text-align: center;
-      font-size: 1.8rem;
-      margin-bottom: 8px;
-      color: #64b5f6;
-    }
+        /* Контейнер */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
 
-    .subtitle {
-      text-align: center;
-      color: #bbdefb;
-      margin-bottom: 20px;
-      font-size: 1rem;
-    }
+        /* Шапка профиля */
+        .profile-header {
+            margin-bottom: 30px;
+        }
 
-    .progress-bar {
-      height: 8px;
-      background: #37474f;
-      border-radius: 4px;
-      margin: 16px 0;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: #4fc3f7;
-      width: 0%;
-      transition: width 0.4s;
-    }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            margin: 0 auto 15px;
+            /* Заглушка для фото. Замени ссылку на свою */
+            background-image: url('https://via.placeholder.com/120/FFC0CB/333333?text=Photo');
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--tg-theme-button-color, #3c88c9);
+        }
 
-    .question {
-      font-size: 1.3rem;
-      margin: 20px 0;
-      line-height: 1.4;
-    }
+        .name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
 
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin: 20px 0;
-    }
+        .specializations {
+            font-size: 14px;
+            color: var(--tg-theme-hint-color, #999);
+            margin-bottom: 20px;
+        }
 
-    .option {
-      padding: 16px;
-      background: rgba(40, 50, 90, 0.6);
-      border: 2px solid transparent;
-      border-radius: 14px;
-      cursor: pointer;
-      text-align: left;
-      font-size: 1.05rem;
-      transition: all 0.2s;
-    }
+        .tag {
+            display: inline-block;
+            background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 2px;
+            font-size: 12px;
+        }
 
-    .option:hover {
-      background: rgba(60, 80, 130, 0.7);
-    }
+        /* Секция услуг */
+        .services-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--tg-theme-hint-color, #eee);
+            padding-bottom: 5px;
+        }
 
-    .option.selected {
-      border-color: #4fc3f7;
-      background: rgba(30, 60, 120, 0.5);
-    }
+        .service-card {
+            background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+        
+        .service-card:active {
+            transform: scale(0.98);
+        }
 
-    button {
-      padding: 14px;
-      font-size: 1.15rem;
-      background: #4fc3f7;
-      color: #0d1b3d;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 16px;
-      width: 100%;
-      max-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
-      transition: opacity 0.2s;
-    }
+        .service-info h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
 
-    button:hover:not(:disabled) {
-      opacity: 0.9;
-    }
+        .service-info p {
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #666);
+        }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+        .service-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--tg-theme-button-color, #3c88c9);
+            white-space: nowrap;
+        }
 
-    .result {
-      display: none;
-      animation: fadeIn 0.6s;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .score-card {
-      background: rgba(0, 0, 0, 0.25);
-      padding: 18px;
-      border-radius: 14px;
-      margin: 16px 0;
-      font-size: 1.1rem;
-    }
-
-    .total-score {
-      font-size: 2rem;
-      color: #ffd54f;
-      margin: 20px 0;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .recommendation {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 16px;
-      border-radius: 12px;
-      font-style: italic;
-      margin-top: 20px;
-      line-height: 1.5;
-    }
-
-    .explanation {
-      margin-top: 25px;
-      padding: 18px;
-      background: rgba(0, 0, 0, 0.15);
-      border-radius: 12px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      color: #e3f2fd;
-    }
-
-    .explanation h3 {
-      margin-bottom: 10px;
-      color: #81d4fa;
-    }
-
-    .explanation ul {
-      padding-left: 20px;
-      margin-top: 10px;
-    }
-
-    .explanation li {
-      margin-bottom: 8px;
-    }
-
-    @media (max-width: 480px) {
-      .container { padding: 18px; }
-      h1 { font-size: 1.6rem; }
-      .question { font-size: 1.2rem; }
-      .option { padding: 14px; font-size: 1rem; }
-      .explanation { font-size: 0.9rem; }
-    }
-  </style>
+        /* Описание "О себе" */
+        .about {
+            margin-top: 30px;
+            text-align: left;
+            font-size: 14px;
+            color: var(--tg-theme-hint-color, #666);
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Шапка -->
+        <div class="profile-header">
+            <div class="avatar"></div> <!-- Здесь будет твое фото -->
+            <div class="name">Юлия</div>
+            <div class="specializations">
+                <span class="tag">Психолог</span>
+                <span class="tag">Сексолог</span>
+                <span class="tag">Телесный терапевт</span>
+            </div>
+        </div>
 
-  <div class="container">
-    <h1>🧭 Эмоциональный компас</h1>
-    <div class="subtitle">Ответьте честно — и узнайте свой внутренний баланс</div>
+        <!-- Услуги -->
+        <div class="services-title">Услуги и стоимость</div>
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+        <div class="service-card" onclick="selectService('Разовая консультация', 5000)">
+            <div class="service-info">
+                <h3>Консультация 50 мин</h3>
+                <p>Работа с запросом, первичный прием</p>
+            </div>
+            <div class="service-price">5 000 ₽</div>
+        </div>
+
+        <div class="service-card" onclick="selectService('Длительная сессия', 6000)">
+            <div class="service-info">
+                <h3>Сессия 80-90 мин</h3>
+                <p>Глубинная работа, телесные практики</p>
+            </div>
+            <div class="service-price">6 000 ₽</div>
+        </div>
+
+        <div class="service-card" onclick="selectService('Пакетная терапия', 7000)">
+            <div class="service-info">
+                <h3>Комплексная встреча</h3>
+                <p>Рассмотрение проблемы в системе</p>
+            </div>
+            <div class="service-price">7 000 ₽</div>
+        </div>
+
+        <div class="about">
+            <p>Я помогаю разобраться в себе, наладить отношения с телом и партнером. Безопасное пространство и конфиденциальность гарантирую.</p>
+        </div>
     </div>
 
-    <div class="question" id="question">Загрузка...</div>
-    <div class="options" id="options"></div>
-    <button id="nextBtn" disabled>Далее</button>
+    <!-- Подключаем API Telegram -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        // Инициализация
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Раскрыть на весь экран
+        
+        // Настройка главной кнопки (внизу экрана)
+        tg.MainButton.setText("Записаться на консультацию");
+        tg.MainButton.show();
 
-    <div class="result" id="result"></div>
-  </div>
+        // Действие при нажатии на Главную кнопку
+        tg.MainButton.onClick(() => {
+            // Это действие отправит тебе в бота данные (например, для уведомления)
+            // Или откроет твой профиль/чат
+            tg.sendData("Клиент нажал кнопку записи"); 
+            
+            // Альтернатива: сразу открыть чат с тобой (замени USERNAME на свой без @)
+            // tg.openTelegramLink('https://t.me/YOUR_USERNAME'); 
+        });
 
-  <script>
-    const levels = [
-      { q: "Когда вы сталкиваетесь с трудной ситуацией, вы чаще:", opts: [ { text: "Анализирую, что пошло не так, и ищу решение", calm: 2, aware: 3, energy: 1 }, { text: "Обращаюсь за поддержкой к близким", calm: 1, empathy: 3, aware: 1 }, { text: "Пытаюсь отвлечься или избежать проблемы", calm: 0, energy: 0, aware: -1 }, { text: "Реагирую эмоционально, потом успокаиваюсь", calm: -1, aware: 1, empathy: 1 } ] },
-      { q: "Как вы реагируете на чужую боль?", opts: [ { text: "Глубоко сопереживаю и хочу помочь", empathy: 3, calm: 1 }, { text: "Сочувствую, но держу дистанцию", empathy: 2, calm: 2 }, { text: "Не знаю, что сказать — чувствую неловкость", empathy: 0, aware: 1 }, { text: "Стараюсь быстро «починить» ситуацию", empathy: 1, energy: 2 } ] },
-      { q: "Как часто вы замечаете свои эмоции в моменте?", opts: [ { text: "Почти всегда — я в потоке осознанности", aware: 3, calm: 2 }, { text: "Иногда, особенно если сильно переживаю", aware: 2, calm: 1 }, { text: "Редко — замечаю только потом", aware: 0, calm: 0 }, { text: "Почти никогда — живу на автопилоте", aware: -1, energy: -1 } ] },
-      { q: "Что даёт вам энергию?", opts: [ { text: "Общение с близкими", empathy: 2, energy: 2 }, { text: "Тишина и одиночество", calm: 3, aware: 2 }, { text: "Новые задачи и вызовы", energy: 3, aware: 1 }, { text: "Отдых без планов", calm: 2, energy: 2 } ] },
-      { q: "Как вы относитесь к своим ошибкам?", opts: [ { text: "Воспринимаю как урок", aware: 3, calm: 2 }, { text: "Переживаю, но отпускаю", calm: 1, empathy: 1 }, { text: "Долго корю себя", calm: -2, aware: -1 }, { text: "Стараюсь забыть как можно скорее", aware: 0, energy: -1 } ] },
-      { q: "Можете ли вы сказать «нет», не чувствуя вины?", opts: [ { text: "Да, спокойно и уважительно", calm: 3, aware: 2 }, { text: "Иногда получается", calm: 1, aware: 1 }, { text: "Очень трудно — боюсь обидеть", empathy: 2, calm: -1 }, { text: "Почти никогда", calm: -2, energy: -2 } ] },
-      { q: "Как вы восстанавливаетесь после стресса?", opts: [ { text: "Медитация, прогулка, тишина", calm: 3, aware: 2 }, { text: "Общение с друзьями", empathy: 2, energy: 1 }, { text: "Сон или сериалы", energy: 2, calm: 1 }, { text: "Еда или покупки", energy: -1, aware: -1 } ] },
-      { q: "Что важнее для вас в отношениях?", opts: [ { text: "Глубина и искренность", aware: 3, empathy: 2 }, { text: "Поддержка и забота", empathy: 3, calm: 1 }, { text: "Свобода и личное пространство", calm: 3, aware: 2 }, { text: "Веселье и совместные приключения", energy: 3, empathy: 1 } ] },
-      { q: "Как вы принимаете важные решения?", opts: [ { text: "Слушаю интуицию и чувства", aware: 3, calm: 2 }, { text: "Взвешиваю все «за» и «против»", aware: 2, calm: 2 }, { text: "Советуюсь с другими", empathy: 2, aware: 1 }, { text: "Действую импульсивно", energy: 2, calm: -1 } ] },
-      { q: "Что вы чувствуете, оставаясь наедине с собой?", opts: [ { text: "Спокойствие и умиротворение", calm: 3, aware: 3 }, { text: "Лёгкое одиночество, но комфортно", calm: 2, empathy: 1 }, { text: "Тревогу или скуку", calm: -1, energy: -1 }, { text: "Облегчение — наконец-то тишина!", calm: 2, energy: 2 } ] }
-    ];
-
-    let currentLevel = 0;
-    let scores = { calm: 0, aware: 0, empathy: 0, energy: 0 };
-    let selectedOption = null;
-
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const nextBtn = document.getElementById('nextBtn');
-    const progressFill = document.getElementById('progressFill');
-    const resultEl = document.getElementById('result');
-
-    function renderLevel() {
-      const level = levels[currentLevel];
-      questionEl.textContent = level.q;
-      optionsEl.innerHTML = '';
-
-      level.opts.forEach((opt) => {
-        const div = document.createElement('div');
-        div.className = 'option';
-        div.textContent = opt.text;
-        div.addEventListener('click', () => selectOption(div, opt));
-        optionsEl.appendChild(div);
-      });
-
-      nextBtn.disabled = true;
-      progressFill.style.width = `${(currentLevel / levels.length) * 100}%`;
-    }
-
-    function selectOption(el, opt) {
-      document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-      el.classList.add('selected');
-      selectedOption = opt;
-      nextBtn.disabled = false;
-    }
-
-    function nextLevel() {
-      if (selectedOption) {
-        scores.calm += Math.max(0, selectedOption.calm || 0);
-        scores.aware += Math.max(0, selectedOption.aware || 0);
-        scores.empathy += Math.max(0, selectedOption.empathy || 0);
-        scores.energy += Math.max(0, selectedOption.energy || 0);
-      }
-
-      if (currentLevel < levels.length - 1) {
-        currentLevel++;
-        renderLevel();
-      } else {
-        showResult();
-      }
-    }
-
-    function calculateScore() {
-      const total = scores.calm + scores.aware + scores.empathy + scores.energy;
-      const average = total / 4;
-      const percentage = Math.round((average / 30) * 100);
-      return Math.max(0, Math.min(100, percentage));
-    }
-
-    function getRecommendation(score) {
-      if (score >= 80) return "Вы в отличной эмоциональной форме! У вас высокий уровень самосознания, спокойствия и связи с собой.";
-      if (score >= 60) return "Ваш эмоциональный фон стабилен. Есть ресурсы, но можно уделить внимание зонам роста.";
-      if (score >= 40) return "Вы в состоянии умеренного напряжения. Возможно, вы устали или чувствуете нехватку поддержки.";
-      if (score >= 20) return "Ваша психоэмоциональная энергия на низком уровне. Пожалуйста, найдите время для отдыха и заботы о себе.";
-      return "Вы в состоянии сильного истощения. Это не ваша вина. Обратитесь за поддержкой — к близким или специалисту.";
-    }
-
-    function showResult() {
-      const totalScore = calculateScore();
-      const rec = getRecommendation(totalScore);
-
-      resultEl.innerHTML = `
-        <h2 style="text-align:center; color:#4fc3f7; margin-bottom:16px;">✨ Ваш результат</h2>
-        <div class="total-score">${totalScore} из 100</div>
-
-        <div class="score-card">
-          <div>🌿 Спокойствие: ${scores.calm} / 30</div>
-          <div>💡 Осознанность: ${scores.aware} / 30</div>
-          <div>❤️ Эмпатия: ${scores.empathy} / 30</div>
-          <div>🔋 Энергия: ${scores.energy} / 30</div>
-        </div>
-
-        <div class="recommendation">«${rec}»</div>
-
-        <div class="explanation">
-          <h3>ℹ️ Как это работает?</h3>
-          <p>Эта игра помогает увидеть, как вы чувствуете себя <strong>здесь и сейчас</strong>. Вот что означают показатели:</p>
-          <ul>
-            <li><strong>🌿 Спокойствие</strong> — насколько вы уравновешены, умеете ли справляться с тревогой.</li>
-            <li><strong>💡 Осознанность</strong> — замечаете ли вы свои мысли и чувства, или живёте «на автопилоте».</li>
-            <li><strong>❤️ Эмпатия</strong> — как вы связаны с другими людьми и с самим собой.</li>
-            <li><strong>🔋 Энергия</strong> — есть ли у вас внутренние ресурсы для жизни и действий.</li>
-          </ul>
-          <p><strong>Итоговый балл</strong> — это среднее по всем шкалам, переведённое в проценты. Чем выше — тем более сбалансировано ваше состояние.</p>
-          <p>❗ <em>Это не тест и не диагноз. Это зеркало. Если результат вызвал тревогу — поговорите с психологом. Вы имеете право на поддержку.</em></p>
-        </div>
-      `;
-      resultEl.style.display = 'block';
-      optionsEl.style.display = 'none';
-      questionEl.style.display = 'none';
-      nextBtn.style.display = 'none';
-      document.querySelector('.progress-bar').style.display = 'none';
-    }
-
-    nextBtn.addEventListener('click', nextLevel);
-    renderLevel();
-  </script>
-
+        // Функция при выборе услуги
+        function selectService(name, price) {
+            // Меняем текст кнопки
+            tg.MainButton.setText(`Записаться: ${name} (${price}₽`);
+            // Вибрация для обратной связи
+            tg.HapticFeedback.impactOccurred('light');
+        }
+    </script>
 </body>
 </html>
