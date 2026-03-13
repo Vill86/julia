@@ -1,106 +1,124 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const fetch = require('node-fetch');
 require('dotenv').config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static('public')); // Раздаем статику из папки public
+
+// Тестовые данные (в реальности берите из .env)
+const TEST_SHOP_ID = process.env.SHOP_ID || 'test_shop_id';
+const TEST_SECRET_KEY = process.env.SECRET_KEY || 'test_secret_key';
 
 // Хранилище платежей (в памяти)
 const payments = new Map();
 
-// Создание платежа через YooKassa API
+// Создание платежа
 app.post('/api/create-payment', async (req, res) => {
     try {
         const { serviceName, amount, userId, userName, description } = req.body;
         
-        console.log('📝 Новый платеж:', { serviceName, amount, userId, userName });
-
-        // ТЕСТОВЫЙ РЕЖИМ - эмуляция без реального API
-        if (process.env.TEST_MODE === 'true') {
-            const paymentId = `test_${Date.now()}`;
-            const payment = {
-                id: paymentId,
-                amount: amount,
-                status: 'pending',
-                serviceName: serviceName,
-                createdAt: new Date().toISOString()
-            };
-            payments.set(paymentId, payment);
-            
-            const confirmationUrl = `${process.env.RETURN_URL || 'http://localhost:3000/payment-success.html'}?payment_id=${paymentId}&amount=${amount}&service=${encodeURIComponent(serviceName)}`;
-            
-            res.json({ payment_id: paymentId, confirmation_url: confirmationUrl });
-            return;
-        }
-
-        // РЕАЛЬНЫЙ РЕЖИМ - YooKassa API
-        const shopId = process.env.YOOKASSA_SHOP_ID;
-        const secretKey = process.env.YOOKASSA_SECRET_KEY;
-
-        if (!shopId || !secretKey) {
-            throw new Error('YooKassa credentials not configured');
-        }
-
-        const response = await fetch('https://api.yookassa.ru/v3/payments', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Idempotence-Key': Date.now().toString(),
-                'Authorization': `Basic ${Buffer.from(`${shopId}:${secretKey}`).toString('base64')}`
-            },
-            body: JSON.stringify({
-                amount: { value: amount.toString(), currency: 'RUB' },
-                confirmation: { type: 'redirect', return_url: process.env.RETURN_URL },
-                capture: true,
-                description: description || 'Оплата консультации',
-                metadata: { userId, userName, serviceName }
-            })
+        console.log('📝 Новый платеж:', {
+            serviceName,
+            amount,
+            userId,
+            userName,
+            description
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.description || 'YooKassa API error');
-        }
-
-        payments.set(data.id, { ...data, status: 'pending' });
-
+        // Генерируем ID платежа
+        const paymentId = `payment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        
+        // Создаем объект платежа
+        const payment = {
+            id: paymentId,
+            amount: amount,
+            currency: 'RUB',
+            status: 'pending',
+            serviceName: serviceName,
+            description: description,
+            userId: userId,
+            userName: userName,
+            createdAt: new Date().toISOString(),
+            confirmationUrl: `http://localhost:3000/payment-success.html?payment_id=${paymentId}&amount=${amount}&service=${encodeURIComponent(serviceName)}`
+        };
+        
+        // Сохраняем платеж
+        payments.set(paymentId, payment);
+        
+        console.log('✅ Платеж создан:', paymentId);
+        
+        // Возвращаем URL для "оплаты"
         res.json({
-            payment_id: data.id,
-            confirmation_url: data.confirmation.confirmation_url
+            payment_id: paymentId,
+            confirmation_url: payment.confirmationUrl,
+            status: 'pending'
         });
-
+        
     } catch (error) {
-        console.error('❌ Ошибка:', error);
-        res.status(500).json({ error: error.message });
+        console.error('❌ Ошибка создания платежа:', error);
+        res.status(500).json({ 
+            error: 'Failed to create payment',
+            message: error.message 
+        });
     }
 });
 
 // Проверка статуса платежа
 app.get('/api/payment-status/:paymentId', (req, res) => {
-    const payment = payments.get(req.params.paymentId);
-    if (!payment) return res.status(404).json({ error: 'Payment not found' });
-    res.json(payment);
+    const { paymentId } = req.params;
+    const payment = payments.get(paymentId);
+    
+    if (!payment) {
+        return res.status(404).json({ error: 'Payment not found' });
+    }
+    
+    res.json({
+        payment_id: payment.id,
+        status: payment.status,
+        amount: payment.amount,
+        serviceName: payment.serviceName
+    });
 });
 
-// Webhook от YooKassa
-app.post('/api/webhook', express.raw({ type: 'application/json' }), (req, res) => {
-    const event = JSON.parse(req.body.toString());
-    console.log('🔔 Webhook:', event);
+// Webhook для ЮKassa (заглушка)
+app.post('/api/webhook', (req, res) => {
+    const event = req.body;
+    console.log('🔔 Webhook received:', event);
     
+    // Здесь можно обновить статус платежа
     if (event.event === 'payment.succeeded') {
-        const payment = payments.get(event.object.id);
-        if (payment) payment.status = 'succeeded';
+        const paymentId = event.object.id;
+        const payment = payments.get(paymentId);
+        if (payment) {
+            payment.status = 'succeeded';
+            console.log('✅ Платеж успешен:', paymentId);
+        }
     }
     
     res.sendStatus(200);
 });
 
+// Страница со списком всех платежей (для тестирования)
+app.get('/api/payments', (req, res) => {
+    const allPayments = Array.from(payments.values());
+    res.json(allPayments);
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
+    console.log(`
+╔═══════════════════════════════════════════╗
+║  🚀 Тестовый сервер запущен!              ║
+║  📍 Порт: ${PORT}                           ║
+║  🌐 URL: http://localhost:${PORT}           ║
+║                                           ║
+║  Для тестирования:                        ║
+║  1. Откройте http://localhost:${PORT}      ║
+║  2. Выберите услугу                       ║
+║  3. Нажмите "Оплатить"                    ║
+╚═══════════════════════════════════════════╝
+    `);
 });
