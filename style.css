@@ -114,7 +114,6 @@ body {
     color: var(--tg-theme-hint-color, #666);
 }
 
-/* Кнопка оплаты */
 .payment-button {
     position: fixed;
     bottom: 20px;
@@ -162,7 +161,6 @@ body {
     }
 }
 
-/* Индикатор загрузки */
 .loading {
     display: none;
     text-align: center;
