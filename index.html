@@ -74,7 +74,7 @@
             console.log('Telegram WebApp not available');
         }
 
-        // URL API (автоматически определяется)
+        // URL API
         const API_URL = window.location.origin + '/api';
         
         let selectedService = null;
@@ -82,25 +82,21 @@
         let serviceName = null;
 
         function selectService(serviceId, name, price) {
-            // Убираем выделение со всех карточек
             document.querySelectorAll('.service-card').forEach(card => {
                 card.classList.remove('selected');
             });
             
-            // Выделяем выбранную карточку
             event.currentTarget.classList.add('selected');
             
             selectedService = serviceId;
             selectedPrice = price;
             serviceName = name;
             
-            // Обновляем кнопку
             const payButton = document.getElementById('payButton');
             payButton.textContent = `💳 Оплатить ${name} - ${price.toLocaleString()} ₽`;
             payButton.classList.add('visible');
             payButton.disabled = false;
             
-            // Вибрация
             if (tg && tg.HapticFeedback) {
                 tg.HapticFeedback.impactOccurred('light');
             }
@@ -112,13 +108,11 @@
                 return;
             }
 
-            // Показываем индикатор загрузки
             document.getElementById('overlay').classList.add('visible');
             document.getElementById('loading').classList.add('visible');
             document.getElementById('payButton').disabled = true;
 
             try {
-                // Получаем данные пользователя
                 let userId = 'anonymous';
                 let userName = 'unknown';
                 
@@ -127,12 +121,9 @@
                     userName = tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name;
                 }
 
-                // Отправляем запрос на создание платежа
                 const response = await fetch(`${API_URL}/create-payment`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         service: selectedService,
                         serviceName: serviceName,
@@ -146,7 +137,6 @@
                 const data = await response.json();
                 
                 if (data.confirmation_url) {
-                    // Перенаправляем на страницу оплаты
                     if (tg) {
                         tg.openLink(data.confirmation_url);
                     } else {
