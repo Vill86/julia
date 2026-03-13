@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Юлия | Психолог</title>
     <style>
-        /* Сброс стилей и базовые настройки */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -15,22 +14,19 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            /* Используем цвета Telegram для автоматической адаптации темы */
             background-color: var(--tg-theme-bg-color, #ffffff);
             color: var(--tg-theme-text-color, #000000);
             line-height: 1.5;
             padding: 20px;
-            padding-bottom: 100px; /* Место под кнопку */
+            padding-bottom: 100px;
         }
 
-        /* Контейнер */
         .container {
             max-width: 500px;
             margin: 0 auto;
             text-align: center;
         }
 
-        /* Шапка профиля */
         .profile-header {
             margin-bottom: 30px;
         }
@@ -41,8 +37,7 @@
             border-radius: 50%;
             background-color: var(--tg-theme-secondary-bg-color, #f0f0f0);
             margin: 0 auto 15px;
-            /* Заглушка для фото. Замени ссылку на свою */
-            background-image: url('https://via.placeholder.com/120/FFC0CB/333333?text=Photo');
+            background-image: url('julia.jpg');
             background-size: cover;
             background-position: center;
             border: 3px solid var(--tg-theme-button-color, #3c88c9);
@@ -69,7 +64,6 @@
             font-size: 12px;
         }
 
-        /* Секция услуг */
         .services-title {
             font-size: 18px;
             font-weight: 600;
@@ -90,10 +84,16 @@
             align-items: center;
             cursor: pointer;
             transition: transform 0.1s;
+            border: 2px solid transparent;
         }
         
         .service-card:active {
             transform: scale(0.98);
+        }
+
+        .service-card.selected {
+            border-color: var(--tg-theme-button-color, #3c88c9);
+            background-color: var(--tg-theme-secondary-bg-color, #e3f2fd);
         }
 
         .service-info h3 {
@@ -114,20 +114,39 @@
             white-space: nowrap;
         }
 
-        /* Описание "О себе" */
         .about {
             margin-top: 30px;
             text-align: left;
             font-size: 14px;
             color: var(--tg-theme-hint-color, #666);
         }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--tg-theme-button-color, #3c88c9);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Шапка -->
         <div class="profile-header">
-            <div class="avatar"></div> <!-- Здесь будет твое фото -->
+            <div class="avatar"></div>
             <div class="name">Юлия</div>
             <div class="specializations">
                 <span class="tag">Психолог</span>
@@ -136,10 +155,9 @@
             </div>
         </div>
 
-        <!-- Услуги -->
         <div class="services-title">Услуги и стоимость</div>
 
-        <div class="service-card" onclick="selectService('Разовая консультация', 5000)">
+        <div class="service-card" onclick="selectService('consultation', 'Разовая консультация', 5000)">
             <div class="service-info">
                 <h3>Консультация 50 мин</h3>
                 <p>Работа с запросом, первичный прием</p>
@@ -147,7 +165,7 @@
             <div class="service-price">5 000 ₽</div>
         </div>
 
-        <div class="service-card" onclick="selectService('Длительная сессия', 6000)">
+        <div class="service-card" onclick="selectService('session', 'Длительная сессия', 6000)">
             <div class="service-info">
                 <h3>Сессия 80-90 мин</h3>
                 <p>Глубинная работа, телесные практики</p>
@@ -155,7 +173,7 @@
             <div class="service-price">6 000 ₽</div>
         </div>
 
-        <div class="service-card" onclick="selectService('Пакетная терапия', 7000)">
+        <div class="service-card" onclick="selectService('package', 'Пакетная терапия', 7000)">
             <div class="service-info">
                 <h3>Комплексная встреча</h3>
                 <p>Рассмотрение проблемы в системе</p>
@@ -166,36 +184,92 @@
         <div class="about">
             <p>Я помогаю разобраться в себе, наладить отношения с телом и партнером. Безопасное пространство и конфиденциальность гарантирую.</p>
         </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Создание платежа...</p>
+        </div>
     </div>
 
-    <!-- Подключаем API Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        // Инициализация
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Раскрыть на весь экран
+        tg.expand();
         
-        // Настройка главной кнопки (внизу экрана)
-        tg.MainButton.setText("Записаться на консультацию");
+        // URL вашего бэкенда (замените на свой)
+        const API_URL = 'https://your-domain.com/api';
+        
+        let selectedService = null;
+        let selectedPrice = null;
+        let serviceName = null;
+
+        tg.MainButton.setText("Выберите услугу");
+        tg.MainButton.disable();
         tg.MainButton.show();
 
-        // Действие при нажатии на Главную кнопку
-        tg.MainButton.onClick(() => {
-            // Это действие отправит тебе в бота данные (например, для уведомления)
-            // Или откроет твой профиль/чат
-            tg.sendData("Клиент нажал кнопку записи"); 
+        function selectService(serviceId, name, price) {
+            // Убираем выделение со всех карточек
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
             
-            // Альтернатива: сразу открыть чат с тобой (замени USERNAME на свой без @)
-            // tg.openTelegramLink('https://t.me/YOUR_USERNAME'); 
-        });
-
-        // Функция при выборе услуги
-        function selectService(name, price) {
-            // Меняем текст кнопки
-            tg.MainButton.setText(`Записаться: ${name} (${price}₽`);
-            // Вибрация для обратной связи
+            // Выделяем выбранную карточку
+            event.currentTarget.classList.add('selected');
+            
+            selectedService = serviceId;
+            selectedPrice = price;
+            serviceName = name;
+            
+            tg.MainButton.setText(`Оплатить ${name} - ${price.toLocaleString()} ₽`);
+            tg.MainButton.enable();
             tg.HapticFeedback.impactOccurred('light');
         }
+
+        tg.MainButton.onClick(async () => {
+            if (!selectedService) return;
+            
+            // Показываем индикатор загрузки
+            document.getElementById('loading').style.display = 'block';
+            tg.MainButton.disable();
+            
+            try {
+                // Получаем данные пользователя Telegram
+                const user = tg.initDataUnsafe.user;
+                
+                // Отправляем запрос на создание платежа
+                const response = await fetch(`${API_URL}/create-payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        service: selectedService,
+                        serviceName: serviceName,
+                        amount: selectedPrice,
+                        userId: user?.id || 'anonymous',
+                        userName: user?.username || 'unknown',
+                        description: `Оплата услуги: ${serviceName}`
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.confirmation_url) {
+                    // Перенаправляем на страницу оплаты ЮKassa
+                    tg.openLink(data.confirmation_url);
+                } else {
+                    tg.showAlert('Ошибка создания платежа. Попробуйте позже.');
+                    tg.MainButton.enable();
+                }
+                
+            } catch (error) {
+                console.error('Payment error:', error);
+                tg.showAlert('Произошла ошибка. Проверьте соединение и попробуйте снова.');
+                tg.MainButton.enable();
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
