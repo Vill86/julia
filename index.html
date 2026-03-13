@@ -83,7 +83,7 @@
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: all 0.2s;
             border: 2px solid transparent;
         }
         
@@ -93,7 +93,7 @@
 
         .service-card.selected {
             border-color: var(--tg-theme-button-color, #3c88c9);
-            background-color: var(--tg-theme-secondary-bg-color, #e3f2fd);
+            background-color: #e3f2fd;
         }
 
         .service-info h3 {
@@ -121,15 +121,76 @@
             color: var(--tg-theme-hint-color, #666);
         }
 
+        /* КНОПКА ОПЛАТЫ */
+        .payment-button {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+            display: none;
+        }
+
+        .payment-button.visible {
+            display: block;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .payment-button:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        .payment-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         .loading {
             display: none;
             text-align: center;
             padding: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 2000;
+        }
+
+        .loading.visible {
+            display: block;
         }
 
         .spinner {
             border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--tg-theme-button-color, #3c88c9);
+            border-top: 3px solid #667eea;
             border-radius: 50%;
             width: 40px;
             height: 40px;
@@ -140,6 +201,21 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+        }
+
+        .overlay.visible {
+            display: block;
         }
     </style>
 </head>
@@ -184,28 +260,37 @@
         <div class="about">
             <p>Я помогаю разобраться в себе, наладить отношения с телом и партнером. Безопасное пространство и конфиденциальность гарантирую.</p>
         </div>
+    </div>
 
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Создание платежа...</p>
-        </div>
+    <!-- ВИДИМАЯ КНОПКА ОПЛАТЫ -->
+    <button id="payButton" class="payment-button" onclick="processPayment()">
+        💳 Оплатить сейчас
+    </button>
+
+    <!-- Индикатор загрузки -->
+    <div class="overlay" id="overlay"></div>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Создание платежа...</p>
     </div>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        
-        // URL вашего бэкенда (замените на свой)
+        // Инициализация Telegram WebApp
+        let tg = null;
+        try {
+            tg = window.Telegram.WebApp;
+            tg.expand();
+        } catch(e) {
+            console.log('Telegram WebApp not available');
+        }
+
+        // URL вашего сервера (ЗАМЕНИТЕ НА СВОЙ!)
         const API_URL = 'https://your-domain.com/api';
         
         let selectedService = null;
         let selectedPrice = null;
         let serviceName = null;
-
-        tg.MainButton.setText("Выберите услугу");
-        tg.MainButton.disable();
-        tg.MainButton.show();
 
         function selectService(serviceId, name, price) {
             // Убираем выделение со всех карточек
@@ -220,23 +305,42 @@
             selectedPrice = price;
             serviceName = name;
             
-            tg.MainButton.setText(`Оплатить ${name} - ${price.toLocaleString()} ₽`);
-            tg.MainButton.enable();
-            tg.HapticFeedback.impactOccurred('light');
+            // Показываем кнопку оплаты
+            const payButton = document.getElementById('payButton');
+            payButton.textContent = `💳 Оплатить ${name} - ${price.toLocaleString()} ₽`;
+            payButton.classList.add('visible');
+            
+            // Вибрация
+            if (tg && tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
         }
 
-        tg.MainButton.onClick(async () => {
-            if (!selectedService) return;
-            
+        async function processPayment() {
+            if (!selectedService) {
+                if (tg) {
+                    tg.showAlert('Пожалуйста, выберите услугу');
+                } else {
+                    alert('Пожалуйста, выберите услугу');
+                }
+                return;
+            }
+
             // Показываем индикатор загрузки
-            document.getElementById('loading').style.display = 'block';
-            tg.MainButton.disable();
-            
+            document.getElementById('overlay').classList.add('visible');
+            document.getElementById('loading').classList.add('visible');
+
             try {
-                // Получаем данные пользователя Telegram
-                const user = tg.initDataUnsafe.user;
+                // Получаем данные пользователя
+                let userId = 'anonymous';
+                let userName = 'unknown';
                 
-                // Отправляем запрос на создание платежа
+                if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                    userId = tg.initDataUnsafe.user.id;
+                    userName = tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name;
+                }
+
+                // ОТПРАВЛЯЕМ ЗАПРОС НА СОЗДАНИЕ ПЛАТЕЖА
                 const response = await fetch(`${API_URL}/create-payment`, {
                     method: 'POST',
                     headers: {
@@ -246,8 +350,8 @@
                         service: selectedService,
                         serviceName: serviceName,
                         amount: selectedPrice,
-                        userId: user?.id || 'anonymous',
-                        userName: user?.username || 'unknown',
+                        userId: userId,
+                        userName: userName,
                         description: `Оплата услуги: ${serviceName}`
                     })
                 });
@@ -255,21 +359,33 @@
                 const data = await response.json();
                 
                 if (data.confirmation_url) {
-                    // Перенаправляем на страницу оплаты ЮKassa
-                    tg.openLink(data.confirmation_url);
+                    // Перенаправляем на ЮKassa
+                    if (tg) {
+                        tg.openLink(data.confirmation_url);
+                    } else {
+                        window.location.href = data.confirmation_url;
+                    }
+                } else if (data.error) {
+                    throw new Error(data.error);
                 } else {
-                    tg.showAlert('Ошибка создания платежа. Попробуйте позже.');
-                    tg.MainButton.enable();
+                    throw new Error('Неверный ответ сервера');
                 }
                 
             } catch (error) {
                 console.error('Payment error:', error);
-                tg.showAlert('Произошла ошибка. Проверьте соединение и попробуйте снова.');
-                tg.MainButton.enable();
+                
+                // ДЛЯ ТЕСТИРОВАНИЯ - перенаправляем на ЮKassa напрямую
+                // Удалите этот блок когда настроите сервер
+                if (confirm('Сервер не доступен. Перейти на тестовую страницу ЮKassa?')) {
+                    // ТЕСТОВАЯ ССЫЛКА (замените на свою)
+                    window.location.href = 'https://yookassa.ru';
+                }
+                
             } finally {
-                document.getElementById('loading').style.display = 'none';
+                document.getElementById('overlay').classList.remove('visible');
+                document.getElementById('loading').classList.remove('visible');
             }
-        });
+        }
     </script>
 </body>
 </html>
