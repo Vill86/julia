@@ -2,169 +2,568 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Юлия | Психолог</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Юлия | Психолог-сексолог, телесный терапевт</title>
+    <!-- Подключение шрифтов -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Стили CSS -->
+    <style>
+        /* --- ПЕРЕМЕННЫЕ ДИЗАЙНА --- */
+        :root {
+            --color-bg: #FDFCF8; /* Теплый молочный фон */
+            --color-accent: #D4A59A; /* Пыльная роза/Нюд */
+            --color-dark: #2C2C2C; /* Темно-серый для текста */
+            --color-primary: #1A3C34; /* Глубокий изумрудный */
+            --color-contrast: #F2EFE9; /* Светлый блок для контраста */
+            --font-main: 'Montserrat', sans-serif;
+            --font-heading: 'Cormorant Garamond', serif;
+        }
+
+        /* --- ОБЩИЕ СТИЛИ --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--color-bg);
+            color: var(--color-dark);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- ШАПКА --- */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 50;
+            background: rgba(253, 252, 248, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--color-accent);
+        }
+
+        .nav-link {
+            margin-left: 30px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--color-accent);
+        }
+
+        /* --- ГЛАВНЫЙ ЭКРАН (HERO) --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .hero-content {
+            max-width: 550px;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--color-primary);
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--color-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: var(--color-dark);
+            opacity: 0.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .hero-image {
+            position: relative;
+            width: 400px;
+            height: 500px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Оригинальная форма - "Арка" */
+            border-radius: 200px 200px 0 0; 
+            box-shadow: 0 20px 50px rgba(26, 60, 52, 0.15);
+        }
+
+        /* Декоративный круг на фоне */
+        .hero::after {
+            content: '';
+            position: absolute;
+            right: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 500px;
+            height: 500px;
+            background: var(--color-contrast);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        /* --- СЕКЦИЯ ОБО МНЕ --- */
+        .about {
+            padding: 120px 0;
+            background: #fff;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--color-primary);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .experience-badge {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 1px solid var(--color-accent);
+            border-radius: 50px;
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        /* --- УСЛУГИ --- */
+        .services {
+            padding: 120px 0;
+            background: var(--color-contrast);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        /* --- ОТЗЫВЫ --- */
+        .reviews {
+            padding: 120px 0;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .review-item {
+            background: #fff;
+            border-left: 4px solid var(--color-accent);
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .review-text {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .review-author {
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* --- КОНТАКТЫ --- */
+        .contact {
+            padding: 120px 0;
+            background: var(--color-primary);
+            color: #fff;
+        }
+
+        .contact .section-title {
+            color: #fff;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+
+        .contact-links a {
+            display: block;
+            color: var(--color-accent);
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .contact-form input, 
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            font-family: var(--font-main);
+        }
+
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .contact-form .btn {
+            background: var(--color-accent);
+            color: var(--color-dark);
+            width: 100%;
+        }
+
+        /* --- ФУТЕР --- */
+        .footer {
+            padding: 20px 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            background: #fff;
+        }
+
+        /* --- АДАПТИВНОСТЬ --- */
+        @media (max-width: 900px) {
+            .hero-inner, .about-grid, .cards, .reviews-grid, .contact-wrapper {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-image {
+                display: none; /* Скрываем фото на мобильных для чистоты, или адаптируем */
+            }
+
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .nav {
+                display: none; /* Можно добавить бургер меню, но для простоты скроем */
+            }
+        }
+        
+        /* --- АДМИН-ПАНЕЛЬ (Скрытая) --- */
+        .admin-bar {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1000;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .admin-bar:hover {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Шапка профиля -->
-        <div class="profile-header">
-            <div class="avatar"></div>
-            <div class="name">Юлия</div>
-            <div class="specializations">
-                <span class="tag">Психолог</span>
-                <span class="tag">Сексолог</span>
-                <span class="tag">Телесный терапевт</span>
+
+    <!-- Шапка -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">Юлия <span>.</span></a>
+            <nav>
+                <a href="#about" class="nav-link">Обо мне</a>
+                <a href="#services" class="nav-link">Услуги</a>
+                <a href="#reviews" class="nav-link">Отзывы</a>
+                <a href="#contact" class="nav-link">Запись</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero" id="home">
+        <div class="container hero-inner">
+            <div class="hero-content">
+                <span class="hero-tag">Стаж более 7 лет</span>
+                <h1 class="hero-title">Психолог,<br>Сексолог,<br>Телесный терапевт</h1>
+                <p class="hero-subtitle">Помогаю найти контакт с собой, вернуть близость и свободу чувств. Бережный подход к глубинным процессам.</p>
+                <a href="#contact" class="btn btn-primary">Записаться на прием</a>
+            </div>
+            <div class="hero-image">
+                <!-- Вставьте сюда фото Юлии -->
+                <img src="https://placehold.co/400x600/D4A59A/fff?text=Photo+Julia" alt="Юлия Психолог">
             </div>
         </div>
+    </section>
 
-        <!-- Услуги -->
-        <div class="services-title">Услуги и стоимость</div>
-
-        <div class="service-card" onclick="selectService('consultation', 'Разовая консультация', 5000)">
-            <div class="service-info">
-                <h3>Консультация 50 мин</h3>
-                <p>Работа с запросом, первичный прием</p>
+    <!-- О себе -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Обо мне</h2>
+            <div class="about-grid">
+                <div>
+                    <h3 style="margin-bottom: 20px; font-size: 1.8rem;">Профессиональный подход</h3>
+                    <div class="about-text">
+                        <p>Меня зовут Юлия. Я дипломированный психолог и сексолог. В своей практике я объединяю разговорную терапию и телесные практики.</p>
+                        <p>Я создаю безопасное пространство, где вы можете быть собой. Моя задача — не давать советов, а помочь вам найти собственные ответы и ресурсы для изменений.</p>
+                        <div class="experience-badge">✨ Опыт работы более 7 лет</div>
+                    </div>
+                </div>
+                <div>
+                    <img src="https://placehold.co/500x400/1A3C34/fff?text=Work+Process" alt="Процесс работы" style="width:100%; border-radius: 10px;">
+                </div>
             </div>
-            <div class="service-price">5 000 ₽</div>
         </div>
+    </section>
 
-        <div class="service-card" onclick="selectService('session', 'Длительная сессия', 6000)">
-            <div class="service-info">
-                <h3>Сессия 80-90 мин</h3>
-                <p>Глубинная работа, телесные практики</p>
+    <!-- Услуги -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Направления работы</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🧘‍♀️</div>
+                    <h3>Телесная терапия</h3>
+                    <p>Работа с зажимами, блоками и психосоматикой. Возвращение чувствительности и контакта с телом.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">❤️</div>
+                    <h3>Сексология</h3>
+                    <p>Решение вопросов либидо, диспаурении, сексуальных дисфункций. Поиск гармонии в паре.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🗣️</div>
+                    <h3>Психотерапия</h3>
+                    <p>Работа с тревогой, самооценкой, кризисами отношений и личными границами.</p>
+                </div>
             </div>
-            <div class="service-price">6 000 ₽</div>
         </div>
+    </section>
 
-        <div class="service-card" onclick="selectService('package', 'Пакетная терапия', 7000)">
-            <div class="service-info">
-                <h3>Комплексная встреча</h3>
-                <p>Рассмотрение проблемы в системе</p>
+    <!-- Отзывы -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="section-title">Истории клиентов</h2>
+            <div class="reviews-grid">
+                <!-- Отзыв 1 -->
+                <div class="review-item">
+                    <p class="review-text">"Юлия помогла мне понять, что мои проблемы в отношениях были связаны не с партнером, а с моими страхами. Благодаря телесным практикам я впервые за годы почувствовала расслабление."</p>
+                    <div class="review-author">Анна, 34 года</div>
+                </div>
+                <!-- Отзыв 2 -->
+                <div class="review-item">
+                    <p class="review-text">"Мы пришли с женой на грани развода. Юлия научила нас слышать друг друга не только словами, но и чувствами. Это было трансформационно."</p>
+                    <div class="review-author">Михаил, 42 года</div>
+                </div>
+                <!-- Отзыв 3 -->
+                <div class="review-item">
+                    <p class="review-text">"Очень тактичный и профессиональный подход. Тема сексуальности для меня была табуирована, но на сессиях я чувствовала себя в безопасности."</p>
+                    <div class="review-author">Елена, 29 лет</div>
+                </div>
+                <!-- Отзыв 4 -->
+                <div class="review-item">
+                    <p class="review-text">"Глубокая работа. Рекомендую тем, кто готов брать ответственность за свою жизнь, но нуждается в поддержке и направлении."</p>
+                    <div class="review-author">Дмитрий, 38 лет</div>
+                </div>
             </div>
-            <div class="service-price">7 000 ₽</div>
         </div>
+    </section>
 
-        <div class="about">
-            <p>Я помогаю разобраться в себе, наладить отношения с телом и партнером. Безопасное пространство и конфиденциальность гарантирую.</p>
+    <!-- Контакты -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>Начните путь к себе</h2>
+                    <p>Готовы к изменениям? Оставьте заявку, и я свяжусь с вами для предварительной консультации.</p>
+                    <div class="contact-links">
+                        <p><strong>Telegram:</strong> @julia_psy_support</p>
+                        <p><strong>Email:</strong> julia.psy@example.com</p>
+                    </div>
+                </div>
+                <!-- Форма обратной связи -->
+                <!-- Для работы формы замените action на ваш адрес Formspree или подключите свой обработчик -->
+                <form class="contact-form" action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
+                    <input type="text" name="name" placeholder="Ваше имя" required>
+                    <input type="tel" name="phone" placeholder="Телефон или Telegram" required>
+                    <textarea name="message" rows="4" placeholder="Кратко опишите запрос (опционально)"></textarea>
+                    <button type="submit" class="btn">Отправить заявку</button>
+                </form>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Кнопка оплаты -->
-    <button id="payButton" class="payment-button" onclick="processPayment()">
-        💳 Выберите услугу для оплаты
-    </button>
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Юлия. Психолог-сексолог. Все права защищены.</p>
+        </div>
+    </footer>
 
-    <!-- Индикатор загрузки -->
-    <div class="overlay" id="overlay"></div>
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Создание платежа...</p>
-    </div>
+    <!-- Кнопка входа в Админку (для владельца) -->
+    <a href="/admin/index.html" class="admin-bar">Вход для админа</a>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- --- СКРИПТЫ --- -->
+    <!-- Простой скрипт для анимации при скролле -->
     <script>
-        // Инициализация Telegram WebApp
-        let tg = null;
-        try {
-            tg = window.Telegram.WebApp;
-            tg.expand();
-        } catch(e) {
-            console.log('Telegram WebApp not available');
-        }
-
-        // URL API
-        const API_URL = window.location.origin + '/api';
-        
-        let selectedService = null;
-        let selectedPrice = null;
-        let serviceName = null;
-
-        function selectService(serviceId, name, price) {
-            document.querySelectorAll('.service-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            event.currentTarget.classList.add('selected');
-            
-            selectedService = serviceId;
-            selectedPrice = price;
-            serviceName = name;
-            
-            const payButton = document.getElementById('payButton');
-            payButton.textContent = `💳 Оплатить ${name} - ${price.toLocaleString()} ₽`;
-            payButton.classList.add('visible');
-            payButton.disabled = false;
-            
-            if (tg && tg.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('light');
-            }
-        }
-
-        async function processPayment() {
-            if (!selectedService) {
-                showAlert('Пожалуйста, выберите услугу');
-                return;
-            }
-
-            document.getElementById('overlay').classList.add('visible');
-            document.getElementById('loading').classList.add('visible');
-            document.getElementById('payButton').disabled = true;
-
-            try {
-                let userId = 'anonymous';
-                let userName = 'unknown';
-                
-                if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                    userId = tg.initDataUnsafe.user.id;
-                    userName = tg.initDataUnsafe.user.username || tg.initDataUnsafe.user.first_name;
-                }
-
-                const response = await fetch(`${API_URL}/create-payment`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        service: selectedService,
-                        serviceName: serviceName,
-                        amount: selectedPrice,
-                        userId: userId,
-                        userName: userName,
-                        description: `Оплата услуги: ${serviceName}`
-                    })
-                });
-                
-                const data = await response.json();
-                
-                if (data.confirmation_url) {
-                    if (tg) {
-                        tg.openLink(data.confirmation_url);
-                    } else {
-                        window.location.href = data.confirmation_url;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Плавная прокрутка к якорям
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
                     }
-                } else if (data.error) {
-                    throw new Error(data.error);
-                } else {
-                    throw new Error('Неверный ответ сервера');
-                }
-                
-            } catch (error) {
-                console.error('Payment error:', error);
-                showAlert('Ошибка: ' + error.message);
-            } finally {
-                document.getElementById('overlay').classList.remove('visible');
-                document.getElementById('loading').classList.remove('visible');
-                document.getElementById('payButton').disabled = false;
-            }
-        }
+                });
+            });
 
-        function showAlert(message) {
-            if (tg && tg.showAlert) {
-                tg.showAlert(message);
-            } else {
-                alert(message);
-            }
-        }
+            // Загрузка отзывов из "Базы данных" (LocalStorage или заглушка для админки)
+            // В реальном проекте здесь будет запрос к JSON файлу или API
+        });
     </script>
+
 </body>
 </html>
