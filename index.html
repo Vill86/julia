@@ -13,7 +13,6 @@
             --link-color: #47a3e3;
             --button-color: #47a3e3;
             --secondary-bg-color: #f0f0f0;
-            --card-border: #e0e0e0;
         }
 
         body {
@@ -26,7 +25,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            padding-bottom: 100px; /* Место для кнопки */
+            padding-bottom: 100px;
         }
 
         /* Автоматическая смена темы от Телеграма */
@@ -35,9 +34,7 @@
             --text-color: #ffffff;
             --hint-color: #8e8e93;
             --secondary-bg-color: #2c2c2e;
-            --card-border: #3a3a3c;
             --link-color: #0a84ff;
-            --button-color: #0a84ff;
         }
 
         .header {
@@ -58,8 +55,11 @@
             justify-content: center;
             font-size: 48px;
             color: var(--hint-color);
-            background-image: url('https://placehold.co/120x120/ce93d8/ffffff?text=J'); /* Заглушка фото */
-            background-size: cover;
+            
+            /* НАСТРОЙКИ ВАШЕГО ФОТО */
+            background-image: url('julia.jpg'); /* Имя вашего файла */
+            background-size: cover; /* Вписывает фото полностью, обрезая края при необходимости */
+            background-position: center; /* Центрирует фото */
         }
 
         h1 {
@@ -96,7 +96,7 @@
             padding: 16px;
             margin-bottom: 12px;
             cursor: pointer;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            transition: transform 0.1s ease;
             border: 2px solid transparent;
             position: relative;
         }
@@ -137,9 +137,6 @@
             color: var(--link-color);
         }
 
-        /* Кнопка оплаты (стандартная кнопка Телеграм внизу) управляется через JS, 
-           но на веб-странице мы её не верстаем жестко, используем MainButton. */
-           
         .status-message {
             position: fixed;
             bottom: 80px;
@@ -154,13 +151,12 @@
         .status-message.visible {
             opacity: 1;
         }
-
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="avatar"></div>
+        <div class="avatar"></div> <!-- Здесь будет ваше фото -->
         <h1>Юлия</h1>
         <div class="subtitle">Сексолог • Психолог • Телесный терапевт</div>
     </div>
@@ -197,71 +193,49 @@
     <script>
         // Инициализация Telegram WebApp
         const tg = window.Telegram.WebApp;
-        
-        // Расширяем на весь экран
         tg.expand();
 
-        // Получаем элементы
         const cards = document.querySelectorAll('.service-card');
         const mainButton = tg.MainButton;
         let selectedService = null;
         const statusMsg = document.getElementById('status-msg');
 
-        // Функция для форматирования цены
         const formatPrice = (price) => price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + ' ₽';
 
-        // Обработка клика по карточке услуги
         cards.forEach(card => {
             card.addEventListener('click', () => {
-                // Убираем выделение со всех
                 cards.forEach(c => c.classList.remove('selected'));
-                
-                // Добавляем выделение текущей
                 card.classList.add('selected');
                 
-                // Запоминаем данные
                 const price = card.getAttribute('data-price');
                 const title = card.querySelector('.service-title').innerText;
                 selectedService = { title, price };
 
-                // Настраиваем главную кнопку
                 mainButton.setText(`Оплатить ${formatPrice(price)}`);
                 mainButton.show();
                 
                 statusMsg.classList.add('visible');
                 statusMsg.innerText = `Выбрано: ${title}`;
                 
-                // Вибрация при выборе (если поддерживается)
-                tg.HapticFeedback.selectionChanged();
+                if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
             });
         });
 
-        // Обработка нажатия Главной кнопки (Виртуальная оплата)
         mainButton.onClick(() => {
             if (!selectedService) return;
 
-            // 1. Показываем индикатор загрузки
             mainButton.showProgress();
             
-            // 2. Эмуляция запроса на сервер (2 секунды)
             setTimeout(() => {
                 mainButton.hideProgress();
                 
-                // 3. Эмуляция успешной оплаты
-                tg.HapticFeedback.notificationOccurred('success');
-                
-                // Закрываем приложение с сообщением (или показываем alert)
-                // В реальном приложении здесь вызывается tg.openInvoice(link)
+                if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
                 
                 tg.showPopup({
                     title: 'Оплата прошла успешно!',
                     message: `Вы записаны на "${selectedService.title}".\nСумма: ${formatPrice(selectedService.price)}\n\nЭто демонстрационный режим.`,
-                    buttons: [
-                        {type: 'ok'}
-                    ]
+                    buttons: [{type: 'ok'}]
                 }, () => {
-                    // Действие после закрытия попапа
-                    // tg.close(); // Можно раскомментировать для закрытия приложения
                     mainButton.hide();
                     cards.forEach(c => c.classList.remove('selected'));
                     statusMsg.innerText = 'Запись подтверждена!';
@@ -271,18 +245,11 @@
             }, 2000);
         });
 
-        // Настройка темы (если Телеграм не передал параметры, ставим дефолт)
-        if (tg.themeParams.bg_color) {
-            document.documentElement.style.setProperty('--bg-color', tg.themeParams.bg_color);
-            // ... можно прописать остальные переменные для полной поддержки темы
-        }
-        
-        // Если приложение запущено не в Телеграме (для теста в браузере)
+        // Эмуляция для тестов в браузере (если не в Телеграме)
         if (!tg.initData) {
             document.body.innerHTML += '<div style="position:fixed; top:10px; left:10px; background:red; color:white; padding:5px; font-size:12px; z-index:100;">Тестовый режим (браузер)</div>';
-            // Эмуляция методов для браузера
             window.Telegram.WebApp.showPopup = (obj, cb) => { alert(obj.message); if(cb) cb(); };
-            window.Telegram.WebApp.HapticFeedback = { selectionChanged: () => console.log('vibro'), notificationOccurred: (type) => console.log('notif ' + type) };
+            window.Telegram.WebApp.HapticFeedback = { selectionChanged: () => {}, notificationOccurred: (type) => {} };
         }
     </script>
 </body>
