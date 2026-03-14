@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        /* --- НАСТРОЙКИ ЦВЕТОВ --- */
         :root {
             --color-bg: #FDFCF8;
             --color-accent: #D4A59A; /* Пыльная роза */
@@ -35,6 +34,7 @@
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
         a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
 
         /* --- ШАПКА --- */
         .header {
@@ -125,25 +125,20 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* Блок с фото */
         .hero-image {
             position: relative;
             width: 400px;
             height: 500px;
             flex-shrink: 0;
         }
-        
-        /* Стиль для самого фото */
         .hero-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Обрезает фото, чтобы оно заполнило блок красиво */
-            border-radius: 200px 200px 0 0; /* Форма арки */
+            object-fit: cover;
+            border-radius: 200px 200px 0 0;
             box-shadow: 0 20px 50px rgba(26, 60, 52, 0.15);
-            background-color: #eee; /* Серый фон, если фото не загрузилось */
+            background-color: #eee;
         }
-
-        /* Декоративный круг */
         .hero::after {
             content: '';
             position: absolute;
@@ -183,19 +178,51 @@
             font-weight: 600;
         }
 
-        /* Услуги */
+        /* --- УСЛУГИ И ЦЕНЫ --- */
         .services { padding: 120px 0; background: var(--color-contrast); }
         .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
         .card {
             background: #fff;
-            padding: 40px;
+            padding: 40px 30px;
             border-radius: 8px;
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        .card:hover { transform: translateY(-10px); }
-        .card-icon { font-size: 2rem; color: var(--color-accent); margin-bottom: 20px; }
+        .card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        }
+        .card-icon { font-size: 2.5rem; color: var(--color-accent); margin-bottom: 20px; }
         .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--color-primary); }
+        .card-desc { margin-bottom: 20px; flex-grow: 1; opacity: 0.8; font-size: 0.95rem; }
+        
+        .price-tag {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+        }
+        .price-tag span { font-size: 1rem; font-weight: 400; color: #888; }
+        
+        .btn-card {
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .btn-card:hover {
+            background: var(--color-primary);
+            color: #fff;
+        }
 
         /* Отзывы */
         .reviews { padding: 120px 0; }
@@ -229,10 +256,8 @@
         .contact-form input::placeholder, .contact-form textarea::placeholder { color: rgba(255,255,255,0.6); }
         .contact-form .btn { background: var(--color-accent); color: var(--color-dark); width: 100%; }
 
-        /* Футер */
         .footer { padding: 20px 0; text-align: center; font-size: 0.8rem; color: #888; background: #fff; }
 
-        /* Админ-кнопка */
         .admin-bar {
             position: fixed;
             bottom: 20px;
@@ -248,21 +273,24 @@
         }
         .admin-bar:hover { opacity: 1; }
 
-        /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
+        /* АДАПТИВНОСТЬ */
         @media (max-width: 900px) {
             .hero-inner, .about-grid, .cards, .reviews-grid, .contact-wrapper {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
             .hero-image {
-                width: 300px; /* Меньше на телефоне */
+                width: 300px;
                 height: 400px;
-                margin: 0 auto; /* Центрирование */
-                order: -1; /* Фото выше текста на мобильном */
+                margin: 0 auto;
+                order: -1;
             }
             .hero-title { font-size: 2.5rem; }
             nav { display: none; }
             .hero::after { display: none; }
+            
+            .cards { gap: 20px; }
+            .card { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -290,10 +318,7 @@
                 <p class="hero-subtitle">Помогаю найти контакт с собой, вернуть близость и свободу чувств. Бережный подход к глубинным процессам.</p>
                 <a href="#contact" class="btn btn-primary">Записаться на прием</a>
             </div>
-            
-            <!-- Блок с ВАШИМ фото -->
             <div class="hero-image">
-                <!-- Имя файла julia.jpg, лежит рядом с index.html -->
                 <img src="julia.jpg" alt="Фото психолога Юлии">
             </div>
         </div>
@@ -313,32 +338,42 @@
                     </div>
                 </div>
                 <div>
-                    <!-- Здесь можно вставить второе фото или картинку процесса -->
-                    <img src="https://placehold.co/500x400/1A3C34/fff?text=About+Me" alt="Процесс работы" style="width:100%; border-radius: 10px;">
+                    <img src="https://placehold.co/500x400/1A3C34/fff?text=Work+Process" alt="Процесс работы" style="width:100%; border-radius: 10px;">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Услуги -->
+    <!-- Услуги и Цены -->
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title">Направления работы</h2>
+            <h2 class="section-title">Услуги и цены</h2>
             <div class="cards">
-                <div class="card">
-                    <div class="card-icon">🧘‍♀️</div>
-                    <h3>Телесная терапия</h3>
-                    <p>Работа с зажимами, блоками и психосоматикой. Возвращение чувствительности и контакта с телом.</p>
-                </div>
+                <!-- Карточка 1 -->
                 <div class="card">
                     <div class="card-icon">❤️</div>
                     <h3>Сексология</h3>
-                    <p>Решение вопросов либидо, диспаурении, сексуальных дисфункций. Поиск гармонии в паре.</p>
+                    <p class="card-desc">Индивидуальная терапия для решения вопросов, связанных с либидо, сексуальными дисфункциями и поиском гармонии в паре. Безопасное пространство для обсуждения чувствительного.</p>
+                    <div class="price-tag">5000 <span>руб</span></div>
+                    <a href="#contact" class="btn-card">Записаться</a>
                 </div>
+
+                <!-- Карточка 2 -->
                 <div class="card">
                     <div class="card-icon">🗣️</div>
-                    <h3>Психотерапия</h3>
-                    <p>Работа с тревогой, самооценкой, кризисами отношений и личными границами.</p>
+                    <h3>Психология</h3>
+                    <p class="card-desc">Глубинная работа с тревожностью, самооценкой и кризисами. Помощь в преодолении жизненных трудностей и поиск внутренних ресурсов для личностного роста.</p>
+                    <div class="price-tag">6000 <span>руб</span></div>
+                    <a href="#contact" class="btn-card">Записаться</a>
+                </div>
+
+                <!-- Карточка 3 -->
+                <div class="card">
+                    <div class="card-icon">🧘‍♀️</div>
+                    <h3>Телесная терапия</h3>
+                    <p class="card-desc">Работа с психосоматикой и телесными блоками. Техники заземления и возвращения чувствительности для восстановления связи между телом и эмоциями.</p>
+                    <div class="price-tag">7000 <span>руб</span></div>
+                    <a href="#contact" class="btn-card">Записаться</a>
                 </div>
             </div>
         </div>
@@ -384,7 +419,7 @@
                 <form class="contact-form" action="https://formspree.io/f/YOUR_ID_HERE" method="POST">
                     <input type="text" name="name" placeholder="Ваше имя" required>
                     <input type="tel" name="phone" placeholder="Телефон или Telegram" required>
-                    <textarea name="message" rows="4" placeholder="Кратко опишите запрос (опционально)"></textarea>
+                    <textarea name="message" rows="4" placeholder="Какую услугу хотите выбрать?"></textarea>
                     <button type="submit" class="btn">Отправить заявку</button>
                 </form>
             </div>
