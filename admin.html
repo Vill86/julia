@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Админ-панель — Юлия</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ivory: #F7F3EE;
+      --clay: #B87B5C;
+      --clay-light: #D4A88C;
+      --terracotta: #C4705A;
+      --sage: #7A8B73;
+      --ink: #2D2926;
+      --stone: #6B6560;
+      --mist: #9B9590;
+      --parchment: #EDE8E1;
+      --warm-white: #FAF8F5;
+      --blush: #E8D5C4;
+      --wine: #722F37;
+      --wine-hover: #8B3A44;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; }
+
+    /* Header */
+    .header {
+      background: var(--warm-white);
+      border-bottom: 1px solid var(--parchment);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header h1 { font-size: 1.5rem; color: var(--ink); }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 24px; border-radius: 40px; border: none;
+      font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+      cursor: pointer; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-primary { background: var(--wine); color: white; }
+    .btn-primary:hover { background: var(--wine-hover); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--clay); border: 1.5px solid var(--clay); }
+    .btn-secondary:hover { background: var(--clay); color: white; }
+    .btn-success { background: var(--sage); color: white; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 4px; padding: 24px 24px 0; background: var(--warm-white); border-bottom: 1px solid var(--parchment); }
+    .tab {
+      padding: 12px 24px; border: none; background: none;
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+      color: var(--mist); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    .tab.active { color: var(--ink); border-bottom-color: var(--clay); }
+    .tab:hover { color: var(--stone); }
+
+    /* Content */
+    .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Cards */
+    .card {
+      background: var(--warm-white);
+      border: 1px solid var(--parchment);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      color: var(--ink);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--parchment);
+    }
+
+    /* Form elements */
+    .field { margin-bottom: 16px; }
+    .field:last-child { margin-bottom: 0; }
+    .field-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--stone);
+      margin-bottom: 6px;
+    }
+    .field input,
+    .field textarea {
+      width: 100%;
+      background: var(--blush);
+      border: 1.5px solid transparent;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--clay);
+      box-shadow: 0 0 0 4px rgba(184,123,92,0.1);
+    }
+    .field textarea { resize: vertical; min-height: 80px; }
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--mist); opacity: 0.6; }
+
+    /* Two column layout */
+    .row { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 768px) {
+      .row { grid-template-columns: 1fr 1fr; }
+      .row-3 { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    /* Section divider */
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      color: var(--ink);
+      margin: 32px 0 20px;
+    }
+
+    /* Stars */
+    .stars { display: flex; gap: 4px; margin-top: 8px; }
+    .star-btn {
+      background: none; border: none; cursor: pointer;
+      padding: 2px; transition: transform 0.2s;
+    }
+    .star-btn:hover { transform: scale(1.2); }
+    .star-btn svg { fill: var(--mist); color: var(--mist); transition: fill 0.2s; }
+    .star-btn.active svg { fill: var(--clay-light); color: var(--clay-light); }
+
+    /* Checkbox */
+    .checkbox-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; color: var(--stone); cursor: pointer;
+    }
+    .checkbox-label input { width: auto; accent-color: var(--clay); }
+
+    /* Instructions */
+    .info-box {
+      background: var(--blush);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+    .info-box p { font-size: 0.9rem; color: var(--stone); line-height: 1.6; }
+    .info-box strong { color: var(--ink); }
+    .info-box code {
+      background: var(--warm-white);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--wine);
+    }
+
+    /* Toast */
+    /* Login overlay */
+    .login-overlay {
+      position: fixed; inset: 0;
+      background: var(--ivory);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200;
+      transition: opacity 0.6s, visibility 0.6s;
+    }
+    .login-overlay.hidden {
+      opacity: 0; visibility: hidden; pointer-events: none;
+    }
+    .login-box {
+      background: var(--warm-white);
+      border: 1px solid var(--parchment);
+      border-radius: 32px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(45,41,38,0.08);
+      text-align: center;
+    }
+    .login-box h2 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .login-box p {
+      font-size: 0.9rem;
+      color: var(--mist);
+      margin-bottom: 32px;
+    }
+    .login-box .field {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .login-box .field input {
+      width: 100%;
+      background: var(--blush);
+      border: 1.5px solid transparent;
+      border-radius: 16px;
+      padding: 16px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--ink);
+      outline: none;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    .login-box .field input:focus {
+      border-color: var(--clay);
+      box-shadow: 0 0 0 4px rgba(184,123,92,0.1);
+    }
+    .login-box .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 14px 24px;
+      font-size: 1rem;
+    }
+    .login-error {
+      color: var(--terracotta);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .login-error.show { opacity: 1; }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--sage);
+      color: white;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      z-index: 100;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--stone); text-decoration: none;
+      font-size: 0.9rem; transition: color 0.3s;
+      margin-bottom: 16px;
+    }
+    .back-link:hover { color: var(--clay); }
+
+    @media (max-width: 767px) {
+      .header { flex-wrap: wrap; gap: 12px; }
+      .header h1 { font-size: 1.25rem; }
+      .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .container { padding: 20px 16px; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Overlay -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <h2>Панель управления</h2>
+    <p>Введите пароль для входа</p>
+    <div class="field">
+      <input type="password" id="login-password" placeholder="Пароль" onkeydown="if(event.key==='Enter')checkPassword()" />
+    </div>
+    <button class="btn btn-primary" onclick="checkPassword()">Войти</button>
+    <p class="login-error" id="login-error">Неверный пароль</p>
+  </div>
+</div>
+
+<header class="header">
+  <h1>Панель управления</h1>
+  <div class="header-actions">
+    <button class="btn btn-success" onclick="downloadJSON()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Скачать JSON
+    </button>
+    <button class="btn btn-secondary" onclick="logout()">Выйти</button>
+    <a href="index.html" class="btn btn-secondary">На сайт</a>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="hero">Главный экран</button>
+  <button class="tab" data-tab="about">Обо мне</button>
+  <button class="tab" data-tab="services">Услуги</button>
+  <button class="tab" data-tab="testimonials">Отзывы</button>
+  <button class="tab" data-tab="contact">Контакты</button>
+</nav>
+
+<div class="container">
+
+  <div class="info-box">
+    <p><strong>Как редактировать:</strong> измените текст в полях ниже → нажмите <strong>«Скачать JSON»</strong> вверху → загрузите файл <code>data.json</code> в свой репозиторий на GitHub. Изменения появятся на сайте через 1–2 минуты.</p>
+  </div>
+
+  <!-- Hero -->
+  <div class="tab-panel active" id="panel-hero">
+    <div class="card">
+      <div class="field">
+        <label class="field-label">Имя (Hero)</label>
+        <input type="text" id="hero-title" />
+      </div>
+      <div class="field">
+        <label class="field-label">Подзаголовок</label>
+        <input type="text" id="hero-subtitle" />
+      </div>
+      <div class="field">
+        <label class="field-label">Опыт</label>
+        <input type="text" id="hero-experience" />
+      </div>
+      <div class="field">
+        <label class="field-label">Описание</label>
+        <textarea id="hero-description" rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <div class="tab-panel" id="panel-about">
+    <div class="card">
+      <div class="field">
+        <label class="field-label">Заголовок секции</label>
+        <input type="text" id="about-title" />
+      </div>
+    </div>
+    <h3 class="section-title">Абзацы</h3>
+    <div id="about-paragraphs"></div>
+  </div>
+
+  <!-- Services -->
+  <div class="tab-panel" id="panel-services">
+    <div class="card">
+      <div class="field">
+        <label class="field-label">Заголовок секции</label>
+        <input type="text" id="services-title" />
+      </div>
+      <div class="field">
+        <label class="field-label">Подзаголовок</label>
+        <input type="text" id="services-subtitle" />
+      </div>
+    </div>
+    <div id="services-list"></div>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="tab-panel" id="panel-testimonials">
+    <div class="card">
+      <div class="field">
+        <label class="field-label">Заголовок секции</label>
+        <input type="text" id="testimonials-title" />
+      </div>
+      <div class="field">
+        <label class="field-label">Подзаголовок</label>
+        <input type="text" id="testimonials-subtitle" />
+      </div>
+    </div>
+    <div id="testimonials-list"></div>
+  </div>
+
+  <!-- Contact -->
+  <div class="tab-panel" id="panel-contact">
+    <div class="card">
+      <div class="field">
+        <label class="field-label">Заголовок секции</label>
+        <input type="text" id="contact-title" />
+      </div>
+      <div class="field">
+        <label class="field-label">Подзаголовок</label>
+        <textarea id="contact-subtitle" rows="2"></textarea>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="field-label">Телефон</label>
+          <input type="text" id="contact-phone" />
+        </div>
+        <div class="field">
+          <label class="field-label">Email</label>
+          <input type="text" id="contact-email" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="field-label">WhatsApp ссылка</label>
+          <input type="text" id="contact-whatsapp" />
+        </div>
+        <div class="field">
+          <label class="field-label">Telegram ссылка</label>
+          <input type="text" id="contact-telegram" />
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Локация</label>
+        <input type="text" id="contact-location" />
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">JSON скачан!</div>
+
+<script>
+let data = {};
+
+// Load data
+fetch('data.json')
+  .then(r => r.json())
+  .then(d => { data = d; populate(); })
+  .catch(() => alert('Ошибка загрузки data.json'));
+
+// Populate fields
+function populate() {
+  // Hero
+  document.getElementById('hero-title').value = data.hero.title;
+  document.getElementById('hero-subtitle').value = data.hero.subtitle;
+  document.getElementById('hero-experience').value = data.hero.experience;
+  document.getElementById('hero-description').value = data.hero.description;
+
+  // About
+  document.getElementById('about-title').value = data.about.title;
+  const aboutContainer = document.getElementById('about-paragraphs');
+  aboutContainer.innerHTML = data.about.paragraphs.map((p, i) => `
+    <div class="card">
+      <div class="field">
+        <label class="field-label">Абзац ${i + 1}</label>
+        <textarea class="about-p" data-index="${i}" rows="4">${p}</textarea>
+      </div>
+    </div>
+  `).join('');
+
+  // Services
+  document.getElementById('services-title').value = data.services.title;
+  document.getElementById('services-subtitle').value = data.services.subtitle;
+  const servicesContainer = document.getElementById('services-list');
+  servicesContainer.innerHTML = data.services.items.map((s, i) => `
+    <div class="card">
+      <h3 class="card-title">Услуга ${i + 1}: ${s.title}</h3>
+      <div class="row row-3">
+        <div class="field">
+          <label class="field-label">Номер</label>
+          <input type="text" class="svc-num" data-index="${i}" value="${s.number}" />
+        </div>
+        <div class="field">
+          <label class="field-label">Название</label>
+          <input type="text" class="svc-title" data-index="${i}" value="${s.title}" />
+        </div>
+        <div class="field">
+          <label class="field-label">Цена</label>
+          <input type="text" class="svc-price" data-index="${i}" value="${s.price}" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="field-label">Длительность</label>
+          <input type="text" class="svc-dur" data-index="${i}" value="${s.duration}" />
+        </div>
+        <div class="field" style="grid-column: 1 / -1;">
+          <label class="field-label">Описание</label>
+          <textarea class="svc-desc" data-index="${i}" rows="3">${s.description}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Testimonials
+  document.getElementById('testimonials-title').value = data.testimonials.title;
+  document.getElementById('testimonials-subtitle').value = data.testimonials.subtitle;
+  const testimonialsContainer = document.getElementById('testimonials-list');
+  testimonialsContainer.innerHTML = data.testimonials.items.map((t, i) => `
+    <div class="card">
+      <h3 class="card-title">Отзыв ${i + 1}: ${t.name}</h3>
+      <div class="row row-3">
+        <div class="field">
+          <label class="field-label">Имя</label>
+          <input type="text" class="t-name" data-index="${i}" value="${t.name}" />
+        </div>
+        <div class="field">
+          <label class="field-label">Возраст</label>
+          <input type="text" class="t-age" data-index="${i}" value="${t.age}" />
+        </div>
+        <div class="field">
+          <label class="field-label">Направление</label>
+          <input type="text" class="t-role" data-index="${i}" value="${t.role}" />
+        </div>
+      </div>
+      <div class="field">
+        <label class="field-label">Текст отзыва</label>
+        <textarea class="t-text" data-index="${i}" rows="4">${t.text}</textarea>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="field-label">Аватар (имя файла)</label>
+          <input type="text" class="t-avatar" data-index="${i}" value="${t.avatar}" />
+        </div>
+        <div class="field">
+          <label class="field-label">Рейтинг</label>
+          <div class="stars">
+            ${[1,2,3,4,5].map(star => `
+              <button class="star-btn ${star <= t.rating ? 'active' : ''}" data-index="${i}" data-star="${star}" onclick="setStar(${i}, ${star})">
+                <svg width="20" height="20" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Contact
+  document.getElementById('contact-title').value = data.contact.title;
+  document.getElementById('contact-subtitle').value = data.contact.subtitle;
+  document.getElementById('contact-phone').value = data.contact.phone;
+  document.getElementById('contact-email').value = data.contact.email;
+  document.getElementById('contact-whatsapp').value = data.contact.whatsapp;
+  document.getElementById('contact-telegram').value = data.contact.telegram;
+  document.getElementById('contact-location').value = data.contact.location;
+}
+
+function setStar(index, rating) {
+  data.testimonials.items[index].rating = rating;
+  const card = document.querySelectorAll('#testimonials-list .card')[index];
+  card.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < rating);
+  });
+}
+
+// Password
+const ADMIN_PASSWORD = "julia2025"; // Смените на свой пароль
+
+function checkPassword() {
+  const input = document.getElementById('login-password').value;
+  if (input === ADMIN_PASSWORD) {
+    document.getElementById('login-overlay').classList.add('hidden');
+    localStorage.setItem('julia_admin', '1');
+  } else {
+    document.getElementById('login-error').classList.add('show');
+    document.getElementById('login-password').value = '';
+  }
+}
+
+// Auto-login if previously authenticated
+if (localStorage.getItem('julia_admin') === '1') {
+  document.getElementById('login-overlay').classList.add('hidden');
+}
+
+// Logout function
+function logout() {
+  localStorage.removeItem('julia_admin');
+  location.reload();
+}
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Collect data from fields
+function collectData() {
+  // Hero
+  data.hero.title = document.getElementById('hero-title').value;
+  data.hero.subtitle = document.getElementById('hero-subtitle').value;
+  data.hero.experience = document.getElementById('hero-experience').value;
+  data.hero.description = document.getElementById('hero-description').value;
+
+  // About
+  data.about.title = document.getElementById('about-title').value;
+  document.querySelectorAll('.about-p').forEach(el => {
+    const i = parseInt(el.dataset.index);
+    data.about.paragraphs[i] = el.value;
+  });
+
+  // Services
+  data.services.title = document.getElementById('services-title').value;
+  data.services.subtitle = document.getElementById('services-subtitle').value;
+  document.querySelectorAll('#services-list .card').forEach((card, i) => {
+    data.services.items[i].number = card.querySelector('.svc-num').value;
+    data.services.items[i].title = card.querySelector('.svc-title').value;
+    data.services.items[i].price = card.querySelector('.svc-price').value;
+    data.services.items[i].duration = card.querySelector('.svc-dur').value;
+    data.services.items[i].description = card.querySelector('.svc-desc').value;
+  });
+
+  // Testimonials
+  data.testimonials.title = document.getElementById('testimonials-title').value;
+  data.testimonials.subtitle = document.getElementById('testimonials-subtitle').value;
+  document.querySelectorAll('#testimonials-list .card').forEach((card, i) => {
+    data.testimonials.items[i].name = card.querySelector('.t-name').value;
+    data.testimonials.items[i].age = card.querySelector('.t-age').value;
+    data.testimonials.items[i].role = card.querySelector('.t-role').value;
+    data.testimonials.items[i].text = card.querySelector('.t-text').value;
+    data.testimonials.items[i].avatar = card.querySelector('.t-avatar').value;
+  });
+
+  // Contact
+  data.contact.title = document.getElementById('contact-title').value;
+  data.contact.subtitle = document.getElementById('contact-subtitle').value;
+  data.contact.phone = document.getElementById('contact-phone').value;
+  data.contact.email = document.getElementById('contact-email').value;
+  data.contact.whatsapp = document.getElementById('contact-whatsapp').value;
+  data.contact.telegram = document.getElementById('
