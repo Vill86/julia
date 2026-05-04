@@ -255,10 +255,10 @@ function populate() {
       <div class="field"><label class="field-label">Текст отзыва</label><textarea class="t-text" data-index="${i}" rows="4">${t.text}</textarea></div>
       <div class="row">
         <div class="field"><label class="field-label">Аватар (имя файла)</label><input type="text" class="t-avatar" data-index="${i}" value="${t.avatar}" /></div>
-        <div class="field"><label class="field-label">Рейтинг</label><div class="stars">${[1,2,3,4,5].map(star => `<button class="star-btn ${star <= t.rating ? 'active' : ''}" onclick="setStar(${i},${star})"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>`).join('')}</div></div>
+        <div class="field"><label class="field-label">Рейтинг</label><div class="stars">${[1,2,3,4,5].map(star => `<button class="star-btn ${star <= t.rating ? 'active' : ''}" data-testimonial="${i}" data-star="${star}" onclick="setStar(${i},${star})"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></button>`).join('')}</div></div>
       </div>
     </div>`).join('');
-
+    
   document.getElementById('contact-title').value = data.contact.title;
   document.getElementById('contact-subtitle').value = data.contact.subtitle;
   document.getElementById('contact-phone').value = data.contact.phone;
@@ -268,15 +268,17 @@ function populate() {
   document.getElementById('contact-location').value = data.contact.location;
 }
 
-function setStar(index, rating) {
+window.setStar = function(index, rating) {
+  if (!data.testimonials.items[index]) return;
   data.testimonials.items[index].rating = rating;
   const cards = document.querySelectorAll('#testimonials-list .card');
   if (cards[index]) {
     cards[index].querySelectorAll('.star-btn').forEach((btn, i) => {
-      btn.classList.toggle('active', i < rating);
+      if (parseInt(btn.dataset.star) <= rating) btn.classList.add('active');
+      else btn.classList.remove('active');
     });
   }
-}
+};
 
 // Tabs
 document.querySelectorAll('.tab').forEach(tab => {
@@ -303,4 +305,37 @@ function downloadJSON() {
     data.services.items[i].title = card.querySelector('.svc-title').value;
     data.services.items[i].price = card.querySelector('.svc-price').value;
     data.services.items[i].duration = card.querySelector('.svc-dur').value;
-    data.services.items[i].description = card.querySelector('.svc-de
+    data.services.items[i].description = card.querySelector('.svc-desc').value;
+  });
+  data.testimonials.title = document.getElementById('testimonials-title').value;
+  data.testimonials.subtitle = document.getElementById('testimonials-subtitle').value;
+  document.querySelectorAll('#testimonials-list .card').forEach((card, i) => {
+    data.testimonials.items[i].name = card.querySelector('.t-name').value;
+    data.testimonials.items[i].age = card.querySelector('.t-age').value;
+    data.testimonials.items[i].role = card.querySelector('.t-role').value;
+    data.testimonials.items[i].text = card.querySelector('.t-text').value;
+    data.testimonials.items[i].avatar = card.querySelector('.t-avatar').value;
+    // rating already preserved via setStar
+  });
+  data.contact.title = document.getElementById('contact-title').value;
+  data.contact.subtitle = document.getElementById('contact-subtitle').value;
+  data.contact.phone = document.getElementById('contact-phone').value;
+  data.contact.email = document.getElementById('contact-email').value;
+  data.contact.whatsapp = document.getElementById('contact-whatsapp').value;
+  data.contact.telegram = document.getElementById('contact-telegram').value;
+  data.contact.location = document.getElementById('contact-location').value;
+  
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'data.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
