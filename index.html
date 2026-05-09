@@ -328,7 +328,7 @@
             <div class="grid md:grid-cols-2 gap-14 md:gap-16 items-center">
                 <div class="fade-up">
                     <div class="about-photo-wrapper">
-                        <img src="Julia.jpeg" 
+                        <img id="about-photo" src="Julia.jpeg" 
                              alt="Юлия — психолог, 7 лет стажа. Портрет психолога Юлии" class="w-full block" style="aspect-ratio: 3 / 3.9; object-fit: cover;" loading="lazy" />
                     </div>
                 </div>
@@ -783,6 +783,12 @@
                         const r = document.getElementById('stat-return');
                         if (r && data.about.stats.return) r.textContent = data.about.stats.return;
                     }
+                }
+
+                // Photo
+                if (data.photo) {
+                    const photo = document.getElementById('about-photo');
+                    if (photo) photo.src = data.photo;
                 }
 
                 // Services
