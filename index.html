@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Юлия — психолог • 7 лет стажа | Индивидуальные консультации, телесно-ориентированная терапия и сексологическое консультирование в Москве</title>
+    <meta name="description" content="Опытный психолог Юлия (7 лет стажа) помогает женщинам и мужчинам справиться с тревогой, восстановить связь с телом, вернуть сексуальность и обрести внутреннюю опору. Индивидуальные сессии в Москве и онлайн.">
+    <meta name="keywords" content="психолог москва, психолог юлия, сексолог москва, телесно-ориентированная терапия, гештальт терапия, консультация психолога, психологическая помощь, сексологическое консультирование, вернуть связь с собой">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Юлия — психолог • 7 лет стажа">
+    <meta property="og:description" content="Помогаю вернуть связь с собой и обрести внутреннюю опору. Индивидуальные консультации, телесно-ориентированная терапия и сексологическое консультирование.">
+    <meta property="og:image" content="Julia.jpeg">
+    <meta property="og:url" content="https://yulia-psych.ru">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://yulia-psych.ru">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --beige: #F8F5F0;
+            --sage: #9CAF88;
+            --sage-dark: #7d8f6a;
+            --sage-light: #d1dfc2;
+            --lavender: #B8A9C9;
+            --lavender-light: #e5def0;
+            --dark: #2C2C2C;
+            --text-muted: #6b6b6b;
+            --radius: 24px;
+            --radius-sm: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+        body {
+            font-family: 'Inter', system_ui, -apple-system, sans-serif;
+            background-color: var(--beige);
+            color: var(--dark);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: var(--sage); border-radius: 3px; }
+
+        .container-narrow { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .section-padding { padding: 100px 0; }
+        @media (max-width: 768px) { .section-padding { padding: 64px 0; } .container-narrow { padding: 0 20px; } }
+
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.35;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            padding: 14px 0;
+            transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(248, 245, 240, 0.92);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 1px 0 rgba(44, 44, 44, 0.05);
+            padding: 8px 0;
+        }
+
+        .nav-link {
+            font-size: 0.9rem; font-weight: 450; color: var(--dark);
+            position: relative; text-decoration: none; transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1.5px;
+            background: var(--sage); transition: width 0.35s ease;
+        }
+        .nav-link:hover { color: var(--sage-dark); }
+        .nav-link:hover::after { width: 100%; }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 30px; border-radius: 50px; background: var(--sage);
+            color: #fff; font-weight: 500; font-size: 0.9rem; border: none; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 4px 18px rgba(156, 175, 136, 0.28);
+        }
+        .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(156, 175, 136, 0.32); }
+
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 30px; border-radius: 50px; background: transparent;
+            color: var(--dark); font-weight: 500; font-size: 0.9rem; border: 1.5px solid var(--dark);
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover { background: var(--dark); color: #fff; transform: translateY(-2px); }
+
+        .btn-lavender {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 24px; border-radius: 50px; background: var(--lavender);
+            color: #fff; font-weight: 500; font-size: 0.82rem; border: none;
+            transition: all 0.3s ease; box-shadow: 0 4px 14px rgba(184, 169, 201, 0.28);
+        }
+        .btn-lavender:hover { background: #a38db6; transform: translateY(-2px); }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; padding-top: 80px;
+        }
+        .hero-deco-1 { width: 520px; height: 520px; background: radial-gradient(circle, var(--sage-light) 0%, transparent 70%); top: -220px; right: -120px; }
+        .hero-deco-2 { width: 420px; height: 420px; background: radial-gradient(circle, var(--lavender-light) 0%, transparent 70%); bottom: -160px; left: -120px; }
+        .hero-title { font-size: clamp(3.2rem, 8vw, 6.8rem); font-weight: 300; letter-spacing: -0.045em; line-height: 0.92; }
+        .hero-subtitle { font-size: clamp(0.95rem, 1.8vw, 1.1rem); font-weight: 350; color: var(--text-muted); letter-spacing: 0.09em; text-transform: uppercase; }
+        .hero-tagline { font-size: clamp(1.05rem, 1.7vw, 1.2rem); max-width: 520px; font-weight: 350; }
+
+        /* About */
+        .about-photo-wrapper { border-radius: var(--radius); overflow: hidden; box-shadow: 0 20px 60px rgba(44, 44, 44, 0.07); }
+        .stat-number { font-size: 2.35rem; font-weight: 600; color: var(--sage-dark); line-height: 1; }
+        .stat-label { font-size: 0.82rem; color: var(--text-muted); margin-top: 3px; }
+
+        /* Service cards */
+        .service-card {
+            background: #fff; border-radius: var(--radius); padding: 38px 32px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
+            box-shadow: 0 2px 12px rgba(44, 44, 44, 0.04);
+            border: 1px solid rgba(44, 44, 44, 0.05); position: relative; overflow: hidden;
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--sage); transform: scaleX(0); transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(44, 44, 44, 0.07); }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-price { font-size: 1.7rem; font-weight: 600; color: var(--sage-dark); }
+        .service-duration { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Review cards */
+        .review-card {
+            background: #fff; border-radius: var(--radius); padding: 30px;
+            box-shadow: 0 2px 12px rgba(44, 44, 44, 0.04);
+            border: 1px solid rgba(44, 44, 44, 0.04); transition: transform 0.3s ease;
+        }
+        .review-card:hover { transform: translateY(-4px); }
+        .review-avatar {
+            width: 48px; height: 48px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-weight: 600; font-size: 1rem; color: #fff; flex-shrink: 0;
+        }
+        .star { color: #e8c84a; letter-spacing: 2px; font-size: 0.85rem; }
+
+        /* Form */
+        .form-card {
+            background: #fff; border-radius: var(--radius); padding: 52px 48px;
+            box-shadow: 0 20px 60px rgba(44, 44, 44, 0.06);
+            border: 1px solid rgba(44, 44, 44, 0.04);
+        }
+        .form-input {
+            width: 100%; padding: 13px 16px; border: 1.5px solid #e5e0d8;
+            border-radius: var(--radius-sm); font-family: 'Inter', sans-serif;
+            font-size: 0.92rem; background: var(--beige); color: var(--dark);
+            outline: none; transition: all 0.3s ease;
+        }
+        .form-input:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(156, 175, 136, 0.12); }
+        .form-label { font-size: 0.82rem; font-weight: 500; color: var(--dark); margin-bottom: 6px; display: block; }
+        select.form-input {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 16px center; padding-right: 44px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(44, 44, 44, 0.48);
+            backdrop-filter: blur(10px); z-index: 100; display: flex;
+            align-items: center; justify-content: center; opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-box {
+            background: #fff; border-radius: var(--radius); padding: 48px 40px;
+            max-width: 420px; width: 90%; text-align: center;
+            transform: translateY(20px) scale(0.95); transition: transform 0.4s ease;
+        }
+        .modal-overlay.active .modal-box { transform: translateY(0) scale(1); }
+        .modal-check {
+            width: 64px; height: 64px; border-radius: 50%; background: var(--sage);
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed; top: 0; right: 0; bottom: 0; width: 300px; max-width: 82vw;
+            background: var(--beige); z-index: 60; padding: 80px 36px 36px;
+            transform: translateX(100%); transition: transform 0.4s ease;
+            box-shadow: -10px 0 40px rgba(44, 44, 44, 0.06);
+        }
+        .mobile-menu.open { transform: translateX(0); }
+        .mobile-menu-overlay {
+            position: fixed; inset: 0; background: rgba(44, 44, 44, 0.28);
+            backdrop-filter: blur(5px); z-index: 55; opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+        .hamburger {
+            display: flex; flex-direction: column; justify-content: center; gap: 5px;
+            width: 30px; height: 30px; cursor: pointer; background: none; border: none; padding: 3px; z-index: 65;
+        }
+        .hamburger span {
+            display: block; width: 100%; height: 1.5px; background: var(--dark);
+            border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0; transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        .section-heading {
+            font-size: clamp(1.75rem, 3.9vw, 2.75rem); font-weight: 350; letter-spacing: -0.025em;
+        }
+        .section-heading strong { font-weight: 600; color: var(--sage-dark); }
+
+        .footer-link { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+        .footer-link:hover { color: var(--sage-dark); }
+
+        @media (max-width: 768px) {
+            .desktop-only { display: none !important; }
+            .form-card { padding: 32px 24px; }
+        }
+        @media (min-width: 769px) { .mobile-only { display: none !important; } }
+        :focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+
+        @keyframes bounce-down {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(7px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container-narrow flex items-center justify-between">
+            <a href="#" class="text-xl font-semibold tracking-tight no-underline" style="color: var(--dark);">
+                Юлия <span style="font-weight:300; color:var(--sage-dark);">·</span>
+                <span style="font-weight:300; font-size:0.82rem; color:var(--text-muted);">Психолог</span>
+            </a>
+
+            <div class="desktop-only flex items-center gap-9">
+                <a href="#services" class="nav-link">Услуги</a>
+                <a href="#about" class="nav-link">Обо мне</a>
+                <a href="#reviews" class="nav-link">Отзывы</a>
+                <a href="#booking" class="btn-primary" style="padding:9px 22px; font-size:0.82rem;">
+                    Записаться
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </a>
+            </div>
+
+            <button class="hamburger mobile-only" id="hamburger" aria-label="Открыть меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="flex flex-col gap-7 text-xl">
+            <a href="#services" class="nav-link">Услуги</a>
+            <a href="#about" class="nav-link">Обо мне</a>
+            <a href="#reviews" class="nav-link">Отзывы</a>
+            <div class="pt-4">
+                <a href="#booking" class="btn-primary w-full justify-center">Записаться на приём</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="deco-circle hero-deco-1"></div>
+        <div class="deco-circle hero-deco-2"></div>
+
+        <div class="container-narrow w-full relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="fade-up visible">
+                    <p id="hero-subtitle" class="hero-subtitle mb-4">Психолог · 7 лет стажа</p>
+                </div>
+
+                <h1 id="hero-title" class="hero-title mb-7 fade-up visible reveal-delay-1">Юлия</h1>
+
+                <p id="hero-tagline" class="hero-tagline mx-auto mb-11 fade-up visible reveal-delay-2">
+                    Помогаю вернуть связь с собой<br class="hidden sm:block" />
+                    и обрести внутреннюю опору
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4 fade-up visible reveal-delay-3">
+                    <a href="#booking" class="btn-primary">
+                        Записаться на консультацию
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                    <a href="#about" class="btn-outline">Узнать больше</a>
+                </div>
+
+                <div class="mt-16 flex flex-col items-center gap-2 fade-up visible reveal-delay-4" style="opacity: 0.5;">
+                    <span style="font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);">Листайте вниз</span>
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--sage)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="animation: bounce-down 2s infinite;"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section-padding" id="about" style="background:#fff;">
+        <div class="container-narrow">
+            <div class="grid md:grid-cols-2 gap-14 md:gap-16 items-center">
+                <div class="fade-up">
+                    <div class="about-photo-wrapper">
+                        <img src="Julia.jpeg" 
+                             alt="Юлия — психолог, 7 лет стажа. Портрет психолога Юлии" class="w-full block" style="aspect-ratio: 3 / 3.9; object-fit: cover;" loading="lazy" />
+                    </div>
+                </div>
+
+                <div class="fade-up reveal-delay-1">
+                    <p id="about-label" class="text-xs font-semibold tracking-[0.14em] uppercase mb-3" style="color: var(--sage-dark);">Обо мне</p>
+                    <h2 id="about-heading" class="section-heading mb-6 leading-none">
+                        Работаю с тем,<br />
+                        что <strong>по-настоящему</strong> волнует
+                    </h2>
+
+                    <div class="space-y-4 text-[15px]" style="color: var(--text-muted); line-height: 1.7;">
+                        <p id="about-p1">Меня зовут Юлия. Я практикующий психолог с 7-летним опытом. В своей работе использую интегративный подход — сочетаю телесно-ориентированную терапию, гештальт и когнитивно-поведенческие методы.</p>
+                        <p id="about-p2">Особое направление — <strong style="color:var(--dark); font-weight:500;">сексологическое консультирование</strong>. Помогаю женщинам вернуть контакт со своим телом, желаниями и потребностями.</p>
+                        <p id="about-p3">Со мной можно говорить о любом. Без стыда и осуждения. Я на вашей стороне.</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6 mt-9 pt-9" style="border-top: 1px solid #ece8e0;">
+                        <div>
+                            <div id="stat-years" class="stat-number">7</div>
+                            <div class="stat-label">лет практики</div>
+                        </div>
+                        <div>
+                            <div id="stat-clients" class="stat-number">600+</div>
+                            <div class="stat-label">клиентов</div>
+                        </div>
+                        <div>
+                            <div id="stat-return" class="stat-number">95%</div>
+                            <div class="stat-label">возвращаются</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section-padding" id="services">
+        <div class="container-narrow">
+            <div class="text-center max-w-lg mx-auto mb-14">
+                <p class="text-xs font-semibold tracking-[0.13em] uppercase mb-3" style="color: var(--sage-dark);">Услуги</p>
+                <h2 class="section-heading mb-4">Что я предлагаю</h2>
+                <p class="text-[15px]" style="color: var(--text-muted);">Каждая встреча — это безопасное пространство, где можно быть собой.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 lg:gap-7">
+                
+                <!-- Card 1 -->
+                <div class="service-card fade-up">
+                    <div class="flex flex-col h-full">
+                        <div class="mb-4">
+                            <div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:flex;align-items:center;justify-content:center;">
+                                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20v-2a7 7 0 0114 0v2"/></svg>
+                            </div>
+                        </div>
+                        <h3 id="service-1-title" class="text-[17px] font-semibold mb-2">Индивидуальная консультация</h3>
+                        <p id="service-1-desc" class="text-sm flex-1" style="color:var(--text-muted);line-height:1.55;">Работа с тревогой, самооценкой, отношениями и личными запросами. Мягко и бережно.</p>
+                        <div class="flex items-end justify-between mt-auto pt-5" style="border-top:1px solid #ece8e0;">
+                            <div><span id="service-1-price" class="service-price">5 000 ₽</span><span id="service-1-duration" class="service-duration ml-1.5">/ 50 мин</span></div>
+                            <a href="#booking" class="btn-lavender text-xs">Записаться</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card fade-up reveal-delay-1">
+                    <div class="flex flex-col h-full">
+                        <div class="mb-4">
+                            <div style="width:44px;height:44px;border-radius:12px;background:var(--lavender-light);display:flex;align-items:center;justify-content:center;">
+                                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--lavender)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 21h6"/><path d="M12 4v17"/></svg>
+                            </div>
+                        </div>
+                        <h3 id="service-2-title" class="text-[17px] font-semibold mb-2">Телесно-ориентированная терапия</h3>
+                        <p id="service-2-desc" class="text-sm flex-1" style="color:var(--text-muted);line-height:1.55;">Работа с телесными зажимами, напряжением и эмоциями через тело.</p>
+                        <div class="flex items-end justify-between mt-auto pt-5" style="border-top:1px solid #ece8e0;">
+                            <div><span id="service-2-price" class="service-price">8 000 ₽</span><span id="service-2-duration" class="service-duration ml-1.5">/ 60 мин</span></div>
+                            <a href="#booking" class="btn-lavender text-xs">Записаться</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card fade-up reveal-delay-2">
+                    <div class="flex flex-col h-full">
+                        <div class="mb-4">
+                            <div style="width:44px;height:44px;border-radius:12px;background:var(--sage-light);display:flex;align-items:center;justify-content:center;">
+                                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--sage-dark)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                            </div>
+                        </div>
+                        <h3 id="service-3-title" class="text-[17px] font-semibold mb-2">Сексологическая консультация</h3>
+                        <p id="service-3-desc" class="text-sm flex-1" style="color:var(--text-muted);line-height:1.55;">Деликатная работа с сексуальностью, желанием и телесным комфортом.</p>
+                        <div class="flex items-end justify-between mt-auto pt-5" style="border-top:1px solid #ece8e0;">
+                            <div><span id="service-3-price" class="service-price">7 000 ₽</span><span id="service-3-duration" class="service-duration ml-1.5">/ 50 мин</span></div>
+                            <a href="#booking" class="btn-lavender text-xs">Записаться</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section class="section-padding" id="reviews" style="background:#fff;">
+        <div class="container-narrow">
+            <div class="text-center max-w-lg mx-auto mb-14">
+                <p class="text-xs font-semibold tracking-[0.13em] uppercase mb-3" style="color: var(--sage-dark);">Отзывы</p>
+                <h2 class="section-heading mb-4">Что говорят клиенты</h2>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- Review 1 -->
+                <div class="review-card fade-up">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="review-avatar" style="background:#d1dfc2; color:#4a5c3a;">А</div>
+                        <div>
+                            <div id="review-1-name" class="font-semibold text-sm">Анна, 29</div>
+                            <div id="review-1-location" class="text-xs" style="color:var(--text-muted);">Москва</div>
+                        </div>
+                    </div>
+                    <div class="star mb-2">★★★★★</div>
+                    <p id="review-1-text" class="text-[13.5px]" style="color:var(--text-muted); line-height:1.6;">После трёх сессий я впервые за долгое время почувствовала, что могу дышать полной грудью. Юлия создаёт удивительно безопасное пространство.</p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-card fade-up reveal-delay-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="review-avatar" style="background:#e5def0; color:#5a4a6b;">Д</div>
+                        <div>
+                            <div id="review-2-name" class="font-semibold text-sm">Дмитрий, 35</div>
+                            <div id="review-2-location" class="text-xs" style="color:var(--text-muted);">Санкт-Петербург</div>
+                        </div>
+                    </div>
+                    <div class="star mb-2">★★★★★</div>
+                    <p id="review-2-text" class="text-[13.5px]" style="color:var(--text-muted); line-height:1.6;">Скептически относился к терапии, но Юлия смогла расположить к себе с первой встречи. Профессионально, бережно, без воды.</p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-card fade-up reveal-delay-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="review-avatar" style="background:#9CAF88;">Е</div>
+                        <div>
+                            <div id="review-3-name" class="font-semibold text-sm">Елена, 42</div>
+                            <div id="review-3-location" class="text-xs" style="color:var(--text-muted);">Казань</div>
+                        </div>
+                    </div>
+                    <div class="star mb-2">★★★★★</div>
+                    <p id="review-3-text" class="text-[13.5px]" style="color:var(--text-muted); line-height:1.6;">Пришла с запросом про сексуальность — боялась, что будет неловко. Всё прошло настолько деликатно и тепло, что я вернулась снова.</p>
+                </div>
+
+                <!-- Review 4 -->
+                <div class="review-card fade-up reveal-delay-3">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="review-avatar" style="background:#c9b8a8; color:#3f3a32;">М</div>
+                        <div>
+                            <div id="review-4-name" class="font-semibold text-sm">Мария, 31</div>
+                            <div id="review-4-location" class="text-xs" style="color:var(--text-muted);">Екатеринбург</div>
+                        </div>
+                    </div>
+                    <div class="star mb-2">★★★★★</div>
+                    <p id="review-4-text" class="text-[13.5px]" style="color:var(--text-muted); line-height:1.6;">Юлия помогла мне наконец-то услышать своё тело. После телесно-ориентированной терапии я стала гораздо спокойнее и увереннее в себе.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section class="section-padding" id="booking" style="background: #fff;">
+        <div class="container-narrow">
+            <div class="max-w-[620px] mx-auto">
+                <div class="text-center mb-10">
+                    <p class="text-xs font-semibold tracking-[0.13em] uppercase mb-3" style="color: var(--sage-dark);">Запись</p>
+                    <h2 class="section-heading mb-3">Запишитесь на консультацию</h2>
+                    <p style="color: var(--text-muted);">Я свяжусь с вами в течение 24 часов</p>
+                </div>
+
+                <div class="form-card">
+                    <form id="bookingForm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="form-label">Ваше имя</label>
+                                <input type="text" id="name" class="form-input" placeholder="Ирина" required>
+                            </div>
+                            <div>
+                                <label class="form-label">Телефон</label>
+                                <input type="tel" id="phone" class="form-input" placeholder="+7 (999) 123-45-67" required>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="email" class="form-input" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="mt-5">
+                            <label class="form-label">Выберите услугу</label>
+                            <select id="service" class="form-input" required>
+                                <option value="">— Выберите услугу —</option>
+                                <option value="Индивидуальная консультация — 5000 ₽">Индивидуальная консультация — 5 000 ₽ / 50 мин</option>
+                                <option value="Телесно-ориентированная терапия — 8000 ₽">Телесно-ориентированная терапия — 8 000 ₽ / 60 мин</option>
+                                <option value="Сексологическая консультация — 7000 ₽">Сексологическая консультация — 7 000 ₽ / 50 мин</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-5">
+                            <div>
+                                <label class="form-label">Предпочтительная дата</label>
+                                <input type="date" id="date" class="form-input" required>
+                            </div>
+                            <div>
+                                <label class="form-label">Время</label>
+                                <select id="time" class="form-input" required>
+                                    <option value="">— Выберите время —</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <label class="form-label">Комментарий (необязательно)</label>
+                            <textarea id="message" class="form-input" placeholder="Расскажите кратко о вашем запросе..." rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary w-full mt-7 justify-center py-[15px]">
+                            Отправить заявку
+                        </button>
+                    </form>
+                </div>
+
+                <p class="text-center text-xs mt-5" style="color: var(--text-muted);">Ваши данные защищены и не будут переданы третьим лицам</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-16" style="background: #f1ede6; border-top: 1px solid #e5e0d8;">
+        <div class="container-narrow">
+            <div class="flex flex-col md:flex-row justify-between gap-y-12">
+                <div>
+                    <div class="text-xl font-semibold tracking-tight mb-1" style="color:var(--dark);">Юлия</div>
+                    <div class="text-sm" style="color:var(--text-muted);">Психолог • 7 лет стажа</div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-x-14 gap-y-8 text-sm">
+                    <div>
+                        <div class="font-medium mb-3" style="color:var(--dark);">Контакты</div>
+                        <div class="space-y-1.5">
+                            <a href="tel:+79991234567" class="footer-link block">+7 (999) 123-45-67</a>
+                            <a href="mailto:hello@yulia-psych.ru" class="footer-link block">hello@yulia-psych.ru</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-medium mb-3" style="color:var(--dark);">Социальные сети</div>
+                        <div class="space-y-1.5">
+                            <a href="#" class="footer-link block">Telegram</a>
+                            <a href="#" class="footer-link block">Instagram</a>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="font-medium mb-3" style="color:var(--dark);">Москва</div>
+                        <div class="text-sm" style="color:var(--text-muted);">м. Тверская<br>ул. Тверская, 12</div>
+                    </div>
+                    <div>
+                        <div class="font-medium mb-3" style="color:var(--dark);">Режим работы</div>
+                        <div class="text-sm" style="color:var(--text-muted);">Пн–Пт: 10:00–19:00<br>Сб: 10:00–15:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 pt-8 border-t text-xs flex flex-col md:flex-row justify-between items-center" style="border-color: #d9d3c8; color: #9a9589;">
+                <div>© 2026 Юлия. Все права защищены.</div>
+                <div class="mt-2 md:mt-0">Сделано с любовью и уважением к вам</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <div class="modal-check">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3 class="text-2xl font-semibold mb-3">Заявка отправлена!</h3>
+            <p class="text-[15px] mb-7" style="color: var(--text-muted);">Спасибо! Я свяжусь с вами в течение 24 часов, чтобы подтвердить время.</p>
+            <button onclick="closeModal()" class="btn-primary w-full justify-center">Вернуться на сайт</button>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script (if needed)
+        function initializeTailwind() {
+            // Already using CDN classes
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('open');
+            mobileOverlay.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        }
+
+        hamburger.addEventListener('click', toggleMobileMenu);
+        mobileOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                toggleMobileMenu();
+            });
+        });
+
+        // Fade-up on scroll
+        function initFadeUp() {
+            const elements = document.querySelectorAll('.fade-up');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: "0px 0px -60px 0px" });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Form handling
+        const form = document.getElementById('bookingForm');
+        const modal = document.getElementById('modal');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate sending
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Отправляем...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                form.reset();
+                showModal();
+            }, 850);
+        });
+
+        function showModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Set minimum date to today
+        function setMinDate() {
+            const dateInput = document.getElementById('date');
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+        }
+
+        // Phone mask
+        function initPhoneMask() {
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0) {
+                    if (value[0] === '8') value = '7' + value.slice(1);
+                    if (value[0] !== '7') value = '7' + value;
+                    
+                    let formatted = '+7';
+                    if (value.length > 1) formatted += ' (' + value.slice(1, 4);
+                    if (value.length > 4) formatted += ') ' + value.slice(4, 7);
+                    if (value.length > 7) formatted += '-' + value.slice(7, 9);
+                    if (value.length > 9) formatted += '-' + value.slice(9, 11);
+                    e.target.value = formatted;
+                }
+            });
+        }
+
+        // Load dynamic content from data.json
+        async function loadContent() {
+            try {
+                const res = await fetch('data.json');
+                if (!res.ok) {
+                    console.log('%c[Сайт] data.json не найден — используется статический контент', 'color:#9CAF88');
+                    return;
+                }
+                const data = await res.json();
+
+                // Hero
+                if (data.hero) {
+                    const sub = document.getElementById('hero-subtitle');
+                    if (sub && data.hero.subtitle) sub.textContent = data.hero.subtitle;
+                    const title = document.getElementById('hero-title');
+                    if (title && data.hero.title) title.textContent = data.hero.title;
+                    const tag = document.getElementById('hero-tagline');
+                    if (tag && data.hero.tagline) tag.innerHTML = data.hero.tagline;
+                }
+
+                // About
+                if (data.about) {
+                    const label = document.getElementById('about-label');
+                    if (label && data.about.label) label.textContent = data.about.label;
+                    const heading = document.getElementById('about-heading');
+                    if (heading && data.about.heading) heading.innerHTML = data.about.heading;
+                    const p1 = document.getElementById('about-p1');
+                    if (p1 && data.about.p1) p1.innerHTML = data.about.p1;
+                    const p2 = document.getElementById('about-p2');
+                    if (p2 && data.about.p2) p2.innerHTML = data.about.p2;
+                    const p3 = document.getElementById('about-p3');
+                    if (p3 && data.about.p3) p3.innerHTML = data.about.p3;
+
+                    if (data.about.stats) {
+                        const y = document.getElementById('stat-years');
+                        if (y && data.about.stats.years) y.textContent = data.about.stats.years;
+                        const c = document.getElementById('stat-clients');
+                        if (c && data.about.stats.clients) c.textContent = data.about.stats.clients;
+                        const r = document.getElementById('stat-return');
+                        if (r && data.about.stats.return) r.textContent = data.about.stats.return;
+                    }
+                }
+
+                // Services
+                if (data.services && Array.isArray(data.services)) {
+                    data.services.forEach((s, i) => {
+                        const idx = i + 1;
+                        const t = document.getElementById(`service-${idx}-title`);
+                        if (t && s.title) t.textContent = s.title;
+                        const d = document.getElementById(`service-${idx}-desc`);
+                        if (d && s.desc) d.textContent = s.desc;
+                        const p = document.getElementById(`service-${idx}-price`);
+                        if (p && s.price) p.textContent = s.price;
+                        const du = document.getElementById(`service-${idx}-duration`);
+                        if (du && s.duration) du.textContent = s.duration;
+                    });
+                }
+
+                // Reviews
+                if (data.reviews && Array.isArray(data.reviews)) {
+                    data.reviews.forEach((r, i) => {
+                        const idx = i + 1;
+                        const n = document.getElementById(`review-${idx}-name`);
+                        if (n && r.name) n.textContent = r.name;
+                        const l = document.getElementById(`review-${idx}-location`);
+                        if (l && r.location) l.textContent = r.location;
+                        const t = document.getElementById(`review-${idx}-text`);
+                        if (t && r.text) t.textContent = r.text;
+                    });
+                }
+
+                console.log('%c[Сайт] Контент загружен из data.json', 'color:#9CAF88');
+            } catch (e) {
+                console.log('%c[Сайт] Ошибка загрузки data.json — статический контент', 'color:#9CAF88');
+            }
+        }
+
+        // Initialize everything
+        function init() {
+            initializeTailwind();
+            initFadeUp();
+            setMinDate();
+            initPhoneMask();
+            loadContent(); // Load dynamic content
+
+            // Make all service "Записаться" buttons work
+            document.querySelectorAll('.btn-lavender').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    // If it's a link to #booking, it will scroll naturally
+                });
+            });
+
+            console.log('%c[Сайт готов] Психолог Юлия — премиум лендинг загружен', 'color:#9CAF88');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

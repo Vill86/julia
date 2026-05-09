@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin • Юлия Психолог</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --beige: #F8F5F0;
+            --sage: #9CAF88;
+            --sage-dark: #7d8f6a;
+            --dark: #2C2C2C;
+        }
+        body { font-family: 'Inter', system_ui, sans-serif; background: var(--beige); color: var(--dark); }
+        .admin-card { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(44,44,44,0.08); }
+        .nav-active { color: var(--sage-dark); font-weight: 600; border-bottom: 2px solid var(--sage); }
+        .section-tab { transition: all 0.2s ease; }
+        .section-tab.active { background: var(--sage); color: white; }
+        .form-input { 
+            width: 100%; padding: 10px 14px; border: 1.5px solid #e5e0d8; 
+            border-radius: 12px; font-size: 0.95rem; background: #fff; 
+            transition: border-color 0.2s;
+        }
+        .form-input:focus { border-color: var(--sage); outline: none; box-shadow: 0 0 0 3px rgba(156,175,136,0.1); }
+        .btn-sage { 
+            background: var(--sage); color: white; padding: 10px 24px; border-radius: 50px; 
+            font-weight: 500; transition: all 0.3s ease; border: none;
+        }
+        .btn-sage:hover { background: var(--sage-dark); transform: translateY(-1px); }
+        .admin-label { font-size: 0.8rem; font-weight: 600; color: #6b6b6b; margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-input { width: 80px; text-align: center; }
+    </style>
+</head>
+<body>
+    <!-- Top nav -->
+    <nav class="bg-white border-b border-[#e5e0d8]">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-[#9CAF88] rounded-2xl flex items-center justify-center text-white font-semibold text-xl">Ю</div>
+                <div>
+                    <div class="font-semibold text-xl tracking-tight">Admin Panel</div>
+                    <div class="text-xs text-[#6b6b6b]">Юлия • Психолог</div>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div id="user-status" class="hidden text-sm px-3 py-1 bg-[#d1dfc2] text-[#4a5c3a] rounded-full font-medium">Администратор</div>
+                <button onclick="logout()" class="hidden px-5 py-2 text-sm font-medium text-[#6b6b6b] hover:text-[#2C2C2C]" id="logout-btn">Выйти</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="min-h-[calc(100vh-73px)] flex items-center justify-center px-6">
+        <div class="admin-card w-full max-w-md p-10">
+            <div class="text-center mb-8">
+                <div class="mx-auto w-16 h-16 bg-[#9CAF88] rounded-3xl flex items-center justify-center mb-4">
+                    <svg width="32" height="32" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V9a4 4 0 00-8 0v2"/></svg>
+                </div>
+                <h1 class="text-2xl font-semibold">Вход в админ-панель</h1>
+                <p class="text-[#6b6b6b] mt-2 text-sm">Редактирование сайта Юлии</p>
+            </div>
+
+            <div class="space-y-5">
+                <div>
+                    <label class="admin-label">Пароль администратора</label>
+                    <input type="password" id="password" class="form-input" placeholder="Введите пароль" onkeypress="if(event.key === 'Enter') login()">
+                </div>
+                <button onclick="login()" class="btn-sage w-full py-3.5 text-base">Войти</button>
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-xs text-[#9a9589]">Пароль: <span class="font-mono bg-[#f1ede6] px-2 py-0.5 rounded">julia2026</span></p>
+                <p class="text-[10px] text-[#9a9589] mt-1">После входа вы сможете редактировать все блоки сайта</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Screen -->
+    <div id="editor-screen" class="hidden max-w-5xl mx-auto px-6 py-10">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h2 class="text-3xl font-semibold tracking-tight">Редактор сайта</h2>
+                <p class="text-[#6b6b6b]">Изменяйте текст на главной странице. После сохранения обновите data.json на хостинге.</p>
+            </div>
+            <div class="flex gap-3">
+                <button onclick="loadFromJson()" class="px-6 py-2.5 text-sm font-medium border border-[#d1dfc2] hover:bg-[#f1ede6] rounded-3xl flex items-center gap-2">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v-4m0 0l4 4m-4-4l4-4m12 4v4m0 0l-4-4m4 4l-4-4"/></svg>
+                    Загрузить из data.json
+                </button>
+                <button onclick="saveToJson()" class="btn-sage px-8 py-2.5 text-sm flex items-center gap-2">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    Сохранить &amp; Скачать data.json
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-6 border-b border-[#e5e0d8]">
+            <button onclick="switchTab(0)" class="section-tab active px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-0">Hero</button>
+            <button onclick="switchTab(1)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-1">Обо мне</button>
+            <button onclick="switchTab(2)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-2">Услуги</button>
+            <button onclick="switchTab(3)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-3">Отзывы</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="tab-content-0" class="tab-content">
+            <div class="admin-card p-8">
+                <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                    <span class="text-[#9CAF88]">●</span> Hero секция
+                </h3>
+                <div class="grid grid-cols-1 gap-6">
+                    <div>
+                        <label class="admin-label">Подзаголовок (над именем)</label>
+                        <input type="text" id="hero-subtitle" class="form-input" value="Психолог · 7 лет стажа">
+                    </div>
+                    <div>
+                        <label class="admin-label">Имя (главный заголовок)</label>
+                        <input type="text" id="hero-title" class="form-input text-2xl font-light" value="Юлия">
+                    </div>
+                    <div>
+                        <label class="admin-label">Таглайн (с поддержкой &lt;br&gt;)</label>
+                        <textarea id="hero-tagline" class="form-input" rows="2">Помогаю вернуть связь с собой<br class="hidden sm:block" />
+и обрести внутреннюю опору</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-content-1" class="tab-content hidden">
+            <div class="admin-card p-8">
+                <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                    <span class="text-[#9CAF88]">●</span> Блок «Обо мне»
+                </h3>
+                <div class="space-y-6">
+                    <div>
+                        <label class="admin-label">Метка над заголовком</label>
+                        <input type="text" id="about-label" class="form-input" value="Обо мне">
+                    </div>
+                    <div>
+                        <label class="admin-label">Заголовок (HTML разрешен)</label>
+                        <textarea id="about-heading" class="form-input" rows="2">Работаю с тем,<br>что <strong>по-настоящему</strong> волнует</textarea>
+                    </div>
+                    <div>
+                        <label class="admin-label">Первый абзац</label>
+                        <textarea id="about-p1" class="form-input" rows="3">Меня зовут Юлия. Я практикующий психолог с 7-летним опытом. В своей работе использую интегративный подход — сочетаю телесно-ориентированную терапию, гештальт и когнитивно-поведенческие методы.</textarea>
+                    </div>
+                    <div>
+                        <label class="admin-label">Второй абзац (сексология)</label>
+                        <textarea id="about-p2" class="form-input" rows="3">Особое направление — <strong style="color:var(--dark); font-weight:500;">сексологическое консультирование</strong>. Помогаю женщинам вернуть контакт со своим телом, желаниями и потребностями.</textarea>
+                    </div>
+                    <div>
+                        <label class="admin-label">Третий абзац</label>
+                        <textarea id="about-p3" class="form-input" rows="2">Со мной можно говорить о любом. Без стыда и осуждения. Я на вашей стороне.</textarea>
+                    </div>
+
+                    <div class="pt-4 border-t">
+                        <label class="admin-label mb-3">Статистика</label>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div>
+                                <label class="text-xs text-[#6b6b6b]">Лет практики</label>
+                                <input type="text" id="stat-years" class="form-input stat-input" value="7">
+                            </div>
+                            <div>
+                                <label class="text-xs text-[#6b6b6b]">Клиентов</label>
+                                <input type="text" id="stat-clients" class="form-input stat-input" value="600+">
+                            </div>
+                            <div>
+                                <label class="text-xs text-[#6b6b6b]">Возвращаются</label>
+                                <input type="text" id="stat-return" class="form-input stat-input" value="95%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-content-2" class="tab-content hidden">
+            <div class="admin-card p-8">
+                <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                    <span class="text-[#9CAF88]">●</span> Услуги (3 карточки)
+                </h3>
+                <div class="space-y-8" id="services-editor">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-content-3" class="tab-content hidden">
+            <div class="admin-card p-8">
+                <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                    <span class="text-[#9CAF88]">●</span> Отзывы (4 карточки)
+                </h3>
+                <div class="space-y-8" id="reviews-editor">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center text-xs text-[#9a9589]">
+            После скачивания замените файл <span class="font-mono">data.json</span> в корне сайта и обновите страницу.<br>
+            Изменения применятся автоматически благодаря динамической загрузке.
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initTailwind() {
+            // already using CDN
+        }
+
+        let currentTab = 0;
+
+        function switchTab(tabIndex) {
+            // Hide all
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.remove('active'));
+
+            // Show selected
+            document.getElementById(`tab-content-${tabIndex}`).classList.remove('hidden');
+            document.getElementById(`tab-${tabIndex}`).classList.add('active');
+            currentTab = tabIndex;
+        }
+
+        // Services editor
+        function renderServicesEditor(services = []) {
+            const container = document.getElementById('services-editor');
+            container.innerHTML = '';
+
+            const defaultServices = [
+                { title: 'Индивидуальная консультация', desc: 'Работа с тревогой, самооценкой, отношениями и личными запросами. Мягко и бережно.', price: '5 000 ₽', duration: '/ 50 мин' },
+                { title: 'Телесно-ориентированная терапия', desc: 'Работа с телесными зажимами, напряжением и эмоциями через тело.', price: '8 000 ₽', duration: '/ 60 мин' },
+                { title: 'Сексологическая консультация', desc: 'Деликатная работа с сексуальностью, желанием и телесным комфортом.', price: '7 000 ₽', duration: '/ 50 мин' }
+            ];
+
+            const data = services.length ? services : defaultServices;
+
+            data.forEach((service, index) => {
+                const div = document.createElement('div');
+                div.className = 'border border-[#e5e0d8] rounded-2xl p-6';
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-semibold">Услуга ${index + 1}</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="admin-label">Название услуги</label>
+                            <input type="text" class="form-input service-title" value="${service.title}" data-idx="${index}">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="admin-label">Цена</label>
+                                <input type="text" class="form-input service-price" value="${service.price}" data-idx="${index}">
+                            </div>
+                            <div>
+                                <label class="admin-label">Длительность</label>
+                                <input type="text" class="form-input service-duration" value="${service.duration}" data-idx="${index}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="admin-label">Описание</label>
+                        <textarea class="form-input service-desc" rows="2" data-idx="${index}">${service.desc}</textarea>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Reviews editor
+        function renderReviewsEditor(reviews = []) {
+            const container = document.getElementById('reviews-editor');
+            container.innerHTML = '';
+
+            const defaultReviews = [
+                { name: 'Анна, 29', location: 'Москва', text: 'После трёх сессий я впервые за долгое время почувствовала, что могу дышать полной грудью. Юлия создаёт удивительно безопасное пространство.' },
+                { name: 'Дмитрий, 35', location: 'Санкт-Петербург', text: 'Скептически относился к терапии, но Юлия смогла расположить к себе с первой встречи. Профессионально, бережно, без воды.' },
+                { name: 'Елена, 42', location: 'Казань', text: 'Пришла с запросом про сексуальность — боялась, что будет неловко. Всё прошло настолько деликатно и тепло, что я вернулась снова.' },
+                { name: 'Мария, 31', location: 'Екатеринбург', text: 'Юлия помогла мне наконец-то услышать своё тело. После телесно-ориентированной терапии я стала гораздо спокойнее и увереннее в себе.' }
+            ];
+
+            const data = reviews.length ? reviews : defaultReviews;
+
+            data.forEach((review, index) => {
+                const div = document.createElement('div');
+                div.className = 'border border-[#e5e0d8] rounded-2xl p-6';
+                div.innerHTML = `
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="font-semibold">Отзыв ${index + 1}</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="admin-label">Имя и возраст</label>
+                            <input type="text" class="form-input review-name" value="${review.name}" data-idx="${index}">
+                        </div>
+                        <div>
+                            <label class="admin-label">Город</label>
+                            <input type="text" class="form-input review-location" value="${review.location}" data-idx="${index}">
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="admin-label">Текст отзыва</label>
+                        <textarea class="form-input review-text" rows="3" data-idx="${index}">${review.text}</textarea>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function collectData() {
+            const data = {
+                hero: {
+                    subtitle: document.getElementById('hero-subtitle').value,
+                    title: document.getElementById('hero-title').value,
+                    tagline: document.getElementById('hero-tagline').value
+                },
+                about: {
+                    label: document.getElementById('about-label').value,
+                    heading: document.getElementById('about-heading').value,
+                    p1: document.getElementById('about-p1').value,
+                    p2: document.getElementById('about-p2').value,
+                    p3: document.getElementById('about-p3').value,
+                    stats: {
+                        years: document.getElementById('stat-years').value,
+                        clients: document.getElementById('stat-clients').value,
+                        return: document.getElementById('stat-return').value
+                    }
+                },
+                services: [],
+                reviews: []
+            };
+
+            // Collect services
+            document.querySelectorAll('#services-editor .service-title').forEach((el, i) => {
+                if (!data.services[i]) data.services[i] = {};
+                data.services[i].title = el.value;
+            });
+            document.querySelectorAll('#services-editor .service-desc').forEach((el, i) => {
+                data.services[i].desc = el.value;
+            });
+            document.querySelectorAll('#services-editor .service-price').forEach((el, i) => {
+                data.services[i].price = el.value;
+            });
+            document.querySelectorAll('#services-editor .service-duration').forEach((el, i) => {
+                data.services[i].duration = el.value;
+            });
+
+            // Collect reviews
+            document.querySelectorAll('#reviews-editor .review-name').forEach((el, i) => {
+                if (!data.reviews[i]) data.reviews[i] = {};
+                data.reviews[i].name = el.value;
+            });
+            document.querySelectorAll('#reviews-editor .review-location').forEach((el, i) => {
+                data.reviews[i].location = el.value;
+            });
+            document.querySelectorAll('#reviews-editor .review-text').forEach((el, i) => {
+                data.reviews[i].text = el.value;
+            });
+
+            return data;
+        }
+
+        async function loadFromJson() {
+            try {
+                const res = await fetch('data.json');
+                if (!res.ok) {
+                    alert('Файл data.json не найден рядом с admin.html');
+                    return;
+                }
+                const data = await res.json();
+
+                // Populate hero
+                if (data.hero) {
+                    document.getElementById('hero-subtitle').value = data.hero.subtitle || '';
+                    document.getElementById('hero-title').value = data.hero.title || '';
+                    document.getElementById('hero-tagline').value = data.hero.tagline || '';
+                }
+
+                // Populate about
+                if (data.about) {
+                    document.getElementById('about-label').value = data.about.label || '';
+                    document.getElementById('about-heading').value = data.about.heading || '';
+                    document.getElementById('about-p1').value = data.about.p1 || '';
+                    document.getElementById('about-p2').value = data.about.p2 || '';
+                    document.getElementById('about-p3').value = data.about.p3 || '';
+
+                    if (data.about.stats) {
+                        document.getElementById('stat-years').value = data.about.stats.years || '';
+                        document.getElementById('stat-clients').value = data.about.stats.clients || '';
+                        document.getElementById('stat-return').value = data.about.stats.return || '';
+                    }
+                }
+
+                // Services
+                renderServicesEditor(data.services || []);
+
+                // Reviews
+                renderReviewsEditor(data.reviews || []);
+
+                // Switch to first tab
+                switchTab(0);
+
+                alert('Данные успешно загружены из data.json!');
+            } catch (e) {
+                alert('Ошибка загрузки data.json: ' + e.message);
+            }
+        }
+
+        function saveToJson() {
+            const data = collectData();
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            // Also show success message
+            const btns = document.querySelectorAll('button');
+            const originalTexts = [];
+            btns.forEach((b, i) => {
+                if (b.textContent.includes('Сохранить')) {
+                    originalTexts[i] = b.innerHTML;
+                    b.innerHTML = '✓ Скачано!';
+                    b.style.background = '#4a5c3a';
+                    setTimeout(() => {
+                        b.innerHTML = originalTexts[i] || 'Сохранить & Скачать data.json';
+                        b.style.background = '';
+                    }, 2200);
+                }
+            });
+        }
+
+        function login() {
+            const pass = document.getElementById('password').value;
+            const correctPass = 'julia2026';
+
+            if (pass === correctPass) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('editor-screen').classList.remove('hidden');
+                document.getElementById('user-status').classList.remove('hidden');
+                document.getElementById('logout-btn').classList.remove('hidden');
+
+                // Initialize editors
+                renderServicesEditor();
+                renderReviewsEditor();
+                switchTab(0);
+
+                // Auto-load if possible
+                setTimeout(() => {
+                    // Try to load automatically
+                    fetch('data.json').then(r => r.ok && r.json()).then(data => {
+                        if (data) {
+                            document.getElementById('hero-subtitle').value = data.hero?.subtitle || document.getElementById('hero-subtitle').value;
+                            document.getElementById('hero-title').value = data.hero?.title || document.getElementById('hero-title').value;
+                            document.getElementById('hero-tagline').value = data.hero?.tagline || document.getElementById('hero-tagline').value;
+                            
+                            if (data.about) {
+                                document.getElementById('about-label').value = data.about.label || document.getElementById('about-label').value;
+                                document.getElementById('about-heading').value = data.about.heading || document.getElementById('about-heading').value;
+                                document.getElementById('about-p1').value = data.about.p1 || document.getElementById('about-p1').value;
+                                document.getElementById('about-p2').value = data.about.p2 || document.getElementById('about-p2').value;
+                                document.getElementById('about-p3').value = data.about.p3 || document.getElementById('about-p3').value;
+                                if (data.about.stats) {
+                                    document.getElementById('stat-years').value = data.about.stats.years || '7';
+                                    document.getElementById('stat-clients').value = data.about.stats.clients || '600+';
+                                    document.getElementById('stat-return').value = data.about.stats.return || '95%';
+                                }
+                            }
+                            
+                            if (data.services) renderServicesEditor(data.services);
+                            if (data.reviews) renderReviewsEditor(data.reviews);
+                        }
+                    }).catch(() => {});
+                }, 300);
+            } else {
+                const input = document.getElementById('password');
+                input.style.borderColor = '#e57373';
+                setTimeout(() => input.style.borderColor = '#e5e0d8', 1200);
+                alert('Неверный пароль. Попробуйте ещё раз.');
+            }
+        }
+
+        function logout() {
+            document.getElementById('editor-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('user-status').classList.add('hidden');
+            document.getElementById('logout-btn').classList.add('hidden');
+            document.getElementById('password').value = '';
+        }
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', function(e) {
+            if (e.metaKey && e.key === 's' && !document.getElementById('editor-screen').classList.contains('hidden')) {
+                e.preventDefault();
+                saveToJson();
+            }
+        });
+
+        // Init
+        function initAdmin() {
+            initTailwind();
+            
+            // Show hint
+            console.log('%c[Admin] Панель администратора готова. Пароль: julia2026', 'color:#9CAF88');
+            
+            // Focus password on load
+            setTimeout(() => {
+                const passInput = document.getElementById('password');
+                if (passInput && !document.getElementById('editor-screen').classList.contains('hidden')) {
+                    // already logged
+                } else if (passInput) {
+                    passInput.focus();
+                }
+            }, 500);
+        }
+
+        window.onload = initAdmin;
+    </script>
+</body>
+</html>
