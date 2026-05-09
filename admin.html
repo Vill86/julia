@@ -102,6 +102,7 @@
             <button onclick="switchTab(1)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-1">Обо мне</button>
             <button onclick="switchTab(2)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-2">Услуги</button>
             <button onclick="switchTab(3)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-3">Отзывы</button>
+            <button onclick="switchTab(4)" class="section-tab px-6 py-3 text-sm font-medium rounded-t-2xl" id="tab-4">Фото</button>
         </div>
 
         <!-- Tab Contents -->
@@ -198,6 +199,31 @@
             </div>
         </div>
 
+        <!-- Photo Tab -->
+        <div id="tab-content-4" class="tab-content hidden">
+            <div class="admin-card p-8">
+                <h3 class="font-semibold text-lg mb-6 flex items-center gap-2">
+                    <span class="text-[#9CAF88]">●</span> Фото на главной странице
+                </h3>
+                
+                <div class="max-w-md">
+                    <div class="mb-6">
+                        <label class="admin-label">Текущее фото</label>
+                        <div class="border border-[#e5e0d8] rounded-2xl overflow-hidden w-64 aspect-[3/3.9]">
+                            <img id="photo-preview" src="Julia.jpeg" class="w-full h-full object-cover" alt="Текущее фото Юлии">
+                        </div>
+                        <p class="text-xs text-[#6b6b6b] mt-2">Это фото отображается в блоке «Обо мне»</p>
+                    </div>
+
+                    <div>
+                        <label class="admin-label">Загрузить новое фото</label>
+                        <input type="file" id="photo-upload" accept="image/*" class="block w-full text-sm file:mr-4 file:py-2.5 file:px-5 file:rounded-3xl file:border-0 file:bg-[#9CAF88] file:text-white file:font-medium hover:file:bg-[#7d8f6a] cursor-pointer">
+                        <p class="text-[10px] text-[#9a9589] mt-1">Рекомендуется квадратное или портретное фото (минимум 720×900 px)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="mt-8 text-center text-xs text-[#9a9589]">
             После скачивания замените файл <span class="font-mono">data.json</span> в корне сайта и обновите страницу.<br>
             Изменения применятся автоматически благодаря динамической загрузке.
@@ -211,6 +237,7 @@
         }
 
         let currentTab = 0;
+        let selectedPhotoFile = null;
 
         function switchTab(tabIndex) {
             // Hide all
@@ -310,6 +337,7 @@
 
         function collectData() {
             const data = {
+                photo: "Julia.jpeg",
                 hero: {
                     subtitle: document.getElementById('hero-subtitle').value,
                     title: document.getElementById('hero-title').value,
@@ -398,6 +426,12 @@
                 // Reviews
                 renderReviewsEditor(data.reviews || []);
 
+                // Photo preview
+                if (data.photo) {
+                    const preview = document.getElementById('photo-preview');
+                    if (preview) preview.src = data.photo;
+                }
+
                 // Switch to first tab
                 switchTab(0);
 
@@ -420,6 +454,25 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+
+            // Download new photo if user uploaded one
+            if (selectedPhotoFile) {
+                setTimeout(() => {
+                    const photoUrl = URL.createObjectURL(selectedPhotoFile);
+                    const photoLink = document.createElement('a');
+                    photoLink.href = photoUrl;
+                    photoLink.download = 'Julia.jpeg';
+                    document.body.appendChild(photoLink);
+                    photoLink.click();
+                    document.body.removeChild(photoLink);
+                    URL.revokeObjectURL(photoUrl);
+                    selectedPhotoFile = null;
+                    
+                    // Reset file input
+                    const input = document.getElementById('photo-upload');
+                    if (input) input.value = '';
+                }, 300);
+            }
 
             // Also show success message
             const btns = document.querySelectorAll('button');
@@ -519,6 +572,23 @@
                     passInput.focus();
                 }
             }, 500);
+
+            // Photo upload preview
+            const photoInput = document.getElementById('photo-upload');
+            if (photoInput) {
+                photoInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        selectedPhotoFile = file;
+                        const reader = new FileReader();
+                        reader.onload = function(ev) {
+                            const preview = document.getElementById('photo-preview');
+                            if (preview) preview.src = ev.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
         }
 
         window.onload = initAdmin;
