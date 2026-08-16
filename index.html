@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Юлия — психолог, сексолог, телесный терапевт</title>
+<meta name="description" content="Юлия — психолог, сексолог и телесный терапевт. Семь лет практики. Тело — это ландшафт: исследуем его без стыда и медицинской холодности.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ECE5D8;
+  --bg-soft:#E3DBCA;
+  --ink:#262A21;
+  --ink-soft:#3A3E33;
+  --accent:#4C5240;
+  --accent-soft:#8B9176;
+  --muted:#6E6A5C;
+  --line:#D6CDB9;
+  --font-display:'Fraunces','Cormorant',Georgia,serif;
+  --font-text:'IBM Plex Sans',Inter,system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-text);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;line-height:1.08;letter-spacing:-0.01em;}
+.em{font-style:italic;color:var(--accent);}
+.container{width:100%;max-width:1240px;margin:0 auto;padding:0 20px;}
+@media(min-width:768px){.container{padding:0 40px;}}
+@media(min-width:1024px){.container{padding:0 56px;}}
+section{scroll-margin-top:72px;}
+.section{padding:64px 0;}
+@media(min-width:1024px){.section{padding:120px 0;}}
+.label{font-size:12px;color:var(--accent);letter-spacing:.02em;}
+.h2{font-size:clamp(1.9rem,4vw,3.1rem);margin-top:16px;}
+.lead{color:var(--ink-soft);max-width:56ch;margin-top:18px;}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:52px;padding:0 30px;font-size:15px;font-weight:500;
+  font-family:var(--font-text);border:1px solid transparent;border-radius:0;
+  cursor:pointer;text-decoration:none;
+  transition:background .25s,color .25s,border-color .25s;
+}
+.btn--solid{background:var(--bg);color:var(--ink);}
+.btn--solid:hover{background:var(--accent-soft);}
+.btn--ghost{border-color:rgba(236,229,216,.4);color:var(--bg);}
+.btn--ghost:hover{border-color:var(--bg);}
+.btn--ink{background:var(--ink);color:var(--bg);}
+.btn--ink:hover{background:var(--accent);}
+.btn--small{height:40px;padding:0 18px;font-size:14px;}
+
+/* header */
+.site-header{position:sticky;top:0;z-index:60;background:var(--bg);border-bottom:1px solid var(--line);}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative;gap:12px;}
+.logo{font-family:var(--font-display);font-size:23px;text-decoration:none;font-weight:500;}
+.logo .dot{color:var(--accent);}
+.nav-links{display:none;list-style:none;}
+.nav-links.open{
+  display:flex;flex-direction:column;position:absolute;top:64px;left:0;width:100%;
+  background:var(--bg);border-bottom:1px solid var(--line);padding:8px 20px 20px;gap:0;
+}
+.nav-links li a{
+  display:block;padding:14px 0;text-decoration:none;font-size:15px;
+  color:var(--ink-soft);border-bottom:1px solid var(--line);
+}
+.nav-links li:last-child a{border-bottom:0;}
+.nav-links li a:hover{color:var(--ink);}
+.header-cta{margin-left:auto;}
+@media(min-width:768px){
+  .nav-links{display:flex;flex-direction:row;align-items:center;gap:34px;margin-left:auto;}
+  .nav-links li a{padding:0;border-bottom:0;font-size:14px;}
+  .header-cta{margin-left:0;}
+}
+.burger{display:flex;flex-direction:column;gap:5px;background:none;border:0;padding:8px;cursor:pointer;flex:0 0 auto;}
+.burger span{display:block;width:22px;height:2px;background:var(--ink);}
+@media(min-width:768px){.burger{display:none;}}
+
+/* hero */
+.hero{background:var(--ink);color:var(--bg);padding:72px 0 88px;}
+@media(min-width:1024px){.hero{padding:120px 0 140px;}}
+.hero-inner{display:grid;gap:40px;}
+@media(min-width:1024px){.hero-inner{grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;}}
+.hero .label{color:var(--accent-soft);}
+.hero h1{font-size:clamp(2.8rem,7vw,5.6rem);margin:20px 0 24px;color:var(--bg);}
+.hero h1 .em{color:var(--accent-soft);}
+.hero-sub{font-size:clamp(1rem,1.4vw,1.15rem);color:rgba(236,229,216,.74);max-width:46ch;margin-bottom:32px;}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;}
+.hero-meta{margin-top:28px;font-size:13px;color:rgba(236,229,216,.55);}
+.hero-media img{width:100%;object-fit:cover;object-position:center;aspect-ratio:16/9;}
+@media(min-width:768px){.hero-media img{aspect-ratio:4/3;}}
+
+/* metaphor band */
+.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.band-inner{padding:56px 0;}
+@media(min-width:1024px){.band-inner{padding:72px 0;}}
+.meta-grid{display:grid;gap:40px;margin-top:44px;}
+@media(min-width:1024px){.meta-grid{grid-template-columns:repeat(3,1fr);gap:56px;}}
+.meta-item{border-top:1px solid var(--line);padding-top:20px;}
+.meta-item .num{font-size:12px;color:var(--muted);}
+.meta-item h3{font-size:clamp(1.4rem,2.4vw,1.8rem);margin:12px 0 14px;}
+.meta-item p{color:var(--ink-soft);font-size:15px;}
+
+/* services — бумажный счёт */
+.invoice{margin-top:40px;border-top:1px solid var(--line);}
+.invoice-row{
+  display:flex;flex-direction:column;gap:6px;padding:22px 0;
+  border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s;
+}
+.invoice-row:hover{background:var(--bg-soft);}
+.invoice-row.selected{background:var(--bg-soft);}
+@media(min-width:768px){
+  .invoice-row{display:grid;grid-template-columns:1.6fr .7fr .9fr;align-items:baseline;gap:24px;}
+}
+.iv-name{font-family:var(--font-display);font-size:clamp(1.3rem,2.2vw,1.7rem);}
+.iv-desc{font-size:14px;color:var(--muted);margin-top:4px;font-family:var(--font-text);font-weight:400;}
+.iv-dur{font-size:14px;color:var(--ink-soft);}
+.iv-price{font-family:var(--font-display);font-size:clamp(1.5rem,2.4vw,2rem);}
+@media(min-width:768px){.iv-price{text-align:right;}}
+.invoice-foot{margin-top:24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+@media(min-width:768px){.invoice-foot{flex-direction:row;justify-content:space-between;align-items:center;}}
+.invoice-note{font-size:13px;color:var(--muted);}
+
+/* process */
+.process-grid{display:grid;gap:40px;}
+@media(min-width:1024px){.process-grid{grid-template-columns:.45fr 1fr;gap:80px;}}
+@media(min-width:1024px){.process-head{position:sticky;top:100px;align-self:start;}}
+.step{display:grid;grid-template-columns:56px 1fr;gap:20px;border-top:1px solid var(--line);padding:28px 0;}
+.step:last-child{border-bottom:1px solid var(--line);}
+.step .num{font-size:13px;color:var(--muted);padding-top:4px;}
+.step h3{font-size:clamp(1.3rem,2.2vw,1.6rem);}
+.step p{color:var(--ink-soft);margin-top:10px;max-width:56ch;}
+
+/* about */
+.about-grid{display:grid;gap:40px;}
+@media(min-width:768px){.about-grid{grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start;}}
+.about-photo{width:100%;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line);}
+.about-body p{color:var(--ink-soft);max-width:56ch;margin-top:18px;}
+.facts{list-style:none;margin-top:28px;border-top:1px solid var(--line);}
+.facts li{display:flex;justify-content:space-between;gap:24px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;}
+.facts li b{font-weight:500;}
+.about-note{margin-top:28px;font-family:var(--font-display);font-style:italic;font-size:clamp(1.1rem,1.8vw,1.35rem);}
+
+/* reviews */
+.reviews-grid{display:grid;gap:16px;margin-top:48px;}
+@media(min-width:1024px){.reviews-grid{grid-template-columns:repeat(3,1fr);gap:24px;}}
+.review{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-direction:column;gap:20px;}
+.review blockquote{font-family:var(--font-display);font-style:italic;font-size:clamp(1.15rem,1.9vw,1.4rem);line-height:1.4;}
+.review .who{font-size:13px;color:var(--muted);margin-top:auto;}
+
+/* texture strip */
+.strip{height:280px;}
+@media(min-width:768px){.strip{height:380px;}}
+.strip img{width:100%;height:100%;object-fit:cover;}
+
+/* contact */
+.contact-grid{display:grid;gap:48px;}
+@media(min-width:1024px){.contact-grid{grid-template-columns:1fr 1fr;gap:80px;}}
+.contact-form{display:flex;flex-direction:column;gap:22px;margin-top:32px;}
+.field{display:flex;flex-direction:column;gap:8px;}
+.field label{font-size:13px;color:var(--muted);}
+.field input,.field textarea{
+  font-family:inherit;font-size:15px;color:var(--ink);background:transparent;
+  border:0;border-bottom:1px solid var(--line);padding:10px 0;border-radius:0;
+}
+.field input:focus,.field textarea:focus{outline:none;border-bottom-color:var(--accent);}
+.field textarea{resize:vertical;min-height:110px;}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5;}
+.consent input{margin-top:3px;accent-color:var(--accent);}
+.form-err{font-size:13px;color:#8A4A3A;display:none;}
+.sel-format{display:none;font-size:14px;color:var(--accent);margin-top:24px;}
+.contact-lines{margin-top:32px;border-top:1px solid var(--line);}
+.contact-lines .row{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;}
+.contact-lines .row a{color:var(--accent);text-decoration:none;}
+.contact-lines .row a:hover{text-decoration:underline;}
+.contact-note{margin-top:20px;font-size:13px;color:var(--muted);}
+
+/* footer */
+.site-footer{border-top:1px solid var(--line);padding:40px 0;}
+.footer-inner{display:flex;flex-direction:column;gap:16px;}
+@media(min-width:768px){.footer-inner{flex-direction:row;justify-content:space-between;align-items:flex-start;}}
+.footer-tag{font-family:var(--font-display);font-size:20px;}
+.footer-meta{font-size:13px;color:var(--muted);max-width:46ch;}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease;}
+.reveal.in{opacity:1;transform:none;}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;transition:none;}
+  .btn,.invoice-row,.nav-links li a{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="logo" href="#top">Юлия<span class="dot">.</span></a>
+      <ul class="nav-links" id="nav">
+        <li><a href="#services">Форматы</a></li>
+        <li><a href="#process">Как проходит</a></li>
+        <li><a href="#about">Обо мне</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+      <a class="btn btn--ink btn--small header-cta" href="#contact">Записаться</a>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text reveal">
+          <p class="label">психолог · сексолог · телесный терапевт</p>
+          <h1>Тело — это<br><span class="em">ландшафт</span></h1>
+          <p class="hero-sub">Помогаю исследовать своё тело спокойно и без стыда. Психология, сексология и телесная терапия — в одном подходе. Семь лет практики.</p>
+          <div class="hero-actions">
+            <a class="btn btn--solid" href="#contact">Записаться на встречу</a>
+            <a class="btn btn--ghost" href="#services">Форматы и цены</a>
+          </div>
+          <p class="hero-meta">Очно и онлайн · Москва</p>
+        </div>
+        <div class="hero-media reveal">
+          <img src="julia3.jpg" alt="Юлия — психолог, сексолог, телесный терапевт">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METAPHORS -->
+  <section class="band">
+    <div class="container">
+      <div class="band-inner">
+        <div class="reveal">
+          <p class="label">язык, на котором мы говорим о теле</p>
+          <h2 class="h2">Природа вместо <span class="em">медицины</span></h2>
+          <p class="lead">Три образа, на которых держится моя работа. Они снимают стыд и возвращают телу право быть просто телом — без диагнозов и оценок.</p>
+        </div>
+        <div class="meta-grid">
+          <div class="meta-item reveal">
+            <p class="num">01</p>
+            <h3>Тело — это ландшафт</h3>
+            <p>Исследуем территорию. Каждый участок — со своей историей. Не поломка, которую надо чинить, а местность, которую можно понять и пройти.</p>
+          </div>
+          <div class="meta-item reveal">
+            <p class="num">02</p>
+            <h3>Зажимы — замёрзшая река</h3>
+            <p>Там, где чувства когда-то остановились, остаётся лёд. Мы не ломаем его — мы добавляем тепла, и течение возвращается само.</p>
+          </div>
+          <div class="meta-item reveal">
+            <p class="num">03</p>
+            <h3>Сексуальность — источник</h3>
+            <p>Не функция и не оценка. Корни желания — в безопасности, доверии и знании собственного тела.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="reveal">
+        <p class="label">01 — форматы и цены</p>
+        <h2 class="h2">Три способа <span class="em">начать</span></h2>
+        <p class="lead">Первая встреча — всегда разговор. Выберите формат, он подставится в заявку.</p>
+      </div>
+      <div class="invoice reveal">
+        <div class="invoice-row" data-format="Консультация · 60 минут · 7 000 ₽" tabindex="0" role="button" aria-label="Выбрать формат: консультация">
+          <div class="iv-name">Консультация <div class="iv-desc">разовый разговор, разбор запроса, понятный план</div></div>
+          <div class="iv-dur">60 минут</div>
+          <div class="iv-price">7 000 ₽</div>
+        </div>
+        <div class="invoice-row" data-format="Телесная сессия · 90 минут · 8 000 ₽" tabindex="0" role="button" aria-label="Выбрать формат: телесная сессия">
+          <div class="iv-name">Телесная сессия <div class="iv-desc">работа с зажимами и ощущениями, возвращение опоры</div></div>
+          <div class="iv-dur">90 минут</div>
+          <div class="iv-price">8 000 ₽</div>
+        </div>
+        <div class="invoice-row" data-format="Углублённая работа · 120 минут · 9 000 ₽" tabindex="0" role="button" aria-label="Выбрать формат: углублённая работа">
+          <div class="iv-name">Углублённая работа <div class="iv-desc">парный формат или длинная сессия — для вопроса, которому нужно больше времени</div></div>
+          <div class="iv-dur">120 минут</div>
+          <div class="iv-price">9 000 ₽</div>
+        </div>
+      </div>
+      <div class="invoice-foot">
+        <p class="invoice-note">Перенос или отмена — не позднее чем за 24 часа.</p>
+        <a class="btn btn--ink" href="#contact">Записаться</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="process-grid">
+        <div class="process-head reveal">
+          <p class="label">02 — как проходит</p>
+          <h2 class="h2">От льда — <span class="em">к течению</span></h2>
+          <p class="lead">Никакого давления и «давайте быстрее». Двигаемся в вашем темпе, шаг за шагом.</p>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <p class="num">01</p>
+            <div>
+              <h3>Карта территории</h3>
+              <p>Начинаем с разговора. Слушаю, задаю вопросы, вместе понимаем, где болит и что за этим стоит.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <p class="num">02</p>
+            <div>
+              <h3>Ищем лёд</h3>
+              <p>Находим места, где тело замерло: дыхание, напряжение, привычные реакции на слова и прикосновение.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <p class="num">03</p>
+            <div>
+              <h3>Оттаивание</h3>
+              <p>Через беседу и телесные практики возвращаем чувствам право быть. Медленно, без насилия над собой.</p>
+            </div>
+          </div>
+          <div class="step reveal">
+            <p class="num">04</p>
+            <div>
+              <h3>Течение</h3>
+              <p>Новые ощущения становятся опорой. Вы уходите не с диагнозом, а с пониманием, как устроено ваше тело.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="reveal">
+          <img class="about-photo" src="photo.jpg" alt="Юлия — психолог, сексолог, телесный терапевт">
+        </div>
+        <div class="about-body reveal">
+          <p class="label">03 — обо мне</p>
+          <h2 class="h2">Юлия</h2>
+          <p>Психолог, сексолог и телесный терапевт. Семь лет частной практики. Работаю на стыке трёх подходов — потому что психика, тело и сексуальность не живут по отдельности.</p>
+          <ul class="facts">
+            <li><span>Частная практика</span><b>7 лет</b></li>
+            <li><span>Направления</span><b>психология · сексология · тело</b></li>
+            <li><span>Формат</span><b>очно в Москве и онлайн</b></li>
+          </ul>
+          <p class="about-note">Без осуждения, без оценок. Всё, что вы расскажете, остаётся между нами.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="reveal">
+        <p class="label">04 — отзывы</p>
+        <h2 class="h2">Слова тех, кто <span class="em">прошёл</span></h2>
+        <p class="lead">Публикую с разрешения. Имена меняю — подробности остаются между нами.</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review reveal">
+          <blockquote>«Пришла с ощущением „со мной что-то не так“. Через несколько встреч впервые за долгое время почувствовала тело своим. Меня не „чинили“ — вернули мне меня».</blockquote>
+          <p class="who">А., 34 года</p>
+        </div>
+        <div class="review reveal">
+          <blockquote>«Говорить о сексе было неловко даже с партнёром. Юля ведёт разговор так спокойно, что страх уходит сам. Теперь разговариваем — и об этом тоже».</blockquote>
+          <p class="who">М. и К., пара</p>
+        </div>
+        <div class="review reveal">
+          <blockquote>«Работа с зажимами — это не „просто расслабьтесь“. Медленно, но честно. Спустя пару месяцев заметила: дышу глубже, сплю спокойнее».</blockquote>
+          <p class="who">Е., 41 год</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEXTURE STRIP -->
+  <div class="strip">
+    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80" alt="Песок и вода — пауза, место, где можно выдохнуть">
+  </div>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="reveal">
+          <p class="label">05 — записаться</p>
+          <h2 class="h2">Сделаем первый <span class="em">шаг</span></h2>
+          <p class="lead">Напишите, что хотите обсудить, — договоримся о времени. Отвечаю в течение дня.</p>
+          <p class="sel-format" id="selectedFormat"></p>
+          <form class="contact-form" id="contactForm">
+            <input type="hidden" id="f-format" name="format">
+            <div class="field">
+              <label for="f-name">Имя</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
+            </div>
+            <div class="field">
+              <label for="f-contact">Телефон или Telegram</label>
+              <input id="f-contact" name="contact" type="text" autocomplete="tel" placeholder="Куда вам ответить">
+            </div>
+            <div class="field">
+              <label for="f-msg">Что хочется обсудить</label>
+              <textarea id="f-msg" name="message" placeholder="Пара слов о запросе — этого достаточно для начала"></textarea>
+            </div>
+            <label class="consent">
+              <input type="checkbox" id="f-consent" required>
+              <span>Согласен(на) на обработку персональных данных (152-ФЗ)</span>
+            </label>
+            <p class="form-err" id="formErr">Подтвердите согласие на обработку данных.</p>
+            <button class="btn btn--ink" type="submit" style="align-self:flex-start;">Отправить</button>
+          </form>
+        </div>
+        <div class="reveal">
+          <p class="lead">Если удобнее написать напрямую:</p>
+          <div class="contact-lines">
+            <div class="row"><span>Telegram</span><a href="https://t.me/yulia_therapy">@yulia_therapy</a></div>
+            <div class="row"><span>Почта</span><a href="mailto:hello@yulia-practice.ru">hello@yulia-practice.ru</a></div>
+          </div>
+          <p class="contact-note">Очно — Москва, кабинет в центре. Онлайн — из любой точки. Точный адрес пришлю после записи.</p>
+          <p class="contact-note">Консультации не заменяют медицинскую и психиатрическую помощь. При острых состояниях — к врачу.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p class="footer-tag">Юлия<span style="color:var(--accent)">.</span></p>
+    <p class="footer-meta">Без стыда. Про тело. · Консультации не заменяют медицинскую и психиатрическую помощь. · 2026</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var burger = document.getElementById('burger');
+  var nav = document.getElementById('nav');
+  burger.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); });
+  });
+
+  var rows = document.querySelectorAll('.invoice-row');
+  var selEl = document.getElementById('selectedFormat');
+  var formatInput = document.getElementById('f-format');
+  var currentFormat = '';
+  rows.forEach(function(r){
+    r.addEventListener('click', function(){
+      rows.forEach(function(x){ x.classList.remove('selected'); });
+      r.classList.add('selected');
+      currentFormat = r.getAttribute('data-format');
+      formatInput.value = currentFormat;
+      selEl.textContent = 'Выбран формат: ' + currentFormat;
+      selEl.style.display = 'block';
+    });
+    r.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); r.click(); }
+    });
+  });
+
+  var form = document.getElementById('contactForm');
+  var err = document.getElementById('formErr');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!document.getElementById('f-consent').checked){
+      err.style.display = 'block';
+      return;
+    }
+    err.style.display = 'none';
+    var name = document.getElementById('f-name').value.trim();
+    var contact = document.getElementById('f-contact').value.trim();
+    var msg = document.getElementById('f-msg').value.trim();
+    var text = 'Заявка с сайта\n'
+      + (currentFormat ? 'Формат: ' + currentFormat + '\n' : '')
+      + 'Имя: ' + name + '\nКонтакт: ' + contact + '\n\n' + msg;
+    window.open('https://t.me/yulia_therapy?text=' + encodeURIComponent(text), '_blank');
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
