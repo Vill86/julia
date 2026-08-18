@@ -2,520 +2,986 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ECE5D8">
 <title>Юлия — психолог, сексолог, телесный терапевт</title>
-<meta name="description" content="Юлия — психолог, сексолог и телесный терапевт. Семь лет практики. Тело — это ландшафт: исследуем его без стыда и медицинской холодности.">
+<meta name="description" content="Семь лет практики. Разговоры о сексе, теле и отношениях — без стыда, диагнозов и давления. Онлайн и офлайн.">
+<link rel="canonical" href="https://ЗАМЕНИТЬ-НА-ДОМЕН.ru/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Юлия — психолог, сексолог, телесный терапевт">
+<meta property="og:description" content="Семь лет практики. Разговоры о сексе, теле и отношениях — без стыда, диагнозов и давления. Онлайн и офлайн.">
+<meta property="og:image" content="https://ЗАМЕНИТЬ-НА-ДОМЕН.ru/og-cover.jpg">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Юлия — психолог, сексолог, телесный терапевт">
+<meta name="twitter:description" content="Семь лет практики. Разговоры о сексе, теле и отношениях — без стыда, диагнозов и давления.">
+<meta name="twitter:image" content="https://ЗАМЕНИТЬ-НА-ДОМЕН.ru/og-cover.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23262A21'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='30' fill='%23F5F1E4' text-anchor='middle' font-style='italic'%3E%D0%AE.%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#ECE5D8;
-  --bg-soft:#E3DBCA;
+  --surface:#E3DBCA;
+  --surface-2:#DCD2BC;
   --ink:#262A21;
-  --ink-soft:#3A3E33;
+  --fg:#262A21;
+  --muted:#5E5A4F;
+  --border:#D6CDB9;
   --accent:#4C5240;
-  --accent-soft:#8B9176;
-  --muted:#6E6A5C;
-  --line:#D6CDB9;
-  --font-display:'Fraunces','Cormorant',Georgia,serif;
-  --font-text:'IBM Plex Sans',Inter,system-ui,sans-serif;
+  --accent-hover:#5B634C;
+  --accent-ink:#F5F1E4;
+  --ink-fg:#F5F1E4;
+  --ink-muted:#B5B0A0;
+  --radius:2px;
+  --font-display:"Fraunces","Georgia",serif;
+  --font-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
-  font-family:var(--font-text);
+  font-family:var(--font-body);
   background:var(--bg);
-  color:var(--ink);
+  color:var(--fg);
   line-height:1.6;
-  font-size:16px;
+  font-size:1.0625rem;
+  overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-optical-sizing:auto;
 }
-img{max-width:100%;display:block;}
-a{color:inherit;}
-h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;line-height:1.08;letter-spacing:-0.01em;}
-.em{font-style:italic;color:var(--accent);}
-.container{width:100%;max-width:1240px;margin:0 auto;padding:0 20px;}
-@media(min-width:768px){.container{padding:0 40px;}}
-@media(min-width:1024px){.container{padding:0 56px;}}
-section{scroll-margin-top:72px;}
-.section{padding:64px 0;}
-@media(min-width:1024px){.section{padding:120px 0;}}
-.label{font-size:12px;color:var(--accent);letter-spacing:.02em;}
-.h2{font-size:clamp(1.9rem,4vw,3.1rem);margin-top:16px;}
-.lead{color:var(--ink-soft);max-width:56ch;margin-top:18px;}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none}
+button,input,textarea{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer}
+section{scroll-margin-top:84px}
+#booking{scroll-margin-top:96px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+::selection{background:rgba(76,82,64,0.16)}
+.skip-link{position:absolute;left:-999px;top:0;z-index:1000;padding:0.8rem 1.2rem;background:var(--ink);color:var(--ink-fg);font-size:0.9rem}
+.skip-link:focus{left:1rem;top:1rem}
 
-/* buttons */
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.25rem,4vw,2.5rem)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:0.75rem;
+  font-size:0.82rem;font-weight:500;letter-spacing:0.02em;
+  color:var(--muted);
+}
+.eyebrow::before{content:"";width:2.5rem;height:1px;background:var(--accent);opacity:0.6}
+h1,h2,h3{font-family:var(--font-display);font-weight:500;line-height:1.12;letter-spacing:-0.01em;font-optical-sizing:auto}
+h1{font-variation-settings:"opsz" 144}
+h2{font-variation-settings:"opsz" 90}
+em{font-style:italic}
+.ital{font-style:italic;color:var(--accent)}
+
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  height:52px;padding:0 30px;font-size:15px;font-weight:500;
-  font-family:var(--font-text);border:1px solid transparent;border-radius:0;
-  cursor:pointer;text-decoration:none;
-  transition:background .25s,color .25s,border-color .25s;
+  display:inline-flex;align-items:center;justify-content:center;gap:0.6rem;
+  min-height:52px;padding:0.9rem 1.9rem;border-radius:0;
+  font-size:1rem;font-weight:600;letter-spacing:0.01em;line-height:1.2;
+  transition:background-color .25s ease,color .25s ease,border-color .25s ease,transform .25s ease;
+  text-align:center;
 }
-.btn--solid{background:var(--bg);color:var(--ink);}
-.btn--solid:hover{background:var(--accent-soft);}
-.btn--ghost{border-color:rgba(236,229,216,.4);color:var(--bg);}
-.btn--ghost:hover{border-color:var(--bg);}
-.btn--ink{background:var(--ink);color:var(--bg);}
-.btn--ink:hover{background:var(--accent);}
-.btn--small{height:40px;padding:0 18px;font-size:14px;}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{background:var(--accent-hover);color:var(--accent-ink)}
+.btn-primary:disabled{background:var(--muted);color:rgba(245,241,228,0.85);cursor:not-allowed;opacity:1}
+.btn-ghost{border:1px solid var(--border);color:var(--fg);background:transparent}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);background:rgba(76,82,64,0.06)}
+.btn-link{display:inline-flex;align-items:center;gap:0.5rem;min-height:44px;padding:0 0.25rem;color:var(--fg);font-weight:600}
+.btn-link .arr{transition:transform .25s ease}
+.btn-link:hover .arr{transform:translateX(4px)}
+.btn-link:hover{color:var(--accent)}
 
-/* header */
-.site-header{position:sticky;top:0;z-index:60;background:var(--bg);border-bottom:1px solid var(--line);}
-.nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative;gap:12px;}
-.logo{font-family:var(--font-display);font-size:23px;text-decoration:none;font-weight:500;}
-.logo .dot{color:var(--accent);}
-.nav-links{display:none;list-style:none;}
-.nav-links.open{
-  display:flex;flex-direction:column;position:absolute;top:64px;left:0;width:100%;
-  background:var(--bg);border-bottom:1px solid var(--line);padding:8px 20px 20px;gap:0;
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  transition:background-color .35s ease,box-shadow .35s ease,backdrop-filter .35s ease;
 }
-.nav-links li a{
-  display:block;padding:14px 0;text-decoration:none;font-size:15px;
-  color:var(--ink-soft);border-bottom:1px solid var(--line);
+.header.is-scrolled{background:rgba(236,229,216,0.85);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--border)}
+.header-inner{display:flex;align-items:center;gap:2rem;height:72px}
+.brand{display:flex;align-items:baseline;gap:0.6rem;white-space:nowrap}
+.brand-name{font-family:var(--font-display);font-size:1.45rem;font-weight:600;font-style:italic;letter-spacing:-0.01em}
+.brand-sub{font-size:0.72rem;color:var(--muted);letter-spacing:0.04em}
+.nav{display:flex;align-items:center;gap:clamp(1rem,2.2vw,1.9rem);margin-left:auto}
+.nav-link{position:relative;font-size:0.95rem;font-weight:500;color:var(--fg);padding:0.55rem 0.1rem;transition:color .2s ease}
+.nav-link::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.nav-link:hover{color:var(--accent)}
+.nav-link:hover::after{transform:scaleX(1)}
+.nav-link.is-active{color:var(--accent)}
+.nav-link.is-active::after{transform:scaleX(1)}
+.nav-cta{margin-left:0.75rem}
+.burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:48px;height:48px;align-items:center;margin-left:auto}
+.burger span{width:22px;height:2px;background:var(--fg);transition:transform .3s ease,opacity .3s ease}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.mobile-menu{
+  position:fixed;inset:0;z-index:190;background:var(--bg);
+  display:flex;flex-direction:column;justify-content:center;gap:0.4rem;
+  padding:2rem clamp(1.5rem,6vw,3rem);
+  opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;
 }
-.nav-links li:last-child a{border-bottom:0;}
-.nav-links li a:hover{color:var(--ink);}
-.header-cta{margin-left:auto;}
-@media(min-width:768px){
-  .nav-links{display:flex;flex-direction:row;align-items:center;gap:34px;margin-left:auto;}
-  .nav-links li a{padding:0;border-bottom:0;font-size:14px;}
-  .header-cta{margin-left:0;}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{font-family:var(--font-display);font-size:clamp(1.7rem,6vw,2.2rem);font-weight:500;color:var(--fg);padding:0.7rem 0;border-bottom:1px solid var(--border)}
+.mobile-menu a:hover{color:var(--accent)}
+.mobile-menu .mm-cta{margin-top:1.4rem;border:0;font-family:var(--font-body);font-size:1.05rem;color:var(--accent-ink);width:100%}
+.mobile-menu .mm-note{margin-top:1.6rem;font-size:0.85rem;color:var(--muted)}
+
+.hero{padding:clamp(8rem,16vh,10.5rem) 0 clamp(3rem,7vh,5rem);position:relative}
+.hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(2.5rem,5vw,5rem);align-items:center}
+.hero-title{font-size:clamp(2.5rem,5vw,4.15rem);line-height:1.08;margin:1.4rem 0 1.5rem;letter-spacing:-0.02em}
+.hero-lead{font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--muted);max-width:34rem;margin-bottom:1.9rem}
+.hero-meta-text{font-size:0.95rem;color:var(--muted);margin-bottom:2.2rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:0.9rem;align-items:center}
+.hero-fine{margin-top:2.2rem;font-size:0.85rem;color:var(--muted);max-width:30rem}
+
+.portrait{
+  position:relative;aspect-ratio:4/5;border-radius:var(--radius);
+  overflow:hidden;background:var(--surface);
+  border:1px solid var(--border);
 }
-.burger{display:flex;flex-direction:column;gap:5px;background:none;border:0;padding:8px;cursor:pointer;flex:0 0 auto;}
-.burger span{display:block;width:22px;height:2px;background:var(--ink);}
-@media(min-width:768px){.burger{display:none;}}
-
-/* hero */
-.hero{background:var(--ink);color:var(--bg);padding:72px 0 88px;}
-@media(min-width:1024px){.hero{padding:120px 0 140px;}}
-.hero-inner{display:grid;gap:40px;}
-@media(min-width:1024px){.hero-inner{grid-template-columns:1.1fr .9fr;gap:64px;align-items:center;}}
-.hero .label{color:var(--accent-soft);}
-.hero h1{font-size:clamp(2.8rem,7vw,5.6rem);margin:20px 0 24px;color:var(--bg);}
-.hero h1 .em{color:var(--accent-soft);}
-.hero-sub{font-size:clamp(1rem,1.4vw,1.15rem);color:rgba(236,229,216,.74);max-width:46ch;margin-bottom:32px;}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;}
-.hero-meta{margin-top:28px;font-size:13px;color:rgba(236,229,216,.55);}
-.hero-media{position:relative;}
-.hero-media::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(160deg,rgba(38,42,33,.08),rgba(38,42,33,.34));}
-.hero-media img{width:100%;object-fit:cover;object-position:center;aspect-ratio:16/9;filter:saturate(.7) sepia(.1) contrast(1.04) brightness(.94);}
-
-/* metaphor band */
-.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-.band-inner{padding:56px 0;}
-@media(min-width:1024px){.band-inner{padding:72px 0;}}
-.meta-grid{display:grid;gap:40px;margin-top:44px;}
-@media(min-width:1024px){.meta-grid{grid-template-columns:repeat(3,1fr);gap:56px;}}
-.meta-item{border-top:1px solid var(--line);padding-top:20px;}
-.meta-item .num{font-size:12px;color:var(--muted);}
-.meta-item h3{font-size:clamp(1.4rem,2.4vw,1.8rem);margin:12px 0 14px;}
-.meta-item p{color:var(--ink-soft);font-size:15px;}
-
-/* services — бумажный счёт */
-.invoice{margin-top:40px;border-top:1px solid var(--line);}
-.invoice-row{
-  display:flex;flex-direction:column;gap:6px;padding:22px 0;
-  border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s;
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.portrait-caption{
+  position:absolute;left:1.25rem;right:1.25rem;bottom:1.25rem;
+  display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;
+  padding:0.85rem 1rem;border-radius:2px;
+  background:rgba(38,42,33,0.82);backdrop-filter:blur(8px);
+  color:var(--ink-fg);font-size:0.83rem;
 }
-.invoice-row:hover{background:var(--bg-soft);}
-.invoice-row.selected{background:var(--bg-soft);}
-@media(min-width:768px){
-  .invoice-row{display:grid;grid-template-columns:1.6fr .7fr .9fr;align-items:baseline;gap:24px;}
+.portrait-caption b{font-weight:600;font-family:var(--font-display);font-style:italic;font-size:0.95rem}
+.portrait-caption span{color:var(--ink-muted);text-align:right;line-height:1.35;flex:1;min-width:0}
+
+.stats{border-top:1px solid var(--border);margin-top:clamp(3rem,7vh,5rem);padding-top:clamp(2rem,5vh,3rem)}
+.stats-plain{font-family:var(--font-display);font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.6;color:var(--fg);max-width:52rem}
+
+.section{padding:clamp(4.5rem,10vw,7.5rem) 0;position:relative}
+.section-head{max-width:44rem;margin-bottom:clamp(2.5rem,5vw,3.5rem)}
+.section-title{font-size:clamp(1.9rem,3.6vw,2.9rem);margin-top:1.1rem}
+.section-sub{margin-top:1rem;color:var(--muted);font-size:1.05rem;max-width:38rem}
+
+.about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:clamp(2.5rem,5vw,5rem);align-items:start}
+.about-text p+p{margin-top:1.1rem}
+.about-text .lead{font-family:var(--font-display);font-size:clamp(1.15rem,1.8vw,1.35rem);line-height:1.5;color:var(--fg)}
+.qual{margin:2rem 0 0;border-top:1px solid var(--border)}
+.qual li{display:flex;gap:1rem;align-items:baseline;padding:0.95rem 0;border-bottom:1px solid var(--border);font-size:0.98rem}
+.qual .num{font-family:var(--font-display);font-style:italic;color:var(--accent);font-size:0.95rem;flex:none}
+.qual b{font-weight:600}
+.qual .note{color:var(--muted);font-size:0.88rem;display:block;margin-top:0.15rem}
+.approach{margin-top:2.2rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(1.5rem,3vw,2.2rem)}
+.approach h3{font-size:1.35rem;margin-bottom:0.8rem}
+.approach p{color:var(--muted);font-size:1rem;max-width:44rem}
+
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.work-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:clamp(1.5rem,2.5vw,2.1rem);
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
 }
-.iv-name{font-family:var(--font-display);font-size:clamp(1.3rem,2.2vw,1.7rem);}
-.iv-desc{font-size:14px;color:var(--muted);margin-top:4px;font-family:var(--font-text);font-weight:400;}
-.iv-dur{font-size:14px;color:var(--ink-soft);}
-.iv-price{font-family:var(--font-display);font-size:clamp(1.5rem,2.4vw,2rem);}
-@media(min-width:768px){.iv-price{text-align:right;}}
-.invoice-foot{margin-top:24px;display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
-@media(min-width:768px){.invoice-foot{flex-direction:row;justify-content:space-between;align-items:center;}}
-.invoice-note{font-size:13px;color:var(--muted);}
+.work-card:hover{transform:translateY(-4px);box-shadow:0 24px 50px -30px rgba(38,42,33,0.25);border-color:rgba(76,82,64,0.4)}
+.work-num{font-family:var(--font-display);font-style:italic;font-size:1.05rem;color:var(--accent)}
+.work-card h3{font-size:1.3rem;margin:0.6rem 0 1rem}
+.work-list li{display:flex;gap:0.7rem;padding:0.72rem 0;border-top:1px solid rgba(38,42,33,0.1);font-size:0.95rem;color:#3B3F34}
+.work-list li::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:0.55em}
 
-/* process */
-.process-grid{display:grid;gap:40px;}
-@media(min-width:1024px){.process-grid{grid-template-columns:.45fr 1fr;gap:80px;}}
-@media(min-width:1024px){.process-head{position:sticky;top:100px;align-self:start;}}
-.step{display:grid;grid-template-columns:56px 1fr;gap:20px;border-top:1px solid var(--line);padding:28px 0;}
-.step:last-child{border-bottom:1px solid var(--line);}
-.step .num{font-size:13px;color:var(--muted);padding-top:4px;}
-.step h3{font-size:clamp(1.3rem,2.2vw,1.6rem);}
-.step p{color:var(--ink-soft);margin-top:10px;max-width:56ch;}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2.2rem}
+.step{position:relative;padding-top:1.4rem}
+.step::before{content:"";position:absolute;top:0;left:0;width:100%;height:1px;background:var(--border)}
+.step::after{content:"";position:absolute;top:-2px;left:0;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.step .idx{font-family:var(--font-display);font-style:italic;color:var(--accent);font-size:1.05rem}
+.step h3{font-size:1.12rem;margin:0.5rem 0 0.6rem}
+.step p{font-size:0.92rem;color:var(--muted)}
+.process-format-text{font-size:0.92rem;color:var(--muted);margin-bottom:2.2rem;line-height:1.7}
+.honest{
+  background:var(--ink);border-radius:var(--radius);color:var(--ink-fg);
+  padding:clamp(1.8rem,4vw,2.8rem);display:grid;grid-template-columns:auto 1fr;gap:clamp(1.5rem,3vw,3rem);align-items:start;
+}
+.honest .tag{flex:none;font-size:0.72rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-muted);padding:0;width:fit-content}
+.honest h3{font-size:clamp(1.3rem,2.4vw,1.7rem);margin-bottom:0.7rem;font-style:italic}
+.honest p{color:var(--ink-muted);max-width:40rem}
 
-/* about */
-.about-grid{display:grid;gap:40px;}
-@media(min-width:768px){.about-grid{grid-template-columns:.8fr 1.2fr;gap:56px;align-items:start;}}
-.about-photo{width:100%;aspect-ratio:4/5;object-fit:cover;border:1px solid var(--line);}
-.about-body p{color:var(--ink-soft);max-width:56ch;margin-top:18px;}
-.facts{list-style:none;margin-top:28px;border-top:1px solid var(--line);}
-.facts li{display:flex;justify-content:space-between;gap:24px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;}
-.facts li b{font-weight:500;}
-.about-note{margin-top:28px;font-family:var(--font-display);font-style:italic;font-size:clamp(1.1rem,1.8vw,1.35rem);}
+.who-rows{border-top:1px solid var(--border)}
+.who-row{
+  display:grid;grid-template-columns:3.5rem 1fr auto;gap:1.2rem;align-items:center;
+  padding:1.5rem 0;border-bottom:1px solid var(--border);
+}
+.who-row .idx{font-family:var(--font-display);font-style:italic;font-size:1.15rem;color:var(--accent)}
+.who-row p{font-size:1.05rem;max-width:42rem}
+.who-row .mark{font-size:1.05rem;color:var(--muted);transition:transform .25s ease,color .25s ease}
+.who-row:hover .mark{color:var(--accent);transform:translateX(4px)}
+.who-row:hover p{color:var(--accent)}
+.who-note{margin-top:2rem;display:flex;gap:1rem;align-items:center;color:var(--muted);font-size:0.95rem}
+.who-note::before{content:"";flex:none;width:2rem;height:1px;background:var(--accent)}
 
-/* reviews */
-.reviews-grid{display:grid;gap:16px;margin-top:48px;}
-@media(min-width:1024px){.reviews-grid{grid-template-columns:repeat(3,1fr);gap:24px;}}
-.review{border-top:1px solid var(--line);padding-top:24px;display:flex;flex-direction:column;gap:20px;}
-.review blockquote{font-family:var(--font-display);font-style:italic;font-size:clamp(1.15rem,1.9vw,1.4rem);line-height:1.4;}
-.review .who{font-size:13px;color:var(--muted);margin-top:auto;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.review{
+  display:flex;flex-direction:column;gap:1.1rem;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:clamp(1.5rem,2.4vw,2rem);
+}
+.review p{font-size:0.97rem;line-height:1.65}
+.review p:first-of-type{flex:1}
+.review .who{display:flex;flex-direction:column;gap:0.25rem;padding-top:1rem;border-top:1px solid rgba(38,42,33,0.1)}
+.review .who b{font-weight:600;font-size:0.95rem}
+.review .who span{font-size:0.82rem;color:var(--muted)}
+.reviews-note{font-size:0.85rem;color:var(--muted);margin-top:1.4rem}
 
-/* texture strip */
-.strip{height:280px;}
-@media(min-width:768px){.strip{height:380px;}}
-.strip img{width:100%;height:100%;object-fit:cover;}
+.pricing-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:clamp(1.5rem,3vw,2.4rem)}
+.price-rows{border-top:1px solid var(--border)}
+.price-row{
+  display:grid;grid-template-columns:1.4fr 1fr auto auto;gap:1.2rem;align-items:center;
+  padding:1.35rem 0;border-bottom:1px solid var(--border);
+}
+.price-row .p-name b{font-weight:600;font-size:1.05rem}
+.price-row .p-name span{display:block;color:var(--muted);font-size:0.88rem;margin-top:0.2rem}
+.price-row .p-dur{color:var(--muted);font-size:0.92rem}
+.price-row .p-price{font-family:var(--font-display);font-size:1.4rem;font-weight:500;color:var(--accent);white-space:nowrap}
+.conditions{margin:1.6rem 0;color:var(--muted);font-size:0.97rem;max-width:44rem}
 
-/* contact */
-.contact-grid{display:grid;gap:48px;}
-@media(min-width:1024px){.contact-grid{grid-template-columns:1fr 1fr;gap:80px;}}
-.contact-form{display:flex;flex-direction:column;gap:22px;margin-top:32px;}
-.field{display:flex;flex-direction:column;gap:8px;}
-.field label{font-size:13px;color:var(--muted);}
+.booking{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);margin-top:2.2rem;align-items:start}
+.booking-info h3{font-size:1.6rem;margin-bottom:0.8rem}
+.booking-info p{color:var(--muted);font-size:0.98rem;max-width:32rem}
+.booking-info ul{margin-top:1.4rem}
+.booking-info li{display:flex;gap:0.7rem;padding:0.6rem 0;font-size:0.95rem}
+.booking-info li::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:0.55em}
+.direct-contact{margin-top:1.6rem;font-size:0.95rem;color:var(--muted)}
+.direct-contact a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.direct-contact a:hover{color:var(--accent-hover)}
+.form{display:flex;flex-direction:column;gap:1.1rem}
+.field label{display:block;font-size:0.85rem;font-weight:600;margin-bottom:0.45rem;color:var(--fg)}
 .field input,.field textarea{
-  font-family:inherit;font-size:15px;color:var(--ink);background:transparent;
-  border:0;border-bottom:1px solid var(--line);padding:10px 0;border-radius:0;
+  width:100%;min-height:52px;padding:0.8rem 1rem;border-radius:2px;
+  border:1px solid var(--border);background:var(--bg);
+  transition:border-color .2s ease,box-shadow .2s ease;
 }
-.field input:focus,.field textarea:focus{outline:none;border-bottom-color:var(--accent);}
-.field textarea{resize:vertical;min-height:110px;}
-.consent{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5;}
-.consent input{margin-top:3px;accent-color:var(--accent);}
-.form-err{font-size:13px;color:#8A4A3A;display:none;}
-.sel-format{display:none;font-size:14px;color:var(--accent);margin-top:24px;}
-.contact-lines{margin-top:32px;border-top:1px solid var(--line);}
-.contact-lines .row{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);font-size:15px;}
-.contact-lines .row a{color:var(--accent);text-decoration:none;}
-.contact-lines .row a:hover{text-decoration:underline;}
-.contact-note{margin-top:20px;font-size:13px;color:var(--muted);}
+.field textarea{min-height:96px;resize:vertical}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted);opacity:0.75}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(76,82,64,0.14)}
+.field input.err{border-color:#8F3E27}
+.field .err-msg{display:none;font-size:0.82rem;color:#8F3E27;margin-top:0.35rem}
+.field input.err + .err-msg{display:block}
+.field.err .err-msg{display:block}
+.field .consent{display:flex;gap:0.7rem;align-items:flex-start;font-size:0.9rem;font-weight:400;color:var(--muted);margin-bottom:0.25rem;cursor:pointer}
+.field .consent input{width:1.05rem;min-height:0;height:1.05rem;padding:0;border:1px solid var(--border);border-radius:2px;flex:none;margin-top:0.2rem;accent-color:var(--accent)}
+.field .consent a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.field .consent a:hover{color:var(--accent-hover)}
+.form .btn{align-self:flex-start}
+.form .btn.is-loading{pointer-events:none;opacity:1}
+.form .btn .spinner{display:none;width:1.05rem;height:1.05rem;border:2px solid rgba(245,241,228,0.35);border-top-color:var(--accent-ink);border-radius:50%;animation:spin .7s linear infinite}
+.form .btn.is-loading .spinner{display:inline-block}
+.form .btn.is-loading .btn-label{opacity:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form-error{font-size:0.88rem;color:#8F3E27;margin-top:0.25rem}
+.after-form{margin-top:1.4rem;font-size:0.9rem;color:var(--fg);display:flex;gap:0.7rem;align-items:center}
+.after-form b{font-weight:600}
 
-/* footer */
-.site-footer{border-top:1px solid var(--line);padding:40px 0;}
-.footer-inner{display:flex;flex-direction:column;gap:16px;}
-@media(min-width:768px){.footer-inner{flex-direction:row;justify-content:space-between;align-items:flex-start;}}
-.footer-tag{font-family:var(--font-display);font-size:20px;}
-.footer-meta{font-size:13px;color:var(--muted);max-width:46ch;}
+.faq{border-top:1px solid var(--border)}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;gap:1.5rem;
+  width:100%;min-height:60px;text-align:left;padding:0.9rem 0.2rem;
+  font-family:var(--font-display);font-size:clamp(1.05rem,1.8vw,1.25rem);font-weight:500;
+  color:var(--fg);transition:color .2s ease;
+}
+.faq-q:hover{color:var(--accent)}
+.faq-q .ico{flex:none;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.4rem;font-weight:300;line-height:1;color:var(--accent);transition:transform .3s ease}
+.faq-item.open .faq-q .ico{transform:rotate(45deg)}
+.faq-item.open .faq-q{color:var(--accent)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.faq-a p{padding:0 2rem 1.4rem 0;color:var(--muted);max-width:42rem;font-size:0.97rem}
 
-/* reveal */
-.reveal{opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease;}
-.reveal.in{opacity:1;transform:none;}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-@media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto;}
-  .reveal{opacity:1;transform:none;transition:none;}
-  .btn,.invoice-row,.nav-links li a{transition:none;}
+.footer{background:var(--ink);color:var(--ink-fg);margin-top:clamp(3rem,6vw,5rem);padding:clamp(3rem,7vw,5rem) 0 2rem}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2.5rem}
+.footer .f-brand{font-family:var(--font-display);font-style:italic;font-size:1.8rem;font-weight:500}
+.footer .f-tag{color:var(--ink-muted);font-size:0.92rem;margin-top:0.5rem;max-width:20rem}
+.footer h4{font-size:0.78rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1.1rem}
+.footer ul li{padding:0.35rem 0}
+.footer a{color:var(--ink-fg);font-size:0.95rem;transition:color .2s ease}
+.footer a:hover{color:#C9C3AE}
+.footer a:focus-visible{outline-color:#C9C3AE}
+.footer .f-note{margin-top:2.5rem;padding-top:1.4rem;border-top:1px solid rgba(184,178,161,0.2);font-size:0.8rem;color:var(--ink-muted);display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:space-between}
+
+.modal{
+  position:fixed;inset:0;z-index:400;display:grid;place-items:center;padding:1.25rem;
+  background:rgba(38,42,33,0.45);backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;
+}
+.modal.open{opacity:1;visibility:visible}
+.modal-card{
+  width:min(100%,420px);background:var(--bg);border-radius:2px;padding:2.5rem 2rem 2rem;text-align:center;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,0.4);
+  transform:translateY(16px) scale(0.97);transition:transform .35s cubic-bezier(.22,.61,.36,1);
+}
+.modal.open .modal-card{transform:none}
+.modal-card .eyebrow{justify-content:center;margin:0 auto 0.7rem;font-size:0.8rem}
+.modal-card h3{font-size:1.6rem;margin-bottom:0.6rem}
+.modal-card p{color:var(--muted);font-size:0.97rem;max-width:20rem;margin:0 auto 1.6rem}
+
+@media (max-width:1000px){
+  .nav{display:none}
+  .burger{display:flex}
+  .hero-grid{grid-template-columns:1fr;gap:2.5rem}
+  .portrait{max-width:420px;aspect-ratio:4/4.6}
+  .work-grid,.reviews-grid,.process-steps{grid-template-columns:repeat(2,1fr)}
+  .process-steps{grid-template-columns:1fr 1fr}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .portrait{max-width:100%}
+  .pricing-panel{grid-template-columns:1fr}
+  .booking{grid-template-columns:1fr;gap:2.5rem}
+}
+@media (max-width:640px){
+  body{font-size:1rem}
+  .header-inner{height:64px}
+  .brand-sub{display:none}
+  .hero{padding-top:7.5rem}
+  .hero-title{font-size:clamp(2.05rem,9vw,2.6rem)}
+  .hero-actions .btn{width:100%}
+  .work-grid,.reviews-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr}
+  .who-row{grid-template-columns:2.6rem 1fr;gap:0.9rem}
+  .who-row .mark{display:none}
+  .price-row{grid-template-columns:1fr auto;gap:0.4rem 1rem;padding:1.2rem 0}
+  .price-row .p-dur{grid-column:1;margin-top:-0.4rem}
+  .price-row .p-price{grid-column:2;grid-row:1/3;align-self:center}
+  .honest{grid-template-columns:1fr;gap:1.2rem}
+  .footer-grid{grid-template-columns:1fr;gap:2rem}
+  .booking-info h3{font-size:1.35rem}
+  .form .btn{width:100%}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+  .btn:active{transform:none}
+  .work-card:hover{transform:none}
+  .who-row:hover .mark{transform:none}
 }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container">
+<a class="skip-link" href="#hero">Перейти к основному содержанию</a>
+
+<header class="header" id="header">
+  <div class="wrap header-inner">
+    <a class="brand" href="#hero" aria-label="Юлия — наверх">
+      <span class="brand-name">Юлия</span>
+      <span class="brand-sub">психолог · сексолог · телесный терапевт</span>
+    </a>
     <nav class="nav" aria-label="Основная навигация">
-      <a class="logo" href="#top">Юлия<span class="dot">.</span></a>
-      <ul class="nav-links" id="nav">
-        <li><a href="#services">Форматы</a></li>
-        <li><a href="#process">Как проходит</a></li>
-        <li><a href="#about">Обо мне</a></li>
-        <li><a href="#reviews">Отзывы</a></li>
-        <li><a href="#contact">Контакты</a></li>
-      </ul>
-      <a class="btn btn--ink btn--small header-cta" href="#contact">Записаться</a>
-      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      <a class="nav-link" href="#about">Обо мне</a>
+      <a class="nav-link" href="#work">С чем работаю</a>
+      <a class="nav-link" href="#process">Как проходит</a>
+      <a class="nav-link" href="#reviews">Отзывы</a>
+      <a class="nav-link" href="#pricing">Стоимость</a>
+      <a class="nav-link" href="#faq">FAQ</a>
+      <a class="btn btn-ghost nav-cta" href="#booking">Записаться</a>
     </nav>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
-<main id="top">
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about">Обо мне</a>
+  <a href="#work">С чем работаю</a>
+  <a href="#process">Как проходит</a>
+  <a href="#reviews">Отзывы</a>
+  <a href="#pricing">Стоимость</a>
+  <a href="#faq">FAQ</a>
+  <a class="btn btn-primary mm-cta" href="#booking">Записаться</a>
+  <p class="mm-note">Отвечаю в течение рабочего дня.</p>
+</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-inner">
-        <div class="hero-text reveal">
-          <p class="label">психолог · сексолог · телесный терапевт</p>
-          <h1>Тело — это<br><span class="em">ландшафт</span></h1>
-          <p class="hero-sub">Помогаю исследовать своё тело спокойно и без стыда. Психология, сексология и телесная терапия — в одном подходе. Семь лет практики.</p>
-          <div class="hero-actions">
-            <a class="btn btn--solid" href="#contact">Записаться на встречу</a>
-            <a class="btn btn--ghost" href="#services">Форматы и цены</a>
-          </div>
-          <p class="hero-meta">Очно и онлайн · Москва</p>
+<main>
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Психолог · сексолог · телесный терапевт</p>
+        <h1 class="hero-title reveal" style="--d:.05s">Секс, тело и отношения — темы, о&nbsp;которых можно говорить <em class="ital">спокойно</em>.</h1>
+        <p class="hero-lead reveal" style="--d:.1s">Меня зовут Юлия. Семь лет помогаю разбираться с тем, что происходит в паре и с собственным желанием, — без стыда, диагнозов и давления.</p>
+        <p class="hero-meta-text reveal" style="--d:.15s">Онлайн и офлайн · Москва · семь лет практики</p>
+        <div class="hero-actions reveal" style="--d:.2s">
+          <a class="btn btn-primary" href="#booking">Записаться на консультацию</a>
+          <a class="btn-link" href="#work">С чем я работаю <span class="arr">&rarr;</span></a>
         </div>
-        <div class="hero-media reveal">
-          <img src="julia3.jpg" alt="Юлия — психолог, сексолог, телесный терапевт">
+        <p class="hero-fine reveal" style="--d:.25s">Первая встреча — 60&nbsp;минут. Это знакомство, а не обязательство: решение о продолжении остаётся за вами.</p>
+      </div>
+      <div class="portrait reveal" style="--d:.12s">
+        <img src="photo.jpg" srcset="photo.jpg 1x, photo@2x.jpg 2x" width="800" height="1000" alt="Юлия — психолог, сексолог, телесный терапевт" loading="eager" decoding="async">
+        <div class="portrait-caption">
+          <b>Юлия</b>
+          <span>психолог · сексолог · телесный терапевт</span>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- METAPHORS -->
-  <section class="band">
-    <div class="container">
-      <div class="band-inner">
-        <div class="reveal">
-          <p class="label">язык, на котором мы говорим о теле</p>
-          <h2 class="h2">Природа вместо <span class="em">медицины</span></h2>
-          <p class="lead">Три образа, на которых держится моя работа. Они снимают стыд и возвращают телу право быть просто телом — без диагнозов и оценок.</p>
-        </div>
-        <div class="meta-grid">
-          <div class="meta-item reveal">
-            <p class="num">01</p>
-            <h3>Тело — это ландшафт</h3>
-            <p>Исследуем территорию. Каждый участок — со своей историей. Не поломка, которую надо чинить, а местность, которую можно понять и пройти.</p>
-          </div>
-          <div class="meta-item reveal">
-            <p class="num">02</p>
-            <h3>Зажимы — замёрзшая река</h3>
-            <p>Там, где чувства когда-то остановились, остаётся лёд. Мы не ломаем его — мы добавляем тепла, и течение возвращается само.</p>
-          </div>
-          <div class="meta-item reveal">
-            <p class="num">03</p>
-            <h3>Сексуальность — источник</h3>
-            <p>Не функция и не оценка. Корни желания — в безопасности, доверии и знании собственного тела.</p>
-          </div>
-        </div>
-      </div>
+    <div class="stats reveal">
+      <p class="stats-plain">Семь лет практики. Встречи по 60&nbsp;минут — индивидуально, по 90 — в паре. Перенос без вопросов, если предупредили за сутки.</p>
     </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="section" id="services">
-    <div class="container">
-      <div class="reveal">
-        <p class="label">01 — форматы и цены</p>
-        <h2 class="h2">Три способа <span class="em">начать</span></h2>
-        <p class="lead">Первая встреча — всегда разговор. Выберите формат, он подставится в заявку.</p>
-      </div>
-      <div class="invoice reveal">
-        <div class="invoice-row" data-format="Консультация · 60 минут · 7 000 ₽" tabindex="0" role="button" aria-label="Выбрать формат: консультация">
-          <div class="iv-name">Консультация <div class="iv-desc">разовый разговор, разбор запроса, понятный план</div></div>
-          <div class="iv-dur">60 минут</div>
-          <div class="iv-price">7 000 ₽</div>
-        </div>
-        <div class="invoice-row" data-format="Телесная сессия · 90 минут · 8 000 ₽" tabindex="0" role="button" aria-label="Выбрать формат: телесная сессия">
-          <div class="iv-name">Телесная сессия <div class="iv-desc">работа с зажимами и ощущениями, возвращение опоры</div></div>
-          <div class="iv-dur">90 минут</div>
-          <div class="iv-price">8 000 ₽</div>
-        </div>
-        <div class="invoice-row" data-format="Углублённая работа · 120 минут · 9 000 ₽" tabindex="0" role="button" aria-label="Выбрать формат: углублённая работа">
-          <div class="iv-name">Углублённая работа <div class="iv-desc">парный формат или длинная сессия — для вопроса, которому нужно больше времени</div></div>
-          <div class="iv-dur">120 минут</div>
-          <div class="iv-price">9 000 ₽</div>
-        </div>
-      </div>
-      <div class="invoice-foot">
-        <p class="invoice-note">Перенос или отмена — не позднее чем за 24 часа.</p>
-        <a class="btn btn--ink" href="#contact">Записаться</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="section" id="process">
-    <div class="container">
-      <div class="process-grid">
-        <div class="process-head reveal">
-          <p class="label">02 — как проходит</p>
-          <h2 class="h2">От льда — <span class="em">к течению</span></h2>
-          <p class="lead">Никакого давления и «давайте быстрее». Двигаемся в вашем темпе, шаг за шагом.</p>
-        </div>
-        <div class="steps">
-          <div class="step reveal">
-            <p class="num">01</p>
-            <div>
-              <h3>Карта территории</h3>
-              <p>Начинаем с разговора. Слушаю, задаю вопросы, вместе понимаем, где болит и что за этим стоит.</p>
-            </div>
-          </div>
-          <div class="step reveal">
-            <p class="num">02</p>
-            <div>
-              <h3>Ищем лёд</h3>
-              <p>Находим места, где тело замерло: дыхание, напряжение, привычные реакции на слова и прикосновение.</p>
-            </div>
-          </div>
-          <div class="step reveal">
-            <p class="num">03</p>
-            <div>
-              <h3>Оттаивание</h3>
-              <p>Через беседу и телесные практики возвращаем чувствам право быть. Медленно, без насилия над собой.</p>
-            </div>
-          </div>
-          <div class="step reveal">
-            <p class="num">04</p>
-            <div>
-              <h3>Течение</h3>
-              <p>Новые ощущения становятся опорой. Вы уходите не с диагнозом, а с пониманием, как устроено ваше тело.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="container">
-      <div class="about-grid">
-        <div class="reveal">
-          <img class="about-photo" src="photo.jpg" alt="Юлия — психолог, сексолог, телесный терапевт">
-        </div>
-        <div class="about-body reveal">
-          <p class="label">03 — обо мне</p>
-          <h2 class="h2">Юлия</h2>
-          <p>Психолог, сексолог и телесный терапевт. Семь лет частной практики. Работаю на стыке трёх подходов — потому что психика, тело и сексуальность не живут по отдельности.</p>
-          <ul class="facts">
-            <li><span>Частная практика</span><b>7 лет</b></li>
-            <li><span>Направления</span><b>психология · сексология · тело</b></li>
-            <li><span>Формат</span><b>очно в Москве и онлайн</b></li>
-          </ul>
-          <p class="about-note">Без осуждения, без оценок. Всё, что вы расскажете, остаётся между нами.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- REVIEWS -->
-  <section class="section" id="reviews">
-    <div class="container">
-      <div class="reveal">
-        <p class="label">04 — отзывы</p>
-        <h2 class="h2">Слова тех, кто <span class="em">прошёл</span></h2>
-        <p class="lead">Публикую с разрешения. Имена меняю — подробности остаются между нами.</p>
-      </div>
-      <div class="reviews-grid">
-        <div class="review reveal">
-          <blockquote>«Пришла с ощущением „со мной что-то не так“. Через несколько встреч впервые за долгое время почувствовала тело своим. Меня не „чинили“ — вернули мне меня».</blockquote>
-          <p class="who">А., 34 года</p>
-        </div>
-        <div class="review reveal">
-          <blockquote>«Говорить о сексе было неловко даже с партнёром. Юля ведёт разговор так спокойно, что страх уходит сам. Теперь разговариваем — и об этом тоже».</blockquote>
-          <p class="who">М. и К., пара</p>
-        </div>
-        <div class="review reveal">
-          <blockquote>«Работа с зажимами — это не „просто расслабьтесь“. Медленно, но честно. Спустя пару месяцев заметила: дышу глубже, сплю спокойнее».</blockquote>
-          <p class="who">Е., 41 год</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TEXTURE STRIP -->
-  <div class="strip">
-    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80" alt="Песок и вода — пауза, место, где можно выдохнуть">
   </div>
+</section>
 
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="contact-grid">
-        <div class="reveal">
-          <p class="label">05 — записаться</p>
-          <h2 class="h2">Сделаем первый <span class="em">шаг</span></h2>
-          <p class="lead">Напишите, что хотите обсудить, — договоримся о времени. Отвечаю в течение дня.</p>
-          <p class="sel-format" id="selectedFormat"></p>
-          <form class="contact-form" id="contactForm">
-            <input type="hidden" id="f-format" name="format">
-            <div class="field">
-              <label for="f-name">Имя</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться">
-            </div>
-            <div class="field">
-              <label for="f-contact">Телефон или Telegram</label>
-              <input id="f-contact" name="contact" type="text" autocomplete="tel" placeholder="Куда вам ответить">
-            </div>
-            <div class="field">
-              <label for="f-msg">Что хочется обсудить</label>
-              <textarea id="f-msg" name="message" placeholder="Пара слов о запросе — этого достаточно для начала"></textarea>
-            </div>
-            <label class="consent">
-              <input type="checkbox" id="f-consent" required>
-              <span>Согласен(на) на обработку персональных данных (152-ФЗ)</span>
-            </label>
-            <p class="form-err" id="formErr">Подтвердите согласие на обработку данных.</p>
-            <button class="btn btn--ink" type="submit" style="align-self:flex-start;">Отправить</button>
-          </form>
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="portrait reveal">
+        <img src="Julia.jpg" srcset="Julia.jpg 1x, Julia@2x.jpg 2x" width="800" height="1000" alt="Юлия — психолог, сексолог, телесный терапевт" loading="lazy" decoding="async">
+        <div class="portrait-caption">
+          <b>Юлия</b>
+          <span>семь лет практики · очно и онлайн</span>
         </div>
-        <div class="reveal">
-          <p class="lead">Если удобнее написать напрямую:</p>
-          <div class="contact-lines">
-            <div class="row"><span>Telegram</span><a href="https://t.me/yulia_therapy">@yulia_therapy</a></div>
-            <div class="row"><span>Почта</span><a href="mailto:hello@yulia-practice.ru">hello@yulia-practice.ru</a></div>
-          </div>
-          <p class="contact-note">Очно — Москва, кабинет в центре. Онлайн — из любой точки. Точный адрес пришлю после записи.</p>
-          <p class="contact-note">Консультации не заменяют медицинскую и психиатрическую помощь. При острых состояниях — к врачу.</p>
+      </div>
+      <div class="about-text">
+        <p class="eyebrow reveal">01 · Обо мне</p>
+        <h2 class="section-title reveal" style="--d:.05s">Я пришла в&nbsp;психологию через <em class="ital">собственные вопросы</em></h2>
+        <div class="section-sub reveal" style="--d:.1s">
+          <p class="lead">В начале пути я работала с людьми в трудных жизненных ситуациях. И заметила: проще говорить о деньгах и работе, чем о том, что «стыдно», — о теле, желании, близости.</p>
+        </div>
+        <p class="reveal" style="--d:.12s">Так я пришла в сексологию и телесную терапию — и осталась, потому что именно здесь можно быть по-настоящему полезной. Семь лет практики подтвердили: почти каждый запрос, который звучит как «со мной что-то не так», на деле оказывается историей о том, что человеку не хватало места, где об этом можно спокойно говорить.</p>
+        <ul class="qual reveal" style="--d:.15s">
+          <li><span class="num">01</span><div><b>Высшее психологическое образование</b><span class="note">диплом и подтверждающие документы предоставлю по запросу</span></div></li>
+          <li><span class="num">02</span><div><b>Специализация по сексологии</b></div></li>
+          <li><span class="num">03</span><div><b>Обучение телесно-ориентированной терапии</b></div></li>
+          <li><span class="num">04</span><div><b>Регулярная супервизия и интервизия</b><span class="note">разбор случаев с более опытными коллегами — моя профессиональная гигиена</span></div></li>
+        </ul>
+        <div class="approach reveal" style="--d:.18s">
+          <h3>Как я работаю</h3>
+          <p>Не оцениваю и не осуждаю. Не ставлю диагнозы на первой встрече и не обещаю быстрых результатов. Каждый запрос — это конкретная ситуация, а не ярлык: говорим простым языком, и если что-то требует объяснения — я объясняю. Когда запрос выходит за пределы моей компетенции, например нужен врач, — я честно об этом скажу и подскажу, куда обратиться.</p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
+<section class="section" id="work" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow reveal">02 · С чем я работаю</p>
+      <h2 class="section-title reveal" style="--d:.05s">Три направления. Не диагнозы — <em class="ital">ситуации</em></h2>
+      <p class="section-sub reveal" style="--d:.1s">Ниже не медицинские заключения, а запросы, с которыми ко мне приходят. Узнать себя в пункте — нормальный повод написать.</p>
+    </div>
+    <div class="work-grid">
+      <article class="work-card reveal">
+        <span class="work-num">01</span>
+        <h3>Психологические трудности</h3>
+        <ul class="work-list">
+          <li>Тревога и фоновое напряжение, когда даже отдых не расслабляет</li>
+          <li>Повторяющиеся сценарии в отношениях: конфликты, страх близости</li>
+          <li>Трудные периоды: развод, потеря, большие перемены</li>
+          <li>Самооценка и границы: сложно говорить «нет» и просить</li>
+        </ul>
+      </article>
+      <article class="work-card reveal" style="--d:.08s">
+        <span class="work-num">02</span>
+        <h3>Сексологические вопросы</h3>
+        <ul class="work-list">
+          <li>Отсутствие или снижение желания — у женщин и у мужчин</li>
+          <li>Боль или дискомфорт во время секса</li>
+          <li>Трудности с возбуждением и оргазмом</li>
+          <li>Страхи и стыд, связанные с интимностью</li>
+          <li>Несовпадение желаний в паре — и как говорить об этом без обид</li>
+        </ul>
+      </article>
+      <article class="work-card reveal" style="--d:.16s">
+        <span class="work-num">03</span>
+        <h3>Телесная терапия</h3>
+        <ul class="work-list">
+          <li>Хроническое напряжение: «всегда на взводе», «не могу расслабиться»</li>
+          <li>Зажимы, связанные со стрессом и непрожитыми чувствами</li>
+          <li>Возвращение контакта с собственными ощущениями: дыхание, напряжение, телесные реакции</li>
+          <li>Дыхательные практики как инструмент самопомощи между встречами</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow reveal">03 · Как проходит работа</p>
+      <h2 class="section-title reveal" style="--d:.05s">Понятный процесс <em class="ital">без сюрпризов</em></h2>
+      <p class="section-sub reveal" style="--d:.1s">Вы всегда знаете, что будет дальше: никакой магии и никаких обязательств до вашего решения.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step reveal">
+        <span class="idx">Шаг 01</span>
+        <h3>Первое сообщение</h3>
+        <p>Пишете мне, договариваемся о времени первой встречи. Отвечаю в течение рабочего дня.</p>
+      </div>
+      <div class="step reveal" style="--d:.08s">
+        <span class="idx">Шаг 02</span>
+        <h3>Первая встреча</h3>
+        <p>60&nbsp;минут знакомства: что привело, что уже пробовали, что важно. Без давления — решение о продолжении остаётся за вами.</p>
+      </div>
+      <div class="step reveal" style="--d:.16s">
+        <span class="idx">Шаг 03</span>
+        <h3>План и регулярность</h3>
+        <p>После первой-второй встречи даю честный прогноз: сколько займёт работа и какая регулярность нужна именно вам.</p>
+      </div>
+      <div class="step reveal" style="--d:.24s">
+        <span class="idx">Шаг 04</span>
+        <h3>Работа и пересмотр</h3>
+        <p>Встречаемся по договорённости. Если что-то не подходит — говорим об этом и корректируем процесс.</p>
+      </div>
+    </div>
+    <p class="process-format-text reveal">Онлайн · видео, 60&nbsp;минут — Офлайн · кабинет, 60&nbsp;минут — Пара · 90&nbsp;минут — Телесные практики — офлайн</p>
+    <div class="honest reveal">
+      <span class="tag">Честно о сроках</span>
+      <div>
+        <h3>Сколько может занять терапия</h3>
+        <p>Конкретный запрос — одна ситуация, один вопрос — обычно занимает 5–10&nbsp;встреч. Глубинная работа с отношениями и телом может длиться от полугода. Точный прогноз я даю после первых встреч, а не до них.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="who" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow reveal">04 · С кем я работаю</p>
+      <h2 class="section-title reveal" style="--d:.05s">Не по&nbsp;анкете, а по&nbsp;<em class="ital">ситуациям</em></h2>
+      <p class="section-sub reveal" style="--d:.1s">Возраст и статус в паспорте мне ни о чём не говорят. Важнее — узнать себя в одной из этих ситуаций.</p>
+    </div>
+    <div class="who-rows">
+      <a class="who-row reveal" href="#booking">
+        <span class="idx" aria-hidden="true">01</span>
+        <p>У вас вроде бы всё в порядке: работа, семья, планы. Но близости хочется избегать — и вы не понимаете, почему.</p>
+        <span class="mark" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="who-row reveal" style="--d:.06s" href="#booking">
+        <span class="idx" aria-hidden="true">02</span>
+        <p>Вы устали объяснять партнёру, что вам нужно. И сами не до конца понимаете, что именно.</p>
+        <span class="mark" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="who-row reveal" style="--d:.12s" href="#booking">
+        <span class="idx" aria-hidden="true">03</span>
+        <p>В паре всё хорошо, кроме секса. И эта сфера уже влияет на отношения в целом.</p>
+        <span class="mark" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="who-row reveal" style="--d:.18s" href="#booking">
+        <span class="idx" aria-hidden="true">04</span>
+        <p>Вы давно откладывали разговор о том, что происходит с телом и желанием, — потому что «не с кем» и «некогда».</p>
+        <span class="mark" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="who-row reveal" style="--d:.24s" href="#booking">
+        <span class="idx" aria-hidden="true">05</span>
+        <p>Вы вступаете в новые отношения и хотите, чтобы в них было иначе, чем раньше.</p>
+        <span class="mark" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+    <p class="who-note reveal">Работаю с женщинами, мужчинами и парами — в любых формах отношений, без осуждения ориентации и идентичности.</p>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow reveal">05 · Отзывы</p>
+      <h2 class="section-title reveal" style="--d:.05s">Что говорят те, кто <em class="ital">уже работал</em></h2>
+      <p class="section-sub reveal" style="--d:.1s">Без восторгов по заказу: только то, что человек сам заметил в процессе. Имена изменены, публикация — с согласия клиентов.</p>
+    </div>
+    <div class="reviews-grid">
+      <article class="review reveal">
+        <p>«Четыре года я избегала разговора о боли при сексе — думала, так „у всех“. За три месяца работы половина страха ушла, и я впервые за годы спокойно поговорила с мужем об этом. Осталось ещё много, но я больше не одна с этим».</p>
+        <div class="who"><b>Наталья, 34</b><span>психологическая и сексологическая работа</span></div>
+      </article>
+      <article class="review reveal" style="--d:.08s">
+        <p>«После рождения второго ребёнка мы перестали быть парой — думали, дело в усталости. Через полгода работы стало ясно: мы просто молчали о том, что нам нужно. Ссор стало меньше, и мы снова выбираем время друг для друга».</p>
+        <div class="who"><b>Андрей и Марина, 41 и 38</b><span>парная работа</span></div>
+      </article>
+      <article class="review reveal" style="--d:.16s">
+        <p>«Пришёл с запросом про тревогу, а всплыла тема отношений и стыда за собственную чувствительность. Юлия не давила и не оценивала, объясняла простым языком. Через три месяца тревога стала фоновой, а не главной в жизни».</p>
+        <div class="who"><b>Дмитрий, 29</b><span>психологическая работа</span></div>
+      </article>
+    </div>
+    <p class="reviews-note reveal">Отзывов о работе с телом и сексом больше — они подробнее. Покажу при личном разговоре.</p>
+  </div>
+</section>
+
+<section class="section" id="pricing" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow reveal">06 · Стоимость и запись</p>
+      <h2 class="section-title reveal" style="--d:.05s">Прозрачные условия <em class="ital">без мелкого шрифта</em></h2>
+      <p class="section-sub reveal" style="--d:.1s">Три формата работы. Если нужен другой вариант — например, разовая консультация «на подумать», — напишите, договоримся.</p>
+    </div>
+    <div class="pricing-panel reveal">
+      <div class="price-rows">
+        <div class="price-row">
+          <div class="p-name"><b>Индивидуальная сессия</b><span>психология · сексология · телесные практики</span></div>
+          <div class="p-dur">60&nbsp;минут</div>
+          <div class="p-price">6&nbsp;000&nbsp;₽</div>
+        </div>
+        <div class="price-row">
+          <div class="p-name"><b>Парная сессия</b><span>работа с парой: отношения и близость</span></div>
+          <div class="p-dur">90&nbsp;минут</div>
+          <div class="p-price">8&nbsp;000&nbsp;₽</div>
+        </div>
+        <div class="price-row">
+          <div class="p-name"><b>Пакет «4 индивидуальные встречи»</b><span>оплата вперед, экономия 2&nbsp;000&nbsp;₽</span></div>
+          <div class="p-dur">4&nbsp;×&nbsp;60&nbsp;минут</div>
+          <div class="p-price">22&nbsp;000&nbsp;₽</div>
+        </div>
+      </div>
+      <p class="conditions">Оплата — перед встречей. Перенос — бесплатно за 24&nbsp;часа. Если на любом этапе вы поймёте, что работа не подходит, — говорим об этом честно, без обид и без уговоров «остаться».</p>
+    </div>
+
+    <div class="booking" id="booking">
+      <div class="booking-info reveal">
+        <h3>Начнём с&nbsp;одного сообщения</h3>
+        <p>Опишите запрос своими словами — насколько получится. Это нужно не для оценки, а чтобы я заранее поняла, подойду ли вам я.</p>
+        <ul>
+          <li>Отвечаю в течение рабочего дня</li>
+          <li>Подберём время и формат: онлайн или офлайн</li>
+          <li>Первая встреча — знакомство, без обязательств</li>
+        </ul>
+        <p class="direct-contact">Если удобнее написать сразу: <a href="https://t.me/ЗАМЕНИТЬ-НА-USERNAME">Telegram</a> · <a href="mailto:ЗАМЕНИТЬ-НА-EMAIL">почта</a></p>
+      </div>
+      <form class="form reveal" id="booking-form" novalidate>
+        <div class="field">
+          <label for="f-name">Имя</label>
+          <input type="text" id="f-name" name="name" placeholder="Как к вам обращаться" autocomplete="name" aria-describedby="f-name-err" aria-required="true">
+          <span class="err-msg" id="f-name-err" role="alert">Пожалуйста, напишите имя.</span>
+        </div>
+        <div class="field">
+          <label for="f-contact">Удобный способ связи</label>
+          <input type="text" id="f-contact" name="contact" placeholder="Телефон или Telegram" autocomplete="off" aria-describedby="f-contact-err" aria-required="true">
+          <span class="err-msg" id="f-contact-err" role="alert">Укажите телефон или Telegram для связи.</span>
+        </div>
+        <div class="field">
+          <label for="f-message">Пара слов о запросе <span style="color:var(--muted);font-weight:400">— по желанию</span></label>
+          <textarea id="f-message" name="message" placeholder="Например: снижение желания, хотим прийти парой…"></textarea>
+        </div>
+        <div class="field" id="f-consent-field">
+          <label class="consent">
+            <input type="checkbox" id="f-consent" name="consent" required>
+            <span>Согласен(на) на обработку персональных данных в соответствии с <a href="/privacy.html" target="_blank" rel="noopener">политикой конфиденциальности</a></span>
+          </label>
+          <span class="err-msg" id="f-consent-err" role="alert">Подтвердите согласие на обработку данных, чтобы отправить заявку.</span>
+        </div>
+        <button class="btn btn-primary" type="submit" aria-busy="false">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-label">Отправить заявку</span>
+        </button>
+        <p class="form-error" id="form-error" role="alert" hidden></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap" style="max-width:820px">
+    <div class="section-head">
+      <p class="eyebrow reveal">07 · Вопросы</p>
+      <h2 class="section-title reveal" style="--d:.05s">Честные ответы <em class="ital">на&nbsp;неудобные вопросы</em></h2>
+      <p class="section-sub reveal" style="--d:.1s">То, что обычно спрашивают до первой встречи — и стесняются спросить вслух.</p>
+    </div>
+    <div class="faq reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Конфиденциально ли то, о чём мы говорим?<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Да. Всё, что звучит в кабинете, остаётся в кабинете. Единственные исключения — прямая угроза жизни, вашей или чьей-то ещё, и случаи, предусмотренные законом. Заметки я не веду с привязкой к личности.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Мне неловко, я никогда не говорил(а) об этом вслух.<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>С этого и начнём. Я веду разговор и задаю вопросы — вам не нужно ничего готовить и формулировать заранее. Можно просто прийти и начать с того, что волнует, даже если это «не знаю, с чего начать».</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Онлайн — это так же эффективно, как офлайн?<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Для большинства запросов — да, исследования показывают сопоставимые результаты. Телесные практики эффективнее офлайн, но часть упражнений можно делать онлайн. Если онлайн вам не подойдёт, я скажу об этом честно.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Сколько мне понадобится сессий?<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Точно заранее не скажет никто. После первой-второй встречи я даю прогноз по количеству и регулярности. Для конкретной ситуации обычно достаточно 5–10&nbsp;встреч.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Сексолог — это врач?<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Не всегда. Я психолог с сексологической специализацией: работаю с желанием, отношениями, страхами и стыдом. Если запрос медицинский — боль при осмотре, гормональные вопросы — направлю к врачу-сексологу, гинекологу или урологу.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Вы работаете с любыми парами?<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Да. С любыми формами пар и отношений, без осуждения ориентации и идентичности.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Можно ли прийти, если у меня «всё не так плохо»?<span class="ico" aria-hidden="true">+</span></button>
+        <div class="faq-a"><p>Можно. В терапию не обязательно приходить в кризисе. Многие приходят, чтобы понять себя или построить отношения по-новому. «Формально всё нормально» — не повод ждать.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <p class="footer-tag">Юлия<span style="color:var(--accent)">.</span></p>
-    <p class="footer-meta">Без стыда. Про тело. · Консультации не заменяют медицинскую и психиатрическую помощь. · 2026</p>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="f-brand">Юлия</div>
+        <p class="f-tag">Психолог, сексолог, телесный терапевт. Семь лет практики, без стыда и диагнозов.</p>
+      </div>
+      <div>
+        <h4>Навигация</h4>
+        <ul>
+          <li><a href="#about">Обо мне</a></li>
+          <li><a href="#work">С чем работаю</a></li>
+          <li><a href="#process">Как проходит</a></li>
+          <li><a href="#pricing">Стоимость</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Запись</h4>
+        <ul>
+          <li><a href="#booking">Оставить заявку</a></li>
+          <li><span style="color:var(--ink-muted);font-size:0.95rem">Форма записи — в блоке «Стоимость»</span></li>
+          <li><span style="color:var(--ink-muted);font-size:0.95rem">Отвечаю в течение рабочего дня</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-note">
+      <span>© 2026 Юлия. Все права защищены.</span>
+      <span>Сайт носит информационный характер и не является публичной офертой. Консультации не заменяют медицинскую помощь.</span>
+    </div>
   </div>
 </footer>
 
+<div class="modal" id="success-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-card">
+    <p class="eyebrow">Заявка отправлена</p>
+    <h3 id="modal-title">Спасибо</h3>
+    <p>Свяжусь с вами в течение рабочего дня, чтобы подобрать время и формат первой встречи.</p>
+    <button class="btn btn-primary" type="button">Хорошо</button>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Юлия — психолог, сексолог, телесный терапевт",
+  "description": "Семь лет практики. Психологическая, сексологическая и телесно-терапевтическая работа онлайн и офлайн.",
+  "areaServed": "Москва",
+  "priceRange": "6000-22000 RUB"
+}
+</script>
+
 <script>
 (function(){
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var header = document.getElementById('header');
+  function onScroll(){
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
   var burger = document.getElementById('burger');
-  var nav = document.getElementById('nav');
-  burger.addEventListener('click', function(){
-    var open = nav.classList.toggle('open');
+  var menu = document.getElementById('mobile-menu');
+  var menuLastFocus = null;
+  function toggleMenu(open){
+    burger.classList.toggle('open', open);
+    menu.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  nav.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', function(){ nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); });
-  });
-
-  var rows = document.querySelectorAll('.invoice-row');
-  var selEl = document.getElementById('selectedFormat');
-  var formatInput = document.getElementById('f-format');
-  var currentFormat = '';
-  rows.forEach(function(r){
-    r.addEventListener('click', function(){
-      rows.forEach(function(x){ x.classList.remove('selected'); });
-      r.classList.add('selected');
-      currentFormat = r.getAttribute('data-format');
-      formatInput.value = currentFormat;
-      selEl.textContent = 'Выбран формат: ' + currentFormat;
-      selEl.style.display = 'block';
-    });
-    r.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); r.click(); }
-    });
-  });
-
-  var form = document.getElementById('contactForm');
-  var err = document.getElementById('formErr');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if(!document.getElementById('f-consent').checked){
-      err.style.display = 'block';
-      return;
+    document.body.style.overflow = open ? 'hidden' : '';
+    if(open){
+      menuLastFocus = document.activeElement;
+      var first = menu.querySelector('a');
+      if(first) setTimeout(function(){ first.focus(); }, 60);
+    } else if(menuLastFocus){
+      menuLastFocus.focus();
+      menuLastFocus = null;
     }
-    err.style.display = 'none';
-    var name = document.getElementById('f-name').value.trim();
-    var contact = document.getElementById('f-contact').value.trim();
-    var msg = document.getElementById('f-msg').value.trim();
-    var text = 'Заявка с сайта\n'
-      + (currentFormat ? 'Формат: ' + currentFormat + '\n' : '')
-      + 'Имя: ' + name + '\nКонтакт: ' + contact + '\n\n' + msg;
-    window.open('https://t.me/yulia_therapy?text=' + encodeURIComponent(text), '_blank');
+  }
+  burger.addEventListener('click', function(){ toggleMenu(!menu.classList.contains('open')); });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ toggleMenu(false); });
   });
 
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
+  var revealEls = document.querySelectorAll('.reveal');
+  if(reducedMotion){ revealEls.forEach(function(el){ el.classList.add('in'); }); }
+  else if('IntersectionObserver' in window){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+    revealEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link'));
+  var spySections = [];
+  navLinks.forEach(function(a){
+    var s = document.getElementById(a.getAttribute('href').slice(1));
+    if(s) spySections.push(s);
+  });
+  function setActiveNav(id){
+    navLinks.forEach(function(a){
+      var match = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', match);
+      if(match) a.setAttribute('aria-current','true');
+      else a.removeAttribute('aria-current');
+    });
+  }
+  if('IntersectionObserver' in window){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting) setActiveNav(e.target.getAttribute('id'));
+      });
+    }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+    spySections.forEach(function(s){ spy.observe(s); });
+  }
+
+  var faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(function(item, i){
+    var q = item.querySelector('.faq-q');
+    var a = item.querySelector('.faq-a');
+    var p = a.querySelector('p');
+    q.setAttribute('aria-controls', 'faq-a-' + (i + 1));
+    a.setAttribute('id', 'faq-a-' + (i + 1));
+    q.addEventListener('click', function(){
+      var open = item.classList.contains('open');
+      faqItems.forEach(function(o){
+        o.classList.remove('open');
+        o.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        o.querySelector('.faq-a').style.maxHeight = '';
+      });
+      if(!open){
+        item.classList.add('open');
+        q.setAttribute('aria-expanded','true');
+        a.style.maxHeight = p.offsetHeight + 40 + 'px';
       }
     });
-  }, {threshold:0.12});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  });
+
+  var FORM_CONFIG = {
+    telegramBotToken: 'ЗАМЕНИТЬ-НА-BOT-TOKEN',
+    telegramChatId: 'ЗАМЕНИТЬ-НА-CHAT-ID'
+  };
+
+  function FormError(message, type){ var e = new Error(message); e.type = type; return e; }
+
+  function sendToTelegram(text){
+    var token = FORM_CONFIG.telegramBotToken;
+    var chatId = FORM_CONFIG.telegramChatId;
+    if(!token || token.indexOf('ЗАМЕНИТЬ') !== -1 || !chatId || chatId.indexOf('ЗАМЕНИТЬ') !== -1){
+      return Promise.reject(FormError('Форма ещё не настроена: укажите Bot Token и chat_id в коде.', 'config'));
+    }
+    return fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text: text, disable_web_page_preview: true })
+    }).then(function(res){
+      return res.json().then(function(data){
+        if(!res.ok || data.ok !== true){
+          throw FormError(data && data.description ? data.description : 'Сервис временно недоступен.', 'server');
+        }
+        return data;
+      });
+    });
+  }
+
+  var form = document.getElementById('booking-form');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('f-name');
+    var contact = document.getElementById('f-contact');
+    var message = document.getElementById('f-message');
+    var consent = document.getElementById('f-consent');
+    var consentField = document.getElementById('f-consent-field');
+    var formError = document.getElementById('form-error');
+    var ok = true;
+
+    [name, contact].forEach(function(f){
+      var valid = f.value.trim().length > 0;
+      f.classList.toggle('err', !valid);
+      f.setAttribute('aria-invalid', valid ? 'false' : 'true');
+      if(!valid) ok = false;
+    });
+
+    var consentOk = consent.checked;
+    if(consentField) consentField.classList.toggle('err', !consentOk);
+    consent.setAttribute('aria-invalid', consentOk ? 'false' : 'true');
+    if(!consentOk) ok = false;
+
+    if(formError) formError.hidden = true;
+
+    if(!ok){
+      var firstErr = [name, contact].filter(function(f){ return f.classList.contains('err'); })[0];
+      if(!firstErr && !consentOk) firstErr = consent;
+      if(firstErr) firstErr.focus();
+      return;
+    }
+
+    var btn = form.querySelector('[type="submit"]');
+    btn.classList.add('is-loading');
+    btn.setAttribute('aria-busy','true');
+    btn.disabled = true;
+
+    var text = 'Новая заявка с сайта\n\n' +
+      'Имя: ' + name.value.trim() + '\n' +
+      'Контакт: ' + contact.value.trim() + '\n' +
+      'Сообщение: ' + (message.value.trim() || '—');
+
+    sendToTelegram(text).then(function(){
+      btn.classList.remove('is-loading');
+      btn.setAttribute('aria-busy','false');
+      btn.disabled = false;
+      form.reset();
+      if(consentField) consentField.classList.remove('err');
+      openModal();
+    }).catch(function(err){
+      btn.classList.remove('is-loading');
+      btn.setAttribute('aria-busy','false');
+      btn.disabled = false;
+      if(formError){
+        var msg = 'Не получилось отправить заявку. ';
+        if(err && err.type === 'config'){ msg += 'Форма ещё не настроена — напишите, пожалуйста, напрямую (контакты слева от формы).'; }
+        else if(err && err.type === 'server'){ msg += err.message; }
+        else { msg += 'Проверьте соединение с интернетом и попробуйте ещё раз.'; }
+        formError.textContent = msg;
+        formError.hidden = false;
+      }
+    });
+  });
+
+  var modal = document.getElementById('success-modal');
+  var lastFocus = null;
+  function openModal(){
+    lastFocus = document.activeElement;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    modal.querySelector('button').focus();
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+    if(lastFocus) lastFocus.focus();
+  }
+  function trapModal(e){
+    if(!modal.classList.contains('open')) return;
+    var focusables = modal.querySelectorAll('button[tabindex], a[href], input, textarea, select, [tabindex]:not([tabindex="-1"])');
+    var list = Array.prototype.filter.call(focusables, function(el){ return el.offsetParent !== null || el === document.activeElement; });
+    if(!list.length) return;
+    var first = list[0], last = list[list.length - 1];
+    if(e.key === 'Tab'){
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  }
+  modal.addEventListener('keydown', trapModal);
+  modal.querySelector('.modal-card button').addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    if(e.key === 'Escape' && menu.classList.contains('open')) toggleMenu(false);
+  });
+
 })();
 </script>
 </body>
