@@ -140,21 +140,19 @@ em{font-style:italic}
 .hero-actions{display:flex;flex-wrap:wrap;gap:0.9rem;align-items:center}
 .hero-fine{margin-top:2.2rem;font-size:0.85rem;color:var(--muted);max-width:30rem}
 
-.portrait{
+.portrait{position:relative}
+.portrait-frame{
   position:relative;aspect-ratio:4/5;border-radius:var(--radius);
   overflow:hidden;background:var(--surface);
   border:1px solid var(--border);
 }
-.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.portrait-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 .portrait-caption{
-  position:absolute;left:1.25rem;right:1.25rem;bottom:1.25rem;
-  display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;
-  padding:0.85rem 1rem;border-radius:2px;
-  background:rgba(38,42,33,0.82);backdrop-filter:blur(8px);
-  color:var(--ink-fg);font-size:0.83rem;
+  display:flex;align-items:baseline;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;
+  padding-top:0.7rem;color:var(--muted);font-size:0.83rem;
 }
-.portrait-caption b{font-weight:600;font-family:var(--font-display);font-style:italic;font-size:0.95rem}
-.portrait-caption span{color:var(--ink-muted);text-align:right;line-height:1.35;flex:1;min-width:0}
+.portrait-caption b{font-weight:600;font-family:var(--font-display);font-style:italic;font-size:0.95rem;color:var(--fg)}
+.portrait-caption span{color:var(--muted);text-align:right;line-height:1.35;flex:1;min-width:0}
 
 .stats{border-top:1px solid var(--border);margin-top:clamp(3rem,7vh,5rem);padding-top:clamp(2rem,5vh,3rem)}
 .stats-plain{font-family:var(--font-display);font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.6;color:var(--fg);max-width:52rem}
@@ -325,7 +323,8 @@ em{font-style:italic}
   .nav{display:none}
   .burger{display:flex}
   .hero-grid{grid-template-columns:1fr;gap:2.5rem}
-  .portrait{max-width:420px;aspect-ratio:4/4.6}
+  .portrait{max-width:420px}
+  .portrait-frame{aspect-ratio:4/4.6}
   .work-grid,.reviews-grid,.process-steps{grid-template-columns:repeat(2,1fr)}
   .process-steps{grid-template-columns:1fr 1fr}
   .about-grid{grid-template-columns:1fr;gap:2.5rem}
@@ -412,13 +411,15 @@ em{font-style:italic}
         </div>
         <p class="hero-fine reveal" style="--d:.25s">Первая встреча — 60&nbsp;минут. Это знакомство, а не обязательство: решение о продолжении остаётся за вами.</p>
       </div>
-      <div class="portrait reveal" style="--d:.12s">
-        <img src="photo.jpg" width="800" height="1000" alt="Юлия — психолог, сексолог, телесный терапевт" loading="eager" decoding="async">
-        <div class="portrait-caption">
+      <figure class="portrait reveal" style="--d:.12s">
+        <div class="portrait-frame">
+          <img src="photo.jpg" width="800" height="1000" alt="Юлия — психолог, сексолог, телесный терапевт" loading="eager" decoding="async">
+        </div>
+        <figcaption class="portrait-caption">
           <b>Юлия</b>
           <span>психолог · сексолог · телесный терапевт</span>
-        </div>
-      </div>
+        </figcaption>
+      </figure>
     </div>
     <div class="stats reveal">
       <p class="stats-plain">Семь лет практики. Встречи по 60&nbsp;минут — индивидуально, по 90 — в паре. Перенос без вопросов, если предупредили за сутки.</p>
@@ -429,13 +430,15 @@ em{font-style:italic}
 <section class="section" id="about">
   <div class="wrap">
     <div class="about-grid">
-      <div class="portrait reveal">
-        <img src="Julia.jpg" width="800" height="1000" alt="Юлия — психолог, сексолог, телесный терапевт" loading="lazy" decoding="async">
-        <div class="portrait-caption">
+      <figure class="portrait reveal">
+        <div class="portrait-frame">
+          <img src="Julia.jpg" width="800" height="1000" alt="Юлия — психолог, сексолог, телесный терапевт" loading="lazy" decoding="async">
+        </div>
+        <figcaption class="portrait-caption">
           <b>Юлия</b>
           <span>семь лет практики · очно и онлайн</span>
-        </div>
-      </div>
+        </figcaption>
+      </figure>
       <div class="about-text">
         <p class="eyebrow reveal">01 · Обо мне</p>
         <h2 class="section-title reveal" style="--d:.05s">Я пришла в&nbsp;психологию через <em class="ital">собственные вопросы</em></h2>
